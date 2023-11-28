@@ -3,6 +3,7 @@ package com.joinventure.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class UserController {
 	
 	@GetMapping("")
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
-		return ResponseEntity.ok().body(userService.findAllUsers());
+		return ResponseEntity.ok().body(userService.findAllUsersDTO());
 	}
 	
 	@GetMapping("{id}")
@@ -110,7 +111,6 @@ public class UserController {
         System.out.println(users.isPresent());
 
         return users.isPresent();
-
     }
 
     @GetMapping("/checkEmail")

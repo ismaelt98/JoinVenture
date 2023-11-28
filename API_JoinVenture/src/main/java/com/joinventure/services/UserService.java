@@ -19,7 +19,11 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public List<UserDTO> findAllUsers(){
+	public List<User> findAllUsers(){
+		return userRepository.findAll();
+	}
+	
+	public List<UserDTO> findAllUsersDTO(){
 		List<User> users = userRepository.findAll();
 		ModelMapper modelMapper = new ModelMapper();
 		List<UserDTO> usersDTO = new ArrayList<>();
