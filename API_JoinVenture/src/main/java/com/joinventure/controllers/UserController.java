@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import lombok.extern.java.Log;
 @Log
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "", allowedHeaders = "")
 public class UserController {
 	
 	@Autowired
@@ -116,7 +118,7 @@ public class UserController {
     @GetMapping("/checkEmail")
     public ResponseEntity<Boolean> checkIfExistUserEmail(@RequestParam String email) {
         boolean existe = userService.verificarEmailExistente(email);
+        
         return ResponseEntity.ok(existe);
-
     }
 }
