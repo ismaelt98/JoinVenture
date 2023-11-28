@@ -60,4 +60,18 @@ public class UserService {
 		}
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el nombre de usuario: " + username);
 	}
+	
+	public User getPasswordByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public boolean verificarEmailExistente(String email) {
+        return userRepository.existsByEmail(email);
+    }
+//    public Optional<User> findUserByEmail(String email) {
+//        Optional<User> user = userRepository.findAll().stream()
+//                .filter(user1 -> user1.getEmail().equals(email)).findFirst();
+//
+//        return user;
+//    }
 }

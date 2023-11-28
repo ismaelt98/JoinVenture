@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joinventure.entities.User;
@@ -99,5 +100,23 @@ public class UserController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("eliminado", Boolean.TRUE);
         return ResponseEntity.ok().body(response);
+    }
+	
+	@PostMapping("/login")
+    public boolean getLogin(@RequestParam String email, @RequestParam String password) {
+        Optional<User> users = userService.findAllUsers().stream().filter(
+                streamedUser -> streamedUser.getEmail().equals(email) && streamedUser.getPassword().equals(password))
+                .findFirst();
+        System.out.println(users.isPresent());
+
+        return users.isPresent();
+
+    }
+
+    @GetMapping("/checkEmail")
+    public ResponseEntity<Boolean> checkIfExistUserEmail(@RequestParam String email) {
+        boolean existe = userService.verificarEmailExistente(email);
+        return ResponseEntity.ok(existe);
+
     }
 }

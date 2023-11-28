@@ -23,8 +23,6 @@ public class User {
 
     @Column(name = "LAST_NAME", nullable = false)
     private String lastname;
-    
-   
 
 	@Column(name = "EMAIL", unique = true)
     private String email;
@@ -72,12 +70,12 @@ public class User {
 	}
 	
 	 public String getPassword() {
-			return password;
-		}
+		return password;
+	}
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getLastname() {
 		return lastname;
