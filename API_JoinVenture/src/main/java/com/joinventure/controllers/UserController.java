@@ -56,6 +56,7 @@ public class UserController {
 	
 	@PostMapping("")
 	public ResponseEntity<String> createUser(@RequestBody User user){
+		
 		return userService.createNewUser(user);
 	}
 	
@@ -93,6 +94,7 @@ public class UserController {
 	    }
 		
 		user.setPassword(userDetails.getPassword());
+		user.setUpdatedAt(userDetails.getUpdatedAt());
 		
 		final User updatedUser = userRepository.save(user);
 		return ResponseEntity.ok().body(updatedUser);
