@@ -1,130 +1,62 @@
-.divGeneral{
-    width: 400px;
-height: auto;
-background: linear-gradient(to bottom, #4a5660, #07181e, #213746, #a39d9a);
-background-repeat: no-repeat;
-background-size: cover;
-     border: 10px solid #07181e;
-display: inline-block;
-  
-    text-align: center;
-   
-     border-radius: 40px;
-  
-  
-   
- }
-
- .divinputlabel{
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
-    align-items: center;
- }
- #h2Account{
-  margin-top: -10px;
- }
-#divCreateAccount{
-  margin-left: 20px;
-}
- label{
-  color: #eff1f5;
- }
- body{
-    text-align: center;
-    margin: 0;
-    padding: 0;
- }
- #btnSign{
-    margin-top: 30px;
- }
- .divAccount{
-    margin-top: 15px;
-    text-align: right;
-    padding: 10px;
- }
- a{
-    color: #eff1f5;
-    text-decoration: none;
- }
-p{
-  color: #eff1f5;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
 }
 
- h2{
-    text-align: left;
-    color: #eff1f5;
- }
- input{
-    width: 50%;
- }
+.login-container {
+  background: url(../img/fred1.gif);
+  background-size: cover;
 
- form{
-    display: inline-block;
- }
- 
-  
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 360px;
+  text-align: center;
+  margin: auto;
+}
 
-  
-  h1 {
-    margin-bottom: 20px;
-  }
-  
-  .input-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-  
-  label {
-    display: block;
-    margin-top: 7px;
-    margin-right: 5px;
-    width: 150px;
-  }
-  #email{
-    position: relative;
-    background-image: url('/img/envelope-mail-icon-vector-illustration-removebg-preview.png');
-  }
-.input-with-image1 {
-    padding: 10px 40px 10px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    background-image: url('/img/user.png'); /* Reemplaza con la ruta de tu imagen */
-    background-size: 20px; /* Tamaño de la imagen */
-    background-position: 95% 50%; /* Posición de la imagen */
-    background-repeat: no-repeat; /* Evitar la repetición de la imagen */
-  }
-  .input-with-image2 {
-    padding: 10px 40px 10px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    background-image: url('/img/password.png'); /* Reemplaza con la ruta de tu imagen */
-    background-size: 20px; /* Tamaño de la imagen */
-    background-position: 95% 50%; /* Posición de la imagen */
-    background-repeat: no-repeat; /* Evitar la repetición de la imagen */
-    margin-bottom: 10px;
-  }
-  input {
-    margin-top: 10px;
-    width: 50%;
-    padding: 8px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-  }
-  
-  button {
-    padding: 8px 16px;
-    border: none;
-    background-color: #07181e;
-    color: #eff1f5;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  #btnPasword{
-    background-color: transparent;
-  }
-  
-  button:hover {
-    background-color: #233949;
-  }
+h2 {
+  margin-bottom: 30px;
+  color: white;
+  background-color: #333333b4;
+}
+
+.input-container {
+  margin-bottom: 20px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: calc(100% - 30px);
+  padding: 15px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+button {
+  padding: 15px;
+  width: calc(100% - 30px);
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
