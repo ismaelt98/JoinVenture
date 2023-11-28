@@ -65,13 +65,15 @@ function crearUsuario1(formulario) {
 
 
             const datos = {
-                email: email1,
-                password: password1,
-                name: datosFormulario.get('name'),
-                surname: datosFormulario.get('surname')
+                USER_NAME: datosFormulario.get('name'),
+                LAST_NAME: datosFormulario.get('surname'),
+                EMAIL: email1,
+                PASSWORD: password1     
+                
 
 
             };
+            
             fetch('http://localhost:8080/users', {
                 method: 'POST',
                 headers: {

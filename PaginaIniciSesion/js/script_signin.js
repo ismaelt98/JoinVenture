@@ -4,19 +4,10 @@ const formulario = document.getElementById('miFormulario');
     document.getElementById('popupMessage').style.display = 'none';
 })*/
 
-formulario.addEventListener('submit', function(event){
-    event.preventDefault();
-
-    var formdata = new FormData();
-    formdata.append("email", document.getElementById('email').value);
-    formdata.append("password", document.getElementById('password').value);
-
-    
-    window.location.href = "./register.html";
-})
 
 
-/*formulario.addEventListener('submit', function (event) {
+
+formulario.addEventListener('submit', function (event) {
     event.preventDefault();
 
     var formdata = new FormData();
@@ -37,7 +28,7 @@ formulario.addEventListener('submit', function(event){
             if (result == "true") {
                 window.location.href = "./forgotpassword.html"
             } else {
-                document.getElementById('popupMessage').style.display = 'inline-block';
+                alert("EMAIL O CONTRASEÑA INCORRECTAS")
                
 
             }
@@ -45,4 +36,4 @@ formulario.addEventListener('submit', function(event){
         .catch(error => console.log('error', error));
 
 
-})*/
+})
