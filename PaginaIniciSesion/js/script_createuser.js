@@ -18,7 +18,14 @@ formulario.addEventListener('submit', function (event) {
     event.preventDefault();
     let email1 = document.getElementById('email').value;
     let existe;
-    fetch(`http://localhost:8080/users/checkEmail?email=${email1}`)
+    fetch(`http://localhost:8080/users/checkEmail?email=${email1}`, {
+        method: 'GET', // Método de la solicitud (GET, POST, etc.)
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*' // Agrega el encabezado para permitir cualquier origen (No recomendado en producción)
+            // Si conoces el origen específico, puedes reemplazar '*' con 'http://mi-sitio.com' por ejemplo
+        }
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -59,47 +66,45 @@ function crearUsuario1(formulario) {
     const password1 = datosFormulario.get('password');
     const confirmPassword = datosFormulario.get('confirm-password');
 
-    if (validarPassword(password1)) {
-        if (password1 === confirmPassword) {
+
+    if (password1 === confirmPassword) {
 
 
 
-            const datos = {
-                USER_NAME: datosFormulario.get('name'),
-                LAST_NAME: datosFormulario.get('surname'),
-                EMAIL: email1,
-                PASSWORD: password1     
-                
+        const datos = {
+            USER_NAME: datosFormulario.get('name'),
+            LAST_NAME: datosFormulario.get('surname'),
+            EMAIL: email1,
+            PASSWORD: password1
+        };
 
 
-            };
-            
-            fetch('http://localhost:8080/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(datos)
+        fetch('http://localhost:8080/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        })
+            .then(response =>{
+                response.json()
+                console.log(response.json());
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Respuesta de la API:', data);
-                    // Aquí puedes manejar la respuesta de la API, mostrar un mensaje, etc.
-                    window.location.href = '../iniciosesion.html';
-                })
-                .catch(error => {
-                    console.error('Error al llamar a la API:', error);
-                    // Manejo de errores
-                });
+            .then(data => {
+                console.log('Respuesta de la API:', data);
+                // Aquí puedes manejar la respuesta de la API, mostrar un mensaje, etc.
+                //window.location.href = '../iniciosesion.html';
+            })
+            .catch(error => {
+                console.error('Error al llamar a la API:', error);
+                // Manejo de errores
+            });
 
-        } else {
-            alert('Las contraseñas no coinciden. Por favor, inténtalo de nuevo.');
-            // Aquí podrías mostrar un mensaje de error al usuario o realizar otras acciones
-        }
     } else {
-        document.getElementById("pasError").innerText = "No cumple con los requisitos";
-        document.getElementById("pasError").style.display = "block";
+        alert('Las contraseñas no coinciden. Por favor, inténtalo de nuevo.');
+        // Aquí podrías mostrar un mensaje de error al usuario o realizar otras acciones
     }
+
 
 
 
