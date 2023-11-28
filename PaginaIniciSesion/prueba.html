@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Consumir API</title>
+</head>
+<body>
+    <div id="datos">
+        
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const baseUrl = window.location.href; // Obtener la URL base del servidor local
+            const apiUrl = `http://localhost:8080/api/personas`; // Construir la URL completa
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('datos').innerText = JSON.stringify(data);
+                });
+        });
+    </script>
+</body>
+</html>

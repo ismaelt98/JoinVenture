@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f3f3f3; /* Color de fondo para cuando el fondo borroso no esté visible */
+  }
+  
+  .blur-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/img/envelope-mail-icon-vector-illustration-removebg-preview.png'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover;
+    filter: blur(10px); /* Aplicar efecto de desenfoque */
+  }
+  
+  /* Estilos para el contenido dentro de la sección con fondo borroso */
+  .blur-background h1,
+  .blur-background p {
+    color: red; /* Asegurarse de que el texto sea visible en el fondo borroso */
+    text-align: center;
+  }
+  
