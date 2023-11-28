@@ -51,6 +51,7 @@ button {
   width: calc(100% - 30px);
   background-color: #3498db;
   color: #fff;
+  margin-bottom: 20px;
   border: none;
   border-radius: 25px;
   cursor: pointer;
@@ -59,4 +60,10 @@ button {
 
 button:hover {
   background-color: #2980b9;
+}
+
+a{
+  
+  color: white;
+  text-decoration: none;
 }
