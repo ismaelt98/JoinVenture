@@ -60,7 +60,7 @@ public class UserController {
 		User user = userService.findUserById(id);
 		
 		user.setUsername(userDetails.getUsername());
-		user.setName(userDetails.getName());
+		user.setPassword(userDetails.getPassword());
 		user.setLastname(userDetails.getLastname());
 		user.setBirthDate(userDetails.getBirthDate());
 		user.setEmail(userDetails.getEmail());

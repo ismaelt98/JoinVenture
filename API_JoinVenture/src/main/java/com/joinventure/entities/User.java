@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name ="USER")
 public class User {
@@ -16,20 +17,23 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USER_ID")
 	private Long id;
-	@Column(name = "USERNAME", nullable = false)
-    private String username;
+	
+	@Column(name = "USER_NAME", nullable = false)
+    private String username;   
 
-    @Column(name = "NAME", nullable = false)
-    private String name;
-
-    @Column(name = "LASTNAME", nullable = false)
+    @Column(name = "LAST_NAME", nullable = false)
     private String lastname;
+    
+   
 
-    @Column(name = "BIRTHDATE")
-    private Date birthDate;
-
-    @Column(name = "EMAIL", unique = true)
+	@Column(name = "EMAIL", unique = true)
     private String email;
+    
+    @Column(name = "BIRTHDATE")
+    private Date birthDate;   
+    
+    @Column(name = "PASSWORD", nullable = false)
+    private String password;
 
     @Column(name = "CREATED_AT", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdAt;
@@ -39,14 +43,14 @@ public class User {
 	
 	public User() {}
 
-	public User(Long id, String username, String name, String lastname, Date birthDate, String email, Date createdAt,
+	public User(Long id, String username, String name, String lastname, Date birthDate, String email, String password, Date createdAt,
 			Date updatedAt) {
 		this.id = id;
-		this.username = username;
-		this.name = name;
+		this.username = username;		
 		this.lastname = lastname;
 		this.birthDate = birthDate;
 		this.email = email;
+		this.password = password;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -66,14 +70,14 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	 public String getPassword() {
+			return password;
+		}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+		public void setPassword(String password) {
+			this.password = password;
+		}
 
 	public String getLastname() {
 		return lastname;
@@ -117,7 +121,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", name=" + name + ", lastname=" + lastname
+		return "User [id=" + id + ", username=" + username + ", lastname=" + lastname
 				+ ", birthDate=" + birthDate + ", email=" + email + ", createdAt=" + createdAt + ", updatedAt="
 				+ updatedAt + "]";
 	}
