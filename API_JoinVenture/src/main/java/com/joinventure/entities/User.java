@@ -27,8 +27,6 @@ public class User {
 	@Column(name = "EMAIL", unique = true)
     private String email;
     
-    @Column(name = "BIRTHDATE")
-    private Date birthDate;   
     
     @Column(name = "PASSWORD", nullable = false)
     private String password;
@@ -41,12 +39,11 @@ public class User {
 	
 	public User() {}
 
-	public User(Long id, String username, String name, String lastname, Date birthDate, String email, String password, Date createdAt,
+	public User(Long id, String username, String lastname, String email, String password, Date createdAt,
 			Date updatedAt) {
 		this.id = id;
 		this.username = username;		
 		this.lastname = lastname;
-		this.birthDate = birthDate;
 		this.email = email;
 		this.password = password;
 		this.createdAt = createdAt;
@@ -85,14 +82,6 @@ public class User {
 		this.lastname = lastname;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -120,7 +109,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", lastname=" + lastname
-				+ ", birthDate=" + birthDate + ", email=" + email + ", createdAt=" + createdAt + ", updatedAt="
+				+ ", email=" + email + ", createdAt=" + createdAt + ", updatedAt="
 				+ updatedAt + "]";
 	}
 }

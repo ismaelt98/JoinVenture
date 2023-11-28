@@ -66,7 +66,6 @@ public class UserController {
 		user.setUsername(userDetails.getUsername());
 		user.setPassword(userDetails.getPassword());
 		user.setLastname(userDetails.getLastname());
-		user.setBirthDate(userDetails.getBirthDate());
 		user.setEmail(userDetails.getEmail());
 		user.setCreatedAt(userDetails.getCreatedAt());
 		user.setUpdatedAt(userDetails.getUpdatedAt());
@@ -80,6 +79,20 @@ public class UserController {
 		User user = userService.findUserByUsername(username);
 		
 		user.setUsername(userDetails.getUsername());
+		
+		final User updatedUser = userRepository.save(user);
+		return ResponseEntity.ok().body(updatedUser);
+	}
+	
+	@PutMapping("/changepassword/{username}")
+	public ResponseEntity<?> updatePassword(@PathVariable(value = "username") String username, @RequestBody User userDetails){
+		User user = userService.findUserByUsername(username);
+		
+		if (userDetails.getPassword().equals(user.getPassword())) {
+	        return ResponseEntity.badRequest().body("La nueva contraseña es igual a la contraseña antigua. Por favor, elige una nueva contraseña.");
+	    }
+		
+		user.setPassword(userDetails.getPassword());
 		
 		final User updatedUser = userRepository.save(user);
 		return ResponseEntity.ok().body(updatedUser);
