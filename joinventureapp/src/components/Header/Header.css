@@ -1,0 +1,18 @@
+.header {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f8f8f8;
+    /* Agrega más estilos para el encabezado aquí */
+  }
+  
+  .header h1 {
+    margin: 0;
+    color: #333;
+    /* Agrega más estilos para el h1 aquí */
+  }
+  
+  .header p {
+    color: #666;
+    /* Agrega más estilos para el párrafo aquí */
+  }
+  

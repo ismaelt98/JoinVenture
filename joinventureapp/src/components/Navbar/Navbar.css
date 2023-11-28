@@ -1,0 +1,21 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-logo {
+    font-size: 24px;
+    /* Agrega más estilos para el logo aquí */
+  }
+  
+  .navbar-links a {
+    text-decoration: none;
+    margin-left: 20px;
+    color: #333;
+    /* Agrega más estilos para los enlaces aquí */
+  }
+  

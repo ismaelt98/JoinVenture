@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+}
+
+/* Añade aquí estilos globales adicionales que afectan a la aplicación completa */
+/* Por ejemplo, podrías querer un fondo para todo el sitio */
+body {
+  background-color: #eaeaea; /* Esto puede variar según la captura de pantalla que estés emulando */
+}
+
+/* Estilos para mantener la coherencia en los márgenes y el padding */
+* {
+  box-sizing: border-box;
+}
+
+/* Asegúrate de que todos los textos utilicen la tipografía correcta */
+body, button, input, textarea {
+  font-family: 'Roboto', sans-serif; /* Sustituye 'Roboto' por la tipografía que desees */
+}
