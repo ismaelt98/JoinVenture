@@ -11,7 +11,7 @@ function validarPassword(password) {
 
 
 document.getElementById("cerrarFormulario").addEventListener("click", function () {
-    window.location.href = '../iniciosesion.html';
+    window.location.href = './iniciosesion.html';
 });
 
 formulario.addEventListener('submit', function (event) {

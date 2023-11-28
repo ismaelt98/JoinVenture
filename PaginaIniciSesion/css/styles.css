@@ -65,7 +65,7 @@ width: 3px;
   }
   
   .form {
-    background: url(/img/fred.gif);
+    background: url(../img/fred.gif);
     background-size: cover;
     position: absolute;
     opacity: 1;
