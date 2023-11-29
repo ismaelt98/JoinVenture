@@ -122,12 +122,21 @@ public class UserController {
 	
 	@PostMapping("/login")
     public boolean getLogin(@RequestParam String email, @RequestParam String password) {
-        Optional<User> users = userService.findAllUsers().stream().filter(
-                streamedUser -> streamedUser.getEmail().equals(email) && streamedUser.getPassword().equals(password))
-                .findFirst();
-        System.out.println(users.isPresent());
+        Optional <User> user = userService.findByEmail(email);
 
-        return users.isPresent();
+        if(user.isPresent()) {
+            User user1 = user.get();
+            String hashedPassword = userService.hashSHA256(password);
+            return hashedPassword.equals(user1.getPassword());
+        }
+
+        return false;
+    }
+	
+	@PostMapping("/password/cifrar")
+    public String cifrarPassword(@RequestParam String password) {
+        String passwordCifrado = userService.hashSHA256(password);
+        return passwordCifrado;
     }
 
     @GetMapping("/checkEmail")

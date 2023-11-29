@@ -1,7 +1,11 @@
 package com.joinventure.services;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +67,11 @@ public class UserService {
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el nombre de usuario: " + username);
 	}
 	
-	public User getPasswordByEmail(String email) {
+	public Optional<User> getPasswordByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+	
+	public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
     }
 
@@ -76,4 +84,22 @@ public class UserService {
 //
 //        return user;
 //    }
+    public String hashSHA256(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
