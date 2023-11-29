@@ -11,36 +11,15 @@ h2{
     font-size: 35px;
 }
 
-.socialMed{
-    width: 20px;
-    height: 20px;
-   
-}
-.butSocialMed{
-    background-color: transparent;
-    border: 2px solid #c6a345;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    text-align: center;
-    border-radius: 50%;
- margin-right: 5px;
- margin-left: 5px;
-}
-.butSocialMed:hover{
-    cursor: pointer;
-}
+
+
 body{
     text-align: center;
     margin: 0;
   padding: 0;
    
 }
-.divSocialMed{
-    display: flex;
-    margin: 10px;
-    justify-content: center;
-  align-items: center;
-}
+
 .divGeneral{
    margin-top: 10px;
  width: 400px;
@@ -91,7 +70,6 @@ background-size: cover;
     cursor: pointer;
     background-color: #1b2737;
   }
-  .divAllMedia{
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
+ 
+ 
+ 

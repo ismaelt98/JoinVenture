@@ -62,13 +62,15 @@ function crearUsuario1(formulario) {
     const datosFormulario = new FormData(formulario);
     let email1 = datosFormulario.get('email');
     let email12 = email1.replace(/^['"]|['"]$/g, '');
-
+    let passwordHasheado;
     const password1 = datosFormulario.get('password');
     const confirmPassword = datosFormulario.get('confirm-password');
 
 
     if (password1 === confirmPassword) {
 
+        
+        
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -93,7 +95,7 @@ function crearUsuario1(formulario) {
             .then(response => response.text())
             .then(result => {
                 console.log(result);
-                window.location.href = "./iniciosesion.html";
+               // window.location.href = "./iniciosesion.html";
             })
             .catch(error => console.log('error', error));
 
@@ -102,12 +104,7 @@ function crearUsuario1(formulario) {
         // Aquí podrías mostrar un mensaje de error al usuario o realizar otras acciones
     }
 
+    }
 
 
 
-
-    // Aquí se simula la llamada a una API usando la función fetch
-
-
-
-}

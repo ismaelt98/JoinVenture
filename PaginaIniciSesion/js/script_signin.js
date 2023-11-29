@@ -13,7 +13,7 @@ formulario.addEventListener('submit', function (event) {
     var formdata = new FormData();
     formdata.append("email", document.getElementById('email').value);
     formdata.append("password", document.getElementById('password').value);
-    var existe;
+
 
     var requestOptions = {
         method: 'POST',
@@ -23,14 +23,11 @@ formulario.addEventListener('submit', function (event) {
 
     fetch("http://localhost:8080/users/login", requestOptions)
         .then(response => response.text())
-        .then(result => {
-            console.log(result);
+        .then(result => {           
             if (result == "true") {
                 window.location.href = "./pagina1.html"
             } else {
-                alert("EMAIL O CONTRASEÑA INCORRECTAS")
-               
-
+                alert("EMAIL O CONTRASEÑA INCORRECTAS");
             }
         })
         .catch(error => console.log('error', error));
