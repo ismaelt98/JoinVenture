@@ -6,7 +6,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.5);
+ 
 }
 
 .login-container {
@@ -27,7 +28,7 @@ h2 {
   background-color: #333333b4;
 }
 
-.input-container {
+.pol {
   margin-bottom: 20px;
 }
 
@@ -45,10 +46,23 @@ input[type="password"]:focus {
   outline: none;
   border-color: #3498db;
 }
+.pol{
+  margin-top: 0;
+}
 
+#divForgotPassword{
+  text-align: right;
+  margin-top: 5px;
+}
+
+#divForgotPassword a{
+  font-size: 10px;
+  font-weight: bold;
+  color: red;
+}
 button {
   padding: 15px;
-  width: calc(100% - 30px);
+  width: 140px;
   background-color: #3498db;
   color: #fff;
   margin-bottom: 20px;
@@ -56,10 +70,11 @@ button {
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: black;
 }
 
 a{

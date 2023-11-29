@@ -71,28 +71,31 @@ function crearUsuario1(formulario) {
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        
+
         var raw = JSON.stringify({
-          "username": datosFormulario.get('name'),
-          "lastname": datosFormulario.get('surname'),
-          "email": email1,
-          "password": password1
+            "username": datosFormulario.get('name'),
+            "lastname": datosFormulario.get('surname'),
+            "email": email1,
+            "password": password1
         });
-        
+
         var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
         };
 
-      
-        
+
+
 
         fetch("http://localhost:8080/users", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+            .then(response => response.text())
+            .then(result => {
+                console.log(result);
+                window.location.href = "./iniciosesion.html";
+            })
+            .catch(error => console.log('error', error));
 
     } else {
         alert('Las contraseñas no coinciden. Por favor, inténtalo de nuevo.');
