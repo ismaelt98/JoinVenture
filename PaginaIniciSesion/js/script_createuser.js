@@ -69,36 +69,30 @@ function crearUsuario1(formulario) {
 
     if (password1 === confirmPassword) {
 
-
-
-        const datos = {
-            USER_NAME: datosFormulario.get('name'),
-            LAST_NAME: datosFormulario.get('surname'),
-            EMAIL: email1,
-            PASSWORD: password1
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        
+        var raw = JSON.stringify({
+          "username": datosFormulario.get('name'),
+          "lastname": datosFormulario.get('surname'),
+          "email": email1,
+          "password": password1
+        });
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
         };
 
+      
+        
 
-        fetch('http://localhost:8080/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(datos)
-        })
-            .then(response =>{
-                response.json()
-                console.log(response.json());
-            })
-            .then(data => {
-                console.log('Respuesta de la API:', data);
-                // Aquí puedes manejar la respuesta de la API, mostrar un mensaje, etc.
-                //window.location.href = '../iniciosesion.html';
-            })
-            .catch(error => {
-                console.error('Error al llamar a la API:', error);
-                // Manejo de errores
-            });
+        fetch("http://localhost:8080/users", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 
     } else {
         alert('Las contraseñas no coinciden. Por favor, inténtalo de nuevo.');

@@ -26,7 +26,7 @@ formulario.addEventListener('submit', function (event) {
         .then(result => {
             console.log(result);
             if (result == "true") {
-                window.location.href = "./forgotpassword.html"
+                window.location.href = "./pagina1.html"
             } else {
                 alert("EMAIL O CONTRASEÑA INCORRECTAS")
                
