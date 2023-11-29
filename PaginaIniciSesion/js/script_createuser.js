@@ -1,18 +1,8 @@
-const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const formulario = document.getElementById('miFormulario');
 
-
-
-
-function validarPassword(password) {
-    return regex.test(password);
-}
-
-
-
-document.getElementById("cerrarFormulario").addEventListener("click", function () {
-    window.location.href = './iniciosesion.html';
-});
+/*document.getElementById("cerrarFormulario").addEventListener("click", function () {
+    document.getElementById('miFormulario').style.display = "none";
+});*/
 
 formulario.addEventListener('submit', function (event) {
     event.preventDefault();

@@ -25,7 +25,7 @@ formulario.addEventListener('submit', function (event) {
         .then(response => response.text())
         .then(result => {           
             if (result == "true") {
-                window.location.href = "./pagina1.html"
+                window.location.href = "./prueba.html"
             } else {
                 alert("EMAIL O CONTRASEÑA INCORRECTAS");
             }
