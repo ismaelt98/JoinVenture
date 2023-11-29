@@ -6,9 +6,9 @@ const formulario = document.getElementById('miFormulario');
 
 formulario.addEventListener('submit', function (event) {
     event.preventDefault();
-    let email1 = document.getElementById('email').value;
+    let email = document.getElementById('email').value;
     let existe;
-    fetch(`http://localhost:8080/users/checkEmail?email=${email1}`, {
+    fetch(`http://localhost:8080/users/checkEmail?email=${email}`, {
         method: 'GET', // Método de la solicitud (GET, POST, etc.)
         headers: {
             'Content-Type': 'application/json',
@@ -48,18 +48,16 @@ formulario.addEventListener('submit', function (event) {
 
 function crearUsuario1(formulario) {
 
-    let data1;
+    
     const datosFormulario = new FormData(formulario);
-    let email1 = datosFormulario.get('email');
-    let email12 = email1.replace(/^['"]|['"]$/g, '');
-    let passwordHasheado;
-    const password1 = datosFormulario.get('password');
+    let email = datosFormulario.get('email');
+   
+    
+    const password = datosFormulario.get('password');
     const confirmPassword = datosFormulario.get('confirm-password');
 
 
-    if (password1 === confirmPassword) {
-
-        
+    if (password === confirmPassword) {        
         
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -67,8 +65,8 @@ function crearUsuario1(formulario) {
         var raw = JSON.stringify({
             "username": datosFormulario.get('name'),
             "lastname": datosFormulario.get('surname'),
-            "email": email1,
-            "password": password1
+            "email": email,
+            "password": password
         });
 
         var requestOptions = {
@@ -78,14 +76,11 @@ function crearUsuario1(formulario) {
             redirect: 'follow'
         };
 
-
-
-
         fetch("http://localhost:8080/users", requestOptions)
             .then(response => response.text())
             .then(result => {
-                console.log(result);
-               // window.location.href = "./iniciosesion.html";
+                
+               window.location.href = "./iniciosesion.html";
             })
             .catch(error => console.log('error', error));
 
