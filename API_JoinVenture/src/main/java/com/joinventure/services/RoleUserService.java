@@ -18,7 +18,7 @@ public class RoleUserService {
 		return roleUserRepository.findAll();
 	}
 
-	public ResponseEntity<String> createNewUser(RoleUser roleUser) {
+	public ResponseEntity<String> createNewRoleUser(RoleUser roleUser) {
 		roleUserRepository.save(roleUser);
 		return ResponseEntity.ok().body("Rol de usuario creado correctamente");
 	}

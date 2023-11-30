@@ -22,9 +22,7 @@ import lombok.extern.java.Log;
 @RequestMapping("/role-users")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RoleUserController {
-	
-	@Autowired
-	private RoleUserRepository roleUserRepository;
+
 	
 	@Autowired
 	private RoleUserService roleUserService;
@@ -35,9 +33,8 @@ public class RoleUserController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<String> createUser(@RequestBody RoleUser roleUser){
-		
-		return roleUserService.createNewUser(roleUser);
+	public ResponseEntity<String> createRoleUser(@RequestBody RoleUser roleUser){
+		return roleUserService.createNewRoleUser(roleUser);
 	}
 
 }

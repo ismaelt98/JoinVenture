@@ -32,9 +32,9 @@ public class Project {
     @Column(name = "NUM_MEMBERS", nullable = false)
     private Integer numMembers;
     
-//    @Column(name = "CREATED_AT", nullable = false, updatable = false)
-//    @CreatedDate 
-//    private LocalDate createdAt;
+    @Column(name = "CREATED_AT", nullable = false, updatable = false)
+    @CreatedDate 
+    private LocalDate createdAt;
 
   //  @Column(name = "UPDATED_AT", nullable = false)
   //  @LastModifiedDate    
@@ -45,12 +45,12 @@ public class Project {
 		super();
 	}
 
-	public Project(Long id, String name, Integer numMembers) {
+	public Project(Long id, String name, Integer numMembers, LocalDate createdAt) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.numMembers = numMembers;
-	
+		this.createdAt = createdAt;
 	}
 	
 //	public Project(Long id, String name, Integer numMembers, LocalDate create, LocalDate update) {
@@ -87,13 +87,13 @@ public class Project {
 		this.numMembers = numMembers;
 	}
 
-//	public LocalDate getCreatedAt() {
-//		return createdAt;
-//	}
-//
-//	public void setCreatedAt(LocalDate createdAt) {
-//		this.createdAt = createdAt;
-//	}
+	public LocalDate getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDate createdAt) {
+		this.createdAt = createdAt;
+	}
 
 //	public LocalDate getUpdatedAt() {
 //		return updatedAt;
