@@ -11,8 +11,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.joinventure.entities.User;
 import com.joinventure.repositories.UserRepository;
-import com.joinventure.services.UserService;
-
 
 @RestController
 @RequestMapping("/google")
@@ -22,8 +20,8 @@ public class GoogleController {
     private UserRepository userRepository;
     
     @GetMapping
-    public RedirectView redirectToGoogleLogin() {
-        return new RedirectView("http://localhost:8080/login/oauth2/code/google");
+    public RedirectView redirectToGoogleAuthorization() {
+        return new RedirectView("/oauth2/authorization/google");
     }
 
     @GetMapping("/callback")

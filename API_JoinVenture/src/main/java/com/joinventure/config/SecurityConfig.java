@@ -21,7 +21,7 @@ public class SecurityConfig {
 	                .requestMatchers("/**", "/google").permitAll()
 	                .anyRequest().authenticated()
 	        )
-	        .oauth2Login().defaultSuccessUrl("/google/callback")
+	        .oauth2Login().defaultSuccessUrl("/google/callback",true)
 	        .and()
 	        .oauth2Client(Customizer.withDefaults());
 	    
