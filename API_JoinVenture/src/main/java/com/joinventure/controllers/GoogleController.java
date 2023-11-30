@@ -1,6 +1,7 @@
 package com.joinventure.controllers;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -30,15 +31,22 @@ public class GoogleController {
         String email = (String) attributes.get("email");
         String firstName = (String) attributes.get("given_name");
         String lastName = (String) attributes.get("family_name");
+        
+        Optional<User> existingUser = userRepository.findByEmail(email);
 
-        User user = new User();
-        user.setUsername(firstName);
-        user.setLastname(lastName);
-        user.setEmail(email);
-        user.setPassword("changethispassword");
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            return new RedirectView("http://localhost:8080/users/buscar/" + user.getUsername());
+        } else {
+            User user = new User();
+            user.setUsername(firstName);
+            user.setLastname(lastName);
+            user.setEmail(email);
+            user.setPassword("changethispassword");
 
-        userRepository.save(user);
-
-        return new RedirectView("http://localhost:8080/users/buscar/" + firstName);
+            userRepository.save(user);
+            
+            return new RedirectView("http://localhost:8080/users/buscar/" + firstName);
+        }
     }
 }
