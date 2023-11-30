@@ -60,20 +60,17 @@ public class UserController {
 		return userService.createNewUser(user);
 	}
 	
-	@PutMapping("{id}")
-	public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long id, @RequestBody User userDetails){
-		User user = userService.findUserById(id);
-		
-		user.setUsername(userDetails.getUsername());
-		user.setPassword(userDetails.getPassword());
-		user.setLastname(userDetails.getLastname());
-		user.setEmail(userDetails.getEmail());
-		user.setCreatedAt(userDetails.getCreatedAt());
-		user.setUpdatedAt(userDetails.getUpdatedAt());
-		
-		final User updatedUser = userRepository.save(user);
-		return ResponseEntity.ok().body(updatedUser);
-	}
+	@PutMapping("/updateUser")
+    public ResponseEntity<User> updateUser(@RequestParam Long id, @RequestBody User userDetails){
+        User user = userService.findUserById(id);
+        user.setUsername(userDetails.getUsername());
+        user.setPassword(userService.hashSHA256(userDetails.getPassword()));
+        user.setLastname(userDetails.getLastname());
+        user.setUpdatedAt(userDetails.getUpdatedAt());
+
+        final User updatedUser = userRepository.save(user);
+        return ResponseEntity.ok().body(updatedUser);
+    }
 	
 	@PutMapping("/changeusername/{username}")
 	public ResponseEntity<User> updateUsername(@PathVariable(value = "username") String username, @RequestBody User userDetails){
