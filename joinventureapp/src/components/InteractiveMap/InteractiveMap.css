@@ -1,0 +1,24 @@
+/* InteractiveMap.css */
+.interactive-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem; /* Ajusta el margen superior según sea necesario */
+  }
+  
+  .interactive-map {
+    max-width: 600px; /* Ajusta el tamaño máximo de la imagen */
+    overflow: hidden;
+    cursor: pointer; /* Cambia el cursor para indicar interactividad */
+  }
+  
+  .interactive-map img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-out; /* Suaviza la transición de movimiento */
+    transform: scale(1); /* Empieza sin escalar */
+  }
+  
+  .interactive-map:hover img {
+    transform: scale(1.02); /* Escala la imagen ligeramente al pasar el mouse */
+  }
+  
