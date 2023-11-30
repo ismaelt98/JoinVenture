@@ -16,55 +16,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.joinventure.entities.RoleUser;
-import com.joinventure.repositories.RoleUserRepository;
-import com.joinventure.services.RoleUserService;
+import com.joinventure.entities.ProgrammerRole;
+import com.joinventure.repositories.ProgrammerRoleRepository;
+import com.joinventure.services.ProgrammerRoleService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.java.Log;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @Log
 @RestController
-@RequestMapping("/roles-user")
+@RequestMapping("/programmer-role")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class RoleUserController {
+public class ProgrammerRoleController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RoleUserController.class);
-    
-    @Autowired
-	private RoleUserRepository roleUserRepository;
+	@Autowired
+	private ProgrammerRoleRepository roleUserRepository;
 	
 	@Autowired
-	private RoleUserService roleUserService;
+	private ProgrammerRoleService roleUserService;
 	
 	@GetMapping("")
-	public ResponseEntity<List<RoleUser>> getAllRoleUsers(){
-		return ResponseEntity.ok().body(roleUserService.findAllUsers());
+	public ResponseEntity<List<ProgrammerRole>> getAllRoleUsers(){
+		return ResponseEntity.ok().body(roleUserService.findAllRoles());
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<String> createRoleUser(@RequestBody RoleUser roleUser){
+	public ResponseEntity<String> createRoleUser(@RequestBody ProgrammerRole roleUser){
 		
-        logger.info("RoleUser received: {}", roleUser);
-
 		return roleUserService.createNewRoleUser(roleUser);
 	}
 
 	@PutMapping("")
-	public ResponseEntity<RoleUser> updateRole(@RequestParam Long id, @RequestBody RoleUser roleDetails){
-		RoleUser role = roleUserService.findRoleById(id);
+	public ResponseEntity<ProgrammerRole> updateRole(@RequestParam Long id, @RequestBody ProgrammerRole roleDetails){
+		ProgrammerRole role = roleUserService.findRoleById(id);
 		role.setName(roleDetails.getName());
 		
-		final RoleUser updatedRole = roleUserRepository.save(role);
+		final ProgrammerRole updatedRole = roleUserRepository.save(role);
 		return ResponseEntity.ok().body(updatedRole);
 	}
 	
 	@DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteRole(@PathVariable(value = "id") Long id) {
-        RoleUser user = roleUserService.findRoleById(id);
+		ProgrammerRole user = roleUserService.findRoleById(id);
 
         roleUserRepository.delete(user);
         Map<String, Boolean> response = new HashMap<>();
@@ -72,3 +65,4 @@ public class RoleUserController {
         return ResponseEntity.ok().body(response);
 	}
 }
+

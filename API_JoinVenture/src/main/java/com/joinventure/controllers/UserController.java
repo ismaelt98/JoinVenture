@@ -86,11 +86,7 @@ public class UserController {
 	public ResponseEntity<?> updatePassword(@PathVariable(value = "username") String username, @RequestBody User userDetails){
 		User user = userService.findUserByUsername(username);
 		
-		if (userDetails.getPassword().equals(user.getPassword())) {
-	        return ResponseEntity.badRequest().body("La nueva contraseña es igual a la contraseña antigua. Por favor, elige una nueva contraseña.");
-	    }
-		
-		user.setPassword(userDetails.getPassword());
+		user.setPassword(userService.hashSHA256(userDetails.getPassword()));
 		user.setUpdatedAt(userDetails.getUpdatedAt());
 		
 		final User updatedUser = userRepository.save(user);
