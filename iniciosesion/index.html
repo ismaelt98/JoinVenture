@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="general">
+        <div class="l1">
+            <div style="height: 400px; width: 600px;">
+                <h2 id="elh2">JoinVenture: Transformando Ideas en Realidad!</h2>
+                <p id="elp">En el dinámico mundo de los negocios y la innovación, surge JoinVenture como un faro de
+                    colaboración y ejecución. Somos más que una empresa, somos el puente que conecta visionarios con
+                    expertos, convirtiendo ideas en proyectos tangibles y exitosos.</p>
+            </div>
+            <div style="margin-top: 100px;">
+                <h3 id="h3CrearCuentaoInici">¿No tienes una cuenta? ¡No te preocupes! </h3>
+                <button id="crearCuenta" class="btnCrearCuenta">CREAR CUENTA</button>
+            </div>
+
+        </div>
+        <div class="l2">
+            <h2 id="h2IniciSesio">INICIAR SESIÓN</h2>
+            <form id="loginForm" class="login-form" >
+                <input type="email" id="emailLogIn" name="username" placeholder="ejemplo@ejemplo.com" required>
+                <input type="password" id="passwordLogIn" name="password" placeholder="Contraseña" required>
+                <input type="submit" value="Iniciar sesión">
+            </form>
+
+            <form style="display: none;" class="signup-form" id="miFormulario">
+                <h2>Crear Cuenta</h2>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Nombre" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="lastname" name="surname" placeholder="Apellido" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="emailRegister" name="emailRegister" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="passwordRegister" name="passwordRegister" placeholder="Contraseña" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirm-password" name="confirm-password"
+                        placeholder="Confirmar Contraseña" required>
+                </div>
+                <button type="submit" class="submit-btn">Crear Cuenta</button>
+            </form>
+
+
+
+            <div id="ralla" style="text-align: center; margin-top: 10px;">
+                <span style="display: inline-block; padding: 0 10px; color: #888;">OR</span>
+            </div>
+            <div id="google" style=" margin-top: 20px; display: flex; justify-content: center; align-items: center; ">
+                <a href="http://localhost:8080/google" class="logo-btn">
+                    <img src="logogoogle.png" alt="Logo" class="logo">
+                    <span class="btn-text">Sign in with Google</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

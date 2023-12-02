@@ -1,0 +1,209 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.logo-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    color: #333;
+    font-size: 16px;
+    text-decoration: none; /* Elimina el subrayado predeterminado */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logo {
+    width: 30px; /* Ajusta el tamaño del logo según sea necesario */
+    height: auto;
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+}
+
+/* Para centrar verticalmente el texto si el logo es más alto */
+.btn-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+body {
+    background-image: url(modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology.jpg);
+   background-repeat: no-repeat;
+   background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.general {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Esta propiedad hace que los elementos hijos tengan la misma altura */
+height: 600px;
+}
+
+/* Estilos para los divs l1 y l2 */
+.l1 {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.767);
+    color: white;
+    border: none;
+}
+.l1 > div {
+    margin-bottom: 20px; /* Añade un margen entre los divs */
+}
+
+.l2 {
+    width: 400px;
+    border: none;
+        border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    height: auto;
+    background-color: white;
+}
+
+.btnCrearCuenta {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+   
+}
+
+.btnCrearCuenta:hover {
+    border-color: grey;
+    cursor: pointer;
+    color: grey;
+    
+}
+
+/* Estilos para los elementos internos del div l1 */
+.l1 h2 {
+    color: white;
+    
+    font-size: 34px;
+    
+}
+/* Estilos para el contenedor del formulario */
+
+
+/* Estilos generales del formulario */
+.signup-form {
+    width: 300px;
+    padding-left: 13%;
+   
+ 
+}
+
+.signup-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilos para los campos del formulario */
+.form-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Estilos para el botón de envío */
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #2980b9;
+}
+
+.l1 p {
+    color: white;
+    font-size: 16px;
+}
+
+.login-form {
+    margin: 0;
+    margin-top: 30px;
+    padding: 10px;
+}
+.register-form{
+    margin: 0;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    text-align: center;
+}
+
+.l2 h2{
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 130px;
+}
+
+
+
+.login-form input[type="email"],
+.login-form input[type="password"],
+.login-form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.login-form input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+ 
+
+
+    cursor: pointer;
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #45a049;
+}
