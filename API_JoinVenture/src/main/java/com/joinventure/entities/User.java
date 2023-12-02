@@ -34,6 +34,9 @@ public class User {
     
     @Column(name = "PASSWORD", nullable = false)
     private String password;
+    
+    @Column(name = "PHONE", nullable = false)
+    private Integer phone;
 
     @Column(name = "CREATED_AT", nullable = false, updatable = false)
     @CreatedDate 
@@ -46,15 +49,16 @@ public class User {
 	public User() {}
 
 	public User(Long id, String username, String lastname, String email, String password, LocalDate createdAt,
-			LocalDate updatedAt) {
-		this.id = id;
-		this.username = username;		
-		this.lastname = lastname;
-		this.email = email;
-		this.password = password;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-	}
+            LocalDate updatedAt, int phone) {
+        this.id = id;
+        this.username = username;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.phone = phone;
+    }
 
 	public Long getId() {
 		return id;
@@ -111,11 +115,19 @@ public class User {
 	public void setUpdatedAt(LocalDate updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	public Integer getPhone() {
+        return phone;
+    }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", lastname=" + lastname
-				+ ", email=" + email + ", createdAt=" + createdAt + ", updatedAt="
-				+ updatedAt + "]";
-	}
+    public void setPhone(Integer phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + ", lastname=" + lastname
+                + ", email=" + email + ", createdAt=" + createdAt + ", updatedAt="
+                + updatedAt + ", phone=" + phone + "]";
+    }
 }

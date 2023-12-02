@@ -44,13 +44,14 @@ public class UserService {
 	}
 	
 	public ResponseEntity<String> createNewUser(User user) {
-	    if(userRepository.existsByEmail(user.getEmail())) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El email ya existe en la base de datos");
-	    } else {
-	        userRepository.save(user);
-	        return ResponseEntity.ok().body("Usuario registrado correctamente");
-	    }
-	}
+        if(userRepository.existsByEmail(user.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El email ya existe en la base de datos");
+        } else {
+            user.setPassword(hashSHA256(user.getPassword()));
+            userRepository.save(user);
+            return ResponseEntity.ok().body("Usuario registrado correctamente");
+        }
+    }
 	
 	public User findUserByUsername(String username) {
 		List<User> users = userRepository.findAll();

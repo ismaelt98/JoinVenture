@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.joinventure.entities.User;
 import com.joinventure.repositories.UserRepository;
+import com.joinventure.services.UserService;
 
 @RestController
 @RequestMapping("/google")
@@ -19,6 +20,9 @@ public class GoogleController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private UserService userSer;
     
     @GetMapping
     public RedirectView redirectToGoogleAuthorization() {
@@ -42,7 +46,8 @@ public class GoogleController {
             user.setUsername(firstName);
             user.setLastname(lastName);
             user.setEmail(email);
-            user.setPassword("changethispassword");
+            user.setPassword(userSer.hashSHA256("changethispassword"));
+            user.setPhone(999999999);
 
             userRepository.save(user);
             
