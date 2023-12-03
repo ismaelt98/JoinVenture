@@ -203,7 +203,7 @@ function crearUsuario1(formularioReg) {
                 "alias": datosFormulario.get('alias'),
                 "email": email,
                 "password": password,
-                "phone": "999999999"
+                "phone": phone
             });
         }
 
