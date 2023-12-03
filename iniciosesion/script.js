@@ -38,19 +38,20 @@ async function obtenerNombres() {
 
 function showProgramador(button) {
     document.getElementById("programadorFields").style.display = "block";
+    document.getElementById('lastname').placeholder = 'Apellido';
 
-    document.getElementById("lastname").style.display = "block";
-    document.getElementById("telefono").style.display = "block";
+   
+    
     document.getElementById("programadorButton").classList.add("active");
     document.getElementById("empresaButton").classList.remove("active");
 }
 
 function showEmpresa(button) {
-    document.getElementById("telefono").style.display = "none";
-
+    
+    document.getElementById('lastname').placeholder = 'Dirección';
     document.getElementById("programadorFields").style.display = "none";
 
-    document.getElementById("lastname").style.display = "none";
+  
     document.getElementById("empresaButton").classList.add("active");
     document.getElementById("programadorButton").classList.remove("active");
 }
@@ -183,7 +184,7 @@ function crearUsuario1(formularioReg) {
     if (password === confirmPassword) {
 
         var myHeaders = new Headers();
-       
+
         myHeaders.append("Content-Type", "application/json");
 
         if (botonProgramador.classList.contains('active')) {
@@ -199,7 +200,7 @@ function crearUsuario1(formularioReg) {
         } else {
             var raw = JSON.stringify({
                 "username": datosFormulario.get('name'),
-                "lastname": datosFormulario.get('name'),
+                "lastname": datosFormulario.get('surname'),
                 "email": email,
                 "password": password,
                 "phone": "999999999"
@@ -219,7 +220,7 @@ function crearUsuario1(formularioReg) {
             .then(result => {
 
                 alert("El usuario se creo correctamente");
-                prova(email);
+                prova(email, parseInt(document.getElementById('selectNombres').value));
                 metodoOla();
 
 
@@ -253,63 +254,132 @@ function metodoOla() {
 }
 
 
-function prova(email) {
-    let roleuser;
-    let programmeruser;
-    
-    let programmerUserId;
-    let user_id;
-    let role_user_id;
+function prova(email, number) {
 
     if (botonProgramador.classList.contains('active')) {
-        programmeruser = document.getElementById("selectNombres").value;
 
-        programmerUserId = parseInt(programmeruser);
+
+        let role_user;
 
         if (botonProgramador.classList.contains('active')) {
-            roleuser = botonProgramador.innerText;
+
+            role_user = botonProgramador.value;
+
         } else {
-            roleuser = botonEmpresa.innerText;
+            role_user = botonEmpresa.value;
         }
+
+
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        
-        var raw = JSON.stringify({
-          "email": email,
-          "pr": programmerUserId,
-          "ru": roleuser
-        });
-        
+
         var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
         };
-        
-        fetch("http://localhost:8080/roleset", requestOptions)
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
 
-      
-        
-        
-        
+        fetch(`http://localhost:8080/users/buscarEmail?email=${email}`, requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
 
-        
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
 
-    
+                var raw = JSON.stringify({
+                    "user": {
+                        "id": parseInt(data.id)
+                    },
+                    "programrole": {
+                        "id": number
+                    },
+                    "roleuser": {
+                        "id": role_user
+                    }
+                });
+                console.log(JSON.stringify(raw));
 
-       
+                var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
 
+                fetch("http://localhost:8080/roleset", requestOptions)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
 
-     
+            })
+            .catch(error => console.log('error', error));
+
 
 
     } else {
+        let role_user;
 
+        if (botonProgramador.classList.contains('active')) {
+
+            role_user = botonProgramador.value;
+
+        } else {
+            role_user = botonEmpresa.value;
+        }
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch(`http://localhost:8080/users/buscarEmail?email=${email}`, requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
+                var raw = JSON.stringify({
+                    "user": {
+                        "id": parseInt(data.id)
+                    },
+                    "programrole": {
+                        "id": 9
+                    },
+                    "roleuser": {
+                        "id": role_user
+                    }
+                });
+                console.log(JSON.stringify(raw));
+
+                var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+
+                fetch("http://localhost:8080/roleset", requestOptions)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
+
+            })
+            .catch(error => console.log('error', error));
     }
 
 }

@@ -40,10 +40,12 @@
 <div class="navbar">
   <a href="#inicio">Inicio</a>
   <p>Hola, <span id="username" class="username">Nombre de Usuario</span> </p>
-  <button id="btnN" class="logout-btn" >Logout</button>
+  <button id="btnN" class="logout-btn" value="443">Logout</button>
 </div>
 
-<script src="script1.js"></script>
+<script>
+  console.log(document.getElementById('btnN').value);
+</script>
 
 </body>
 </html>
