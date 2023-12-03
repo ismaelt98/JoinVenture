@@ -237,6 +237,7 @@ function crearUsuario1(formularioReg) {
 function metodoOla() {
     document.getElementById('name').value = '';
     document.getElementById('alias').value = '';
+    document.getElementById('phone').value = '';
     document.getElementById('emailRegister').value = '';
     document.getElementById('passwordRegister').value = '';
     document.getElementById('confirm-password').value = '';
