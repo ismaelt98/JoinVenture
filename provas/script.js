@@ -32,7 +32,9 @@ document.addEventListener("DOMContentLoaded", function() {
             celdaProgramerRole.textContent = item.name_role_programmer;
             fila.appendChild(celdaProgramerRole);
 
-            
+            const celdaBoton = document.createElement('td');
+            celdaBoton.innerHTML = '<button onclick="eliminarFila(this)">DEL</button><button style=margin-left:10px; onclick="eliminarFila(this)">UPD</button>';
+            fila.appendChild(celdaBoton);
 
             tablaBody.appendChild(fila);
         });
