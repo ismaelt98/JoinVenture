@@ -108,11 +108,35 @@ height: 600px;
    
  
 }
-
-.signup-form h2 {
-    text-align: center;
+.userType-buttons {
+ text-align: center;
     margin-bottom: 20px;
-    color: #333;
+  
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.userType-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  border-radius: 8px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.userType-button:hover {
+    background-color: #555;
+    color: white;
+}
+
+/* Estilo para resaltar el botón activo */
+.active {
+    background-color: #555;
+    color: white;
 }
 
 /* Estilos para los campos del formulario */
@@ -120,6 +144,7 @@ height: 600px;
     margin-bottom: 15px;
 }
 
+input[type="tel"],
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -179,10 +204,33 @@ input[type="password"] {
     color: #333;
     font-size: 24px;
     text-align: center;
-    margin-top: 130px;
+    margin-top: 50px;
 }
 
+.select-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
 
+/* Estilos para el label del rol */
+.select-label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Estilos para el select */
+.selectNombres {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 200px;
+}
+.selectNombres:hover{
+    cursor: pointer;
+}
 
 .login-form input[type="email"],
 .login-form input[type="password"],

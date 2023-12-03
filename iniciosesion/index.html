@@ -31,8 +31,13 @@
                 <input type="submit" value="Iniciar sesión">
             </form>
 
-            <form style="display: none;" class="signup-form" id="miFormulario">
-                <h2>Crear Cuenta</h2>
+            
+                <h2 id="h2CrearCuenta" style="display: none;">Crear Cuenta</h2>
+                <div id="divElige" style="display: none;" class="userType-buttons">
+                    <button class="userType-button active" onclick="showProgramador(this)" id="programadorButton">Programador</button>
+                    <button class="userType-button" onclick="showEmpresa(this)" id="empresaButton">Empresa</button>
+                </div>
+                <form style="display: none;" class="signup-form" id="miFormulario">
                 <div class="form-group">
                     <input type="text" id="name" name="name" placeholder="Nombre" required>
                 </div>
@@ -43,12 +48,20 @@
                     <input type="email" id="emailRegister" name="emailRegister" placeholder="Email" required>
                 </div>
                 <div class="form-group">
+                    <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+                </div>
+                <div class="form-group">
                     <input type="password" id="passwordRegister" name="passwordRegister" placeholder="Contraseña" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" id="confirm-password" name="confirm-password"
-                        placeholder="Confirmar Contraseña" required>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmar Contraseña" required>
                 </div>
+                <div id="programadorFields" class="select-container">
+                    <label for="selectNombres" class="select-label">Rol:</label>
+                    <select id="selectNombres" class="selectNombres"></select>
+                </div>
+              
+              
                 <button type="submit" class="submit-btn">Crear Cuenta</button>
             </form>
 

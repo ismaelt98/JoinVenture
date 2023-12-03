@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Navbar Elegante</title>
+  <style>
+    /* Estilos básicos para el navbar */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Estilos para el botón de logout */
+    .logout-btn {
+      float: right;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <a href="#inicio">Inicio</a>
+  <p>Hola, <span id="username" class="username">Nombre de Usuario</span> </p>
+  <button id="btnN" class="logout-btn" >Logout</button>
+</div>
+
+<script src="script1.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rellenar tabla desde JSON</title>
+  <style>
+    /* Estilos para la tabla */
+#miTabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+}
+
+#miTabla thead th {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+  padding: 12px;
+}
+
+#miTabla tbody tr {
+  border-bottom: 1px solid #dddddd;
+  text-align: center;
+}
+
+#miTabla tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+#miTabla tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+  </style>
+</head>
+<body>
+
+<table id="miTabla">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Role User</th>
+      <th>Role Programmer</th>
+      <!-- Agrega más encabezados según la estructura de tu JSON -->
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Aquí se llenarán los datos -->
+  </tbody>
+</table>
+
+<script>
+  // Realizar la solicitud a la URL que devuelve el JSON
+  fetch('http://localhost:8080/roleset')
+    .then(response => response.json())
+    .then(data => {
+      const tabla = document.getElementById('miTabla');
+
+      data.forEach(item => {
+        const row = tabla.insertRow(-1); // Insertar una nueva fila al final de la tabla
+        const idCell = row.insertCell(0); // Celdas para ID, nombre, email, etc.
+        const nombreCell = row.insertCell(1);
+        const emailCell = row.insertCell(2);
+        const phoneCell = row.insertCell(3);
+        const roleuser = row.insertCell(4);
+        const roleprogra = row.insertCell(5);
+        // Asignar los valores del JSON a las celdas de la fila
+        idCell.innerHTML = item.user_name;
+        nombreCell.innerHTML = item.last_name;
+        emailCell.innerHTML = item.email;
+        phoneCell.innerHTML = item.phone;
+        roleuser.innerHTML = item.name_role_user;
+        roleprogra.innerHTML = item.name_role_programmer;
+        // Asigna más celdas según la estructura de tu JSON
+      });
+    })
+    .catch(error => {
+      console.error('Error al obtener el JSON:', error);
+    });
+</script>
+
+</body>
+</html>
