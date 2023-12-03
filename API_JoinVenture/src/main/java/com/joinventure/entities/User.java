@@ -116,9 +116,10 @@ public class User {
 		this.updatedAt = updatedAt;
 	}
 	
-	public Integer getPhone() {
-        return phone;
-    }
+		public Integer getPhone() {
+		return phone;
+	}
+
 
     public void setPhone(Integer phone) {
         this.phone = phone;
@@ -130,4 +131,6 @@ public class User {
                 + ", email=" + email + ", createdAt=" + createdAt + ", updatedAt="
                 + updatedAt + ", phone=" + phone + "]";
     }
+
+
 }
