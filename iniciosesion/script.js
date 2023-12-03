@@ -38,7 +38,7 @@ async function obtenerNombres() {
 
 function showProgramador(button) {
     document.getElementById("programadorFields").style.display = "block";
-    document.getElementById('lastname').placeholder = 'Apellido';
+  
 
    
     
@@ -48,7 +48,7 @@ function showProgramador(button) {
 
 function showEmpresa(button) {
     
-    document.getElementById('lastname').placeholder = 'Dirección';
+   
     document.getElementById("programadorFields").style.display = "none";
 
   
@@ -191,7 +191,7 @@ function crearUsuario1(formularioReg) {
 
             var raw = JSON.stringify({
                 "username": datosFormulario.get('name'),
-                "lastname": datosFormulario.get('surname'),
+                "alias": datosFormulario.get('alias'),
                 "email": email,
                 "password": password,
                 "phone": phone
@@ -200,7 +200,7 @@ function crearUsuario1(formularioReg) {
         } else {
             var raw = JSON.stringify({
                 "username": datosFormulario.get('name'),
-                "lastname": datosFormulario.get('surname'),
+                "alias": datosFormulario.get('alias'),
                 "email": email,
                 "password": password,
                 "phone": "999999999"
@@ -236,7 +236,7 @@ function crearUsuario1(formularioReg) {
 
 function metodoOla() {
     document.getElementById('name').value = '';
-    document.getElementById('lastname').value = '';
+    document.getElementById('alias').value = '';
     document.getElementById('emailRegister').value = '';
     document.getElementById('passwordRegister').value = '';
     document.getElementById('confirm-password').value = '';

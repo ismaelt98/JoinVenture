@@ -71,7 +71,7 @@ public class UserController {
         User user = userService.findUserById(id);
         user.setUsername(userDetails.getUsername());
         user.setPassword(userService.hashSHA256(userDetails.getPassword()));
-        user.setLastname(userDetails.getLastname());
+        user.setAlias(userDetails.getAlias());
         user.setUpdatedAt(userDetails.getUpdatedAt());
 
         final User updatedUser = userRepository.save(user);

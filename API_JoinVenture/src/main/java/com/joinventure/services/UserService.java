@@ -23,8 +23,7 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private RoleSetService roleSetService;
+
 	
 	public List<User> findAllUsers(){
 		return userRepository.findAll();

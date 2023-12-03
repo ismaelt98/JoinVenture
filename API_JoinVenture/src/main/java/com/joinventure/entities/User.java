@@ -26,8 +26,8 @@ public class User {
 	@Column(name = "USER_NAME", nullable = false)
     private String username;   
 
-    @Column(name = "LAST_NAME", nullable = false)
-    private String lastname;
+    @Column(name = "ALIAS", nullable = false)
+    private String alias;
 
 	@Column(name = "EMAIL", unique = true)
     private String email;
@@ -48,11 +48,11 @@ public class User {
 	
 	public User() {}
 
-	public User(Long id, String username, String lastname, String email, String password, LocalDate createdAt,
+	public User(Long id, String username, String alias, String email, String password, LocalDate createdAt,
             LocalDate updatedAt, String phone) {
         this.id = id;
         this.username = username;
-        this.lastname = lastname;
+        this.alias = alias;
         this.email = email;
         this.password = password;
         this.createdAt = createdAt;
@@ -84,12 +84,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getAlias() {
+		return alias;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getEmail() {
@@ -126,7 +126,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + ", lastname=" + lastname
+        return "User [id=" + id + ", username=" + username + ", alias=" + alias
                 + ", email=" + email + ", createdAt=" + createdAt + ", updatedAt="
                 + updatedAt + ", phone=" + phone + "]";
     }

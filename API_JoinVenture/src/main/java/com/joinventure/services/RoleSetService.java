@@ -68,7 +68,7 @@ public class RoleSetService {
 	
 		
 		technDTO.setUser_name(roleSet.getUser().getUsername());
-		technDTO.setLast_name(roleSet.getUser().getLastname());
+		technDTO.setLast_name(roleSet.getUser().getAlias());
 		technDTO.setEmail(roleSet.getUser().getEmail());
 		technDTO.setPhone(roleSet.getUser().getPhone());
 

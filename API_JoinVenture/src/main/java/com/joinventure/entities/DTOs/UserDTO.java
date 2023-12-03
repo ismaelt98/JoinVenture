@@ -3,15 +3,15 @@ package com.joinventure.entities.DTOs;
 public class UserDTO {
 	String username;
 	String password;
-	String lastname;
+	String alias;
 	String email;
 	
 	public UserDTO() {}
 	
-	public UserDTO(String username, String password, String lastname, String email) {
+	public UserDTO(String username, String password, String alias, String email) {
 		this.username = username;
 		this.password = password;
-		this.lastname = lastname;
+		this.alias = alias;
 		this.email = email;
 	}
 
@@ -31,12 +31,14 @@ public class UserDTO {
 		this.password = password;
 	}
 
-	public String getLastname() {
-		return lastname;
+	
+
+	public String getAlias() {
+		return alias;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getEmail() {
@@ -49,6 +51,6 @@ public class UserDTO {
 
 	@Override
 	public String toString() {
-		return "UserDTO [username=" + username + ", password=" + password + ", lastname=" + lastname + ", email=" + email + "]";
+		return "UserDTO [username=" + username + ", password=" + password + ", alias=" + alias + ", email=" + email + "]";
 	}
 }

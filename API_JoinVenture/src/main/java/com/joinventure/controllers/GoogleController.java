@@ -44,7 +44,7 @@ public class GoogleController {
         } else {
             User user = new User();
             user.setUsername(firstName);
-            user.setLastname(lastName);
+            user.setAlias(lastName);
             user.setEmail(email);
             user.setPassword(userService.hashSHA256("changethispassword"));
             user.setPhone("999999999");
