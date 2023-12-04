@@ -52,7 +52,7 @@ public class UserService {
             user.setPassword(hashSHA256(user.getPassword()));
             userRepository.save(user);
            
-            return ResponseEntity.ok().body("Usuario registrado correctamente");
+            return ResponseEntity.ok().body(user.toString());
         }
     }
 	
