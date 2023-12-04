@@ -3,6 +3,8 @@ package com.joinventure.entities.DTOs;
 import java.util.List;
 
 public class UserDTO {
+	
+	Long id;
 	String username;
 	
 	String alias;
@@ -15,11 +17,22 @@ public class UserDTO {
 	
 
 	
-	public UserDTO(String username, String alias, String email, String name_role,
+
+
+
+
+	public List<String> getProjectNames() {
+		return projectNames;
+	}
+
+
+
+
+	public UserDTO(Long id, String username, String alias, String email, String name_role,
 			List<String> projectNames) {
 		super();
+		this.id = id;
 		this.username = username;
-		
 		this.alias = alias;
 		this.email = email;
 		this.name_role = name_role;
@@ -29,8 +42,15 @@ public class UserDTO {
 
 
 
-	public List<String> getProjectNames() {
-		return projectNames;
+	public Long getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 

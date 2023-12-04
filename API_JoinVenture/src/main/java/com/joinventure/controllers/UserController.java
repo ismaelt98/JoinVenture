@@ -57,9 +57,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/buscarEmail")
-	public ResponseEntity<User> getUserByEmail(@RequestParam String email){
-		User user = userService.findUserByEmail(email);
+	public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email){
+		UserDTO user = userService.findUserByEmail(email);
+		
 		return ResponseEntity.ok().body(user);
+		
 	}
 	
 	@PostMapping("")
