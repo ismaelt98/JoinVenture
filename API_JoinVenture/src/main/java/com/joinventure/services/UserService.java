@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,30 +30,42 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public List<UserDTO> findAllUsersDTO(){
-		List<User> users = userRepository.findAll();
-		ModelMapper modelMapper = new ModelMapper();
-		List<UserDTO> usersDTO = new ArrayList<>();
-		for (User userElement : users) {
-			UserDTO userDTO = modelMapper.map(userElement, UserDTO.class);
-			usersDTO.add(userDTO);
-		}
-		return usersDTO;
-	}
+	public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> userDTOs = new ArrayList<>();
+
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setName_role(user.getRoleuser().getName()); // Suponiendo que 'nombre' es un campo en RoleUser
+            userDTO.setUsername(user.getUsername());
+            userDTO.setAlias(user.getAlias());
+            userDTO.setEmail(user.getEmail());
+
+            List<String> projectNames = user.getProjectList().stream()
+                    .map(project -> project.getName()) 
+                    .collect(Collectors.toList());
+            userDTO.setProjectNames(projectNames);
+
+            userDTOs.add(userDTO);
+        }
+
+        return userDTOs;
+    }
+	
+
 	
 	public User findUserById(long id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
 		return user;
 	}
 	
-	public ResponseEntity<String> createNewUser(User user) {
+	public ResponseEntity<Object> createNewUser(User user) {
         if(userRepository.existsByEmail(user.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El email ya existe en la base de datos");
         } else {
             user.setPassword(hashSHA256(user.getPassword()));
-            userRepository.save(user);
-           
-            return ResponseEntity.ok().body("Usuario registrado correctamente");
+            
+            return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
         }
     }
 	

@@ -1,6 +1,7 @@
 package com.joinventure.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,6 +13,10 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -45,20 +50,107 @@ public class User {
     @Column(name = "UPDATED_AT", nullable = false)
     @LastModifiedDate
     private LocalDate updatedAt;
+    
+    @ManyToOne
+    @JoinColumn(name = "fk_roleuser_id")
+    private RoleUser roleuser;
+    
+    @ManyToMany
+	@JoinTable(name = "user_has_proyect", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "PROYECT_ID"))
+	List<Project> projectList;
+    
+    @ManyToMany
+	@JoinTable(name = "user_has_lenguage", joinColumns = @JoinColumn(name = "fk_user_id"), inverseJoinColumns = @JoinColumn(name = "fk_lenguage_id"))
+	List<Language> listLanguage;
+    
+    @ManyToMany
+	@JoinTable(name = "user_has_proyect", joinColumns = @JoinColumn(name = "fk_user_id"), inverseJoinColumns = @JoinColumn(name = "fk_framework_id"))
+	List<Framework> listFrameworks;
 	
 	public User() {}
 
-	public User(Long id, String username, String alias, String email, String password, LocalDate createdAt,
-            LocalDate updatedAt, String phone) {
-        this.id = id;
-        this.username = username;
-        this.alias = alias;
-        this.email = email;
-        this.password = password;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.phone = phone;
-    }
+	public User(Long id, String username, String alias, String email, String password, String phone,
+			LocalDate createdAt, LocalDate updatedAt, RoleUser roleuser, List<Project> projectList,
+			List<Language> listLanguage, List<Framework> listFrameworks) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.alias = alias;
+		this.email = email;
+		this.password = password;
+		this.phone = phone;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.roleuser = roleuser;
+		this.projectList = projectList;
+		this.listLanguage = listLanguage;
+		this.listFrameworks = listFrameworks;
+	}
+
+
+
+
+
+
+	public List<Language> getListLanguage() {
+		return listLanguage;
+	}
+
+
+
+
+
+
+	public void setListLanguage(List<Language> listLanguage) {
+		this.listLanguage = listLanguage;
+	}
+
+
+
+
+
+
+	public List<Framework> getListFrameworks() {
+		return listFrameworks;
+	}
+
+
+
+
+
+
+	public void setListFrameworks(List<Framework> listFrameworks) {
+		this.listFrameworks = listFrameworks;
+	}
+
+
+
+
+
+
+	public RoleUser getRoleuser() {
+		return roleuser;
+	}
+
+
+
+	public void setRoleuser(RoleUser roleuser) {
+		this.roleuser = roleuser;
+	}
+
+
+
+	public List<Project> getProjectList() {
+		return projectList;
+	}
+
+
+
+	public void setProjectList(List<Project> projectList) {
+		this.projectList = projectList;
+	}
+
+
 
 	public Long getId() {
 		return id;

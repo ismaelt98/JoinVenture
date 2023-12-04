@@ -26,7 +26,9 @@ document.getElementById("projectForm").addEventListener("submit", function (even
     };
 
     fetch("http://localhost:8080/projects", requestOptions)
-        .then(response => response.text())
+        .then(response => {
+           return response.json()
+        })
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
 

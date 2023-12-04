@@ -22,7 +22,7 @@ async function obtenerNombres() {
         const response = await fetch('http://localhost:8080/programmers-roles'); // URL de tu API
         const data = await response.json();
 
-        const select = document.getElementById('selectNombres');
+        
 
         // Iterar sobre los datos y agregar opciones al select
         data.forEach((item) => {
@@ -37,7 +37,7 @@ async function obtenerNombres() {
 }
 
 function showProgramador(button) {
-    document.getElementById("programadorFields").style.display = "block";
+   
   
 
    
@@ -49,7 +49,7 @@ function showProgramador(button) {
 function showEmpresa(button) {
     
    
-    document.getElementById("programadorFields").style.display = "none";
+   
 
   
     document.getElementById("empresaButton").classList.add("active");
@@ -194,7 +194,13 @@ function crearUsuario1(formularioReg) {
                 "alias": datosFormulario.get('alias'),
                 "email": email,
                 "password": password,
-                "phone": phone
+                "phone": phone,
+                "roleuser": {
+                    "id":parseInt(botonProgramador.value)
+                },
+                "projectList": [],
+                "listLanguage":[],
+                "listFrameworks":[]
             });
 
         } else {
@@ -203,7 +209,13 @@ function crearUsuario1(formularioReg) {
                 "alias": datosFormulario.get('alias'),
                 "email": email,
                 "password": password,
-                "phone": phone
+                "phone": phone,
+                "roleuser": {
+                    "id":parseInt(botonEmpresa.value)
+                },
+                "projectList": [],
+                "listLanguage":[],
+                "listFrameworks":[]
             });
         }
 
@@ -220,7 +232,7 @@ function crearUsuario1(formularioReg) {
             .then(result => {
 
                 alert("El usuario se creo correctamente");
-                prova(email, parseInt(document.getElementById('selectNombres').value));
+             
                 metodoOla();
 
 
@@ -255,135 +267,7 @@ function metodoOla() {
 }
 
 
-function prova(email, number) {
 
-    if (botonProgramador.classList.contains('active')) {
-
-
-        let role_user;
-
-        if (botonProgramador.classList.contains('active')) {
-
-            role_user = botonProgramador.value;
-
-        } else {
-            role_user = botonEmpresa.value;
-        }
-
-
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`http://localhost:8080/users/buscarEmail?email=${email}`, requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-
-                var myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-
-                var raw = JSON.stringify({
-                    "user": {
-                        "id": parseInt(data.id)
-                    },
-                    "programrole": {
-                        "id": number
-                    },
-                    "roleuser": {
-                        "id": role_user
-                    }
-                });
-                console.log(JSON.stringify(raw));
-
-                var requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                };
-
-                fetch("http://localhost:8080/roleset", requestOptions)
-                    .then(response => response.text())
-                    .then(result => console.log(result))
-                    .catch(error => console.log('error', error));
-
-            })
-            .catch(error => console.log('error', error));
-
-
-
-    } else {
-        let role_user;
-
-        if (botonProgramador.classList.contains('active')) {
-
-            role_user = botonProgramador.value;
-
-        } else {
-            role_user = botonEmpresa.value;
-        }
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`http://localhost:8080/users/buscarEmail?email=${email}`, requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-
-                var myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-
-                var raw = JSON.stringify({
-                    "user": {
-                        "id": parseInt(data.id)
-                    },
-                    "programrole": {
-                        "id": 9
-                    },
-                    "roleuser": {
-                        "id": role_user
-                    }
-                });
-                console.log(JSON.stringify(raw));
-
-                var requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                };
-
-                fetch("http://localhost:8080/roleset", requestOptions)
-                    .then(response => response.text())
-                    .then(result => console.log(result))
-                    .catch(error => console.log('error', error));
-
-            })
-            .catch(error => console.log('error', error));
-    }
-
-}
 
 
 

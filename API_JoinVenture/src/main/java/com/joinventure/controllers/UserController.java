@@ -39,12 +39,14 @@ public class UserController {
 	
 	@GetMapping("")
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
-		return ResponseEntity.ok().body(userService.findAllUsersDTO());
+		return ResponseEntity.ok().body(userService.getAllUsers());
 	}
 	
 	@GetMapping("{id}")
 	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id){
 		User user = userService.findUserById(id);
+		
+		
 		return ResponseEntity.ok().body(user);
 	}
 	
@@ -61,7 +63,7 @@ public class UserController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<String> createUser(@RequestBody User user){
+	public ResponseEntity<Object> createUser(@RequestBody User user){
 		
 		return userService.createNewUser(user);
 	}

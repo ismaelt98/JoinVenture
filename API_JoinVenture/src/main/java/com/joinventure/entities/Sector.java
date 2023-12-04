@@ -8,21 +8,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="ROLE_USER")
-public class RoleUser {
+@Table(name = "SECTOR")
+public class Sector {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ROLE_ID")
+	@Column(name = "SECTOR_ID")
 	private Long id;
 	
 	@Column(name = "NAME", nullable = false)
-    public String name;
+	private String name;
 
-	public RoleUser() {
+	public Sector() {
 		super();
 	}
 
-	public RoleUser(Long id, String name) {
+	public Sector(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -46,6 +46,6 @@ public class RoleUser {
 
 	@Override
 	public String toString() {
-		return "RoleUser [id=" + id + ", name=" + name + "]";
+		return "Sector [id=" + id + ", name=" + name + "]";
 	}
 }

@@ -13,27 +13,27 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="ROLE_SET")
+@Table(name ="SET")
 @EntityListeners(AuditingEntityListener.class)
-public class RoleSet {
+public class SetEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "role_set_id")
+	@Column(name = "set_id")
 	private Long id;
 
 	
 	@ManyToOne
-    @JoinColumn(name = "user_user_id")
-    private User user;
+    @JoinColumn(name = "PROYECT_PROYECT_ID")
+    private Project project;
 	 
 	@ManyToOne
-    @JoinColumn(name = "PROGRAMMER_ROLE_ROLE_PRO_ID")
-    private ProgrammerRole programrole;
+    @JoinColumn(name = "SECTOR_SECTOR_ID")
+    private Sector sector;
 	
 	
 	@ManyToOne
-    @JoinColumn(name = "ROLE_USER_ROLE_ID") 
-    private RoleUser roleuser;
+    @JoinColumn(name = "DEMAND_DEMAND_ID") 
+    private Demand demand;
 
 
 	public Long getId() {
@@ -46,40 +46,34 @@ public class RoleSet {
 	}
 
 
-	public User getUser() {
-		return user;
+	public Project getProject() {
+		return project;
 	}
 
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 
-	public ProgrammerRole getProgramrole() {
-		return programrole;
+	public Sector getSector() {
+		return sector;
 	}
 
 
-	public void setProgramrole(ProgrammerRole programrole) {
-		this.programrole = programrole;
+	public void setSector(Sector sector) {
+		this.sector = sector;
 	}
 
 
-	public RoleUser getRoleuser() {
-		return roleuser;
+	public Demand getDemand() {
+		return demand;
 	}
 
 
-	public void setRoleuser(RoleUser roleuser) {
-		this.roleuser = roleuser;
+	public void setDemand(Demand demand) {
+		this.demand = demand;
 	}
 	
-   
 	
-	
-
-	
-    
-    
 }
