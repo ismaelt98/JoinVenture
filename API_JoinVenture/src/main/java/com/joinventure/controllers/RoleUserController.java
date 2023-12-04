@@ -3,6 +3,7 @@ package com.joinventure.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joinventure.entities.ProgrammerRole;
 import com.joinventure.entities.RoleUser;
 import com.joinventure.repositories.RoleUserRepository;
 import com.joinventure.services.RoleUserService;
@@ -43,6 +45,11 @@ public class RoleUserController {
 	@GetMapping("")
 	public ResponseEntity<List<RoleUser>> getAllRoleUsers(){
 		return ResponseEntity.ok().body(roleUserService.findAllUsers());
+	}
+	@GetMapping("/role-user")
+	public ResponseEntity<Optional <RoleUser>> getProgrammerRole(@RequestParam String name){
+		Optional <RoleUser> user = roleUserRepository.findByName(name);
+		return ResponseEntity.ok().body(user); 
 	}
 	
 	@PostMapping("")

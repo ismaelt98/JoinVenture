@@ -23,6 +23,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+
+	
 	public List<User> findAllUsers(){
 		return userRepository.findAll();
 	}
@@ -49,17 +51,25 @@ public class UserService {
         } else {
             user.setPassword(hashSHA256(user.getPassword()));
             userRepository.save(user);
+           
             return ResponseEntity.ok().body("Usuario registrado correctamente");
         }
     }
 	
+	public User findUserByEmail(String email) {
+		List<User> users = userRepository.findAll();
+		
+		for (User user : users) {
+			if(user.getEmail().equals(email)) {
+				return user;
+			}
+		}
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + email);
+	}
+	
 	public User findUserByUsername(String username) {
 		List<User> users = userRepository.findAll();
-//		for (int i=0; i<users.size(); i++) {
-//			if(users.get(i).getUsername().equals(username)) {
-//				return users.get(i);
-//			}
-//		}
+
 		for (User user : users) {
 			if(user.getUsername().equals(username)) {
 				return user;

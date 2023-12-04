@@ -22,7 +22,7 @@ public class GoogleController {
     private UserRepository userRepository;
     
     @Autowired
-    private UserService userSer;
+    private UserService userService;
     
     @GetMapping
     public RedirectView redirectToGoogleAuthorization() {
@@ -44,10 +44,10 @@ public class GoogleController {
         } else {
             User user = new User();
             user.setUsername(firstName);
-            user.setLastname(lastName);
+            user.setAlias(lastName);
             user.setEmail(email);
-            user.setPassword(userSer.hashSHA256("changethispassword"));
-            user.setPhone(999999999);
+            user.setPassword(userService.hashSHA256("changethispassword"));
+            user.setPhone("999999999");
 
             userRepository.save(user);
             

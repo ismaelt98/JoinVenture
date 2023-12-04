@@ -36,7 +36,7 @@ public class TechnologyService {
 	private TechnologyDTO convertirAMiTablaDTO(Technology techn) {
 		TechnologyDTO technDTO = new TechnologyDTO();
 		technDTO.setUser_name(techn.getUser_user_id().getUsername());
-		technDTO.setLast_name(techn.getUser_user_id().getLastname());
+		technDTO.setLast_name(techn.getUser_user_id().getAlias());
 		technDTO.setEmail(techn.getUser_user_id().getEmail());
 		technDTO.setName_framework(techn.getFrameworks_frameworks_id().getName());
 		technDTO.setName_language(techn.getLenguage_lenguage_id().getName());

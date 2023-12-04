@@ -4,7 +4,7 @@ public class IntegrationDTO {
 	private String user_name;
 	private String last_name;
 	private String email;
-	private Integer phone;
+	private String phone;
 	private String name_project;
 	public String getUser_name() {
 		return user_name;
@@ -24,10 +24,10 @@ public class IntegrationDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Integer getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(Integer phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getName_project() {

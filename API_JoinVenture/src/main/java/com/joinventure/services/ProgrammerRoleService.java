@@ -9,24 +9,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.joinventure.entities.ProgrammerRole;
+import com.joinventure.entities.User;
 import com.joinventure.repositories.ProgrammerRoleRepository;
 
 @Service
 public class ProgrammerRoleService {
 	@Autowired
 	private ProgrammerRoleRepository programmerRoleRepository;
-	
-	public List<ProgrammerRole> findAllRoles(){
+
+	public List<ProgrammerRole> findAllRoles() {
 		return programmerRoleRepository.findAll();
 	}
-	
+
 	public ResponseEntity<String> createNewRoleUser(ProgrammerRole role) {
 		programmerRoleRepository.save(role);
 		return ResponseEntity.ok().body("Rol de usuario creado correctamente");
 	}
 
 	public ProgrammerRole findRoleById(Long id) {
-		ProgrammerRole role = programmerRoleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rol no encontrado con id: " + id));
+		ProgrammerRole role = programmerRoleRepository.findById(id).orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rol no encontrado con id: " + id));
 		return role;
+	}
+
+	public ProgrammerRole findRoleByName(String name) {
+		List<ProgrammerRole> prs = programmerRoleRepository.findAll();
+
+		for (ProgrammerRole pr : prs) {
+			if (pr.getName().equals(name)) {
+				return pr;
+			}
+		}
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + name);
+
+		
 	}
 }

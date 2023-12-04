@@ -3,6 +3,7 @@ package com.joinventure.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joinventure.entities.ProgrammerRole;
+import com.joinventure.entities.User;
 import com.joinventure.repositories.ProgrammerRoleRepository;
 import com.joinventure.services.ProgrammerRoleService;
 
@@ -25,7 +27,7 @@ import lombok.extern.java.Log;
 
 @Log
 @RestController
-@RequestMapping("/programmer-role")
+@RequestMapping("/programmers-roles")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProgrammerRoleController {
 
@@ -38,6 +40,12 @@ public class ProgrammerRoleController {
 	@GetMapping("")
 	public ResponseEntity<List<ProgrammerRole>> getAllRoleUsers(){
 		return ResponseEntity.ok().body(roleUserService.findAllRoles());
+	}
+	
+	@GetMapping("/programer-role")
+	public ResponseEntity<Optional <ProgrammerRole>> getProgrammerRole(@RequestParam Long name){
+		Optional <ProgrammerRole> user = roleUserRepository.findById(name);
+		return ResponseEntity.ok().body(user); 
 	}
 	
 	@PostMapping("")

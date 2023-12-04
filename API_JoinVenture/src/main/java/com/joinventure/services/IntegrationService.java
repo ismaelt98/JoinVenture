@@ -23,7 +23,7 @@ public class IntegrationService {
 	private IntegrationDTO convertirAMiTablaDTO(Integration integration) {
 		IntegrationDTO inteDTO = new IntegrationDTO();
 		inteDTO.setUser_name(integration.getUser_user_id().getUsername());
-		inteDTO.setLast_name(integration.getUser_user_id().getLastname());
+		inteDTO.setLast_name(integration.getUser_user_id().getAlias());
 		inteDTO.setEmail(integration.getUser_user_id().getEmail());
 		inteDTO.setPhone(integration.getUser_user_id().getPhone());
 		inteDTO.setName_project(integration.getProyect_proyect_id().getName());

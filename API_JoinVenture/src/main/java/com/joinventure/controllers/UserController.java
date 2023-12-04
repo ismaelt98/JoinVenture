@@ -54,6 +54,12 @@ public class UserController {
 		return ResponseEntity.ok().body(user);
 	}
 	
+	@GetMapping("/buscarEmail")
+	public ResponseEntity<User> getUserByEmail(@RequestParam String email){
+		User user = userService.findUserByEmail(email);
+		return ResponseEntity.ok().body(user);
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<String> createUser(@RequestBody User user){
 		
@@ -65,7 +71,7 @@ public class UserController {
         User user = userService.findUserById(id);
         user.setUsername(userDetails.getUsername());
         user.setPassword(userService.hashSHA256(userDetails.getPassword()));
-        user.setLastname(userDetails.getLastname());
+        user.setAlias(userDetails.getAlias());
         user.setUpdatedAt(userDetails.getUpdatedAt());
 
         final User updatedUser = userRepository.save(user);

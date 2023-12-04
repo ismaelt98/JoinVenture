@@ -14,7 +14,7 @@ public class RoleUser {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ROLE_ID")
 	private Long id;
-	
+	//cambiado
 	@Column(name = "NAME", nullable = false)
     public String name;
 

@@ -5,7 +5,7 @@ public class RoleSetDTO {
 	private String user_name;
 	private String last_name;
 	private String email;
-	private Integer phone;
+	private String phone;
 	private String name_role_user;
 	private String name_role_programmer;
 
@@ -33,11 +33,11 @@ public class RoleSetDTO {
 		this.email = email;
 	}
 
-	public Integer getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(Integer phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
