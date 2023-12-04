@@ -1,0 +1,11 @@
+USE joinventure1;
+INSERT INTO joinventure1.sector (NAME) VALUES
+("CULTURE"),
+("ENERGIE"),
+("ENTERTEINMENT"),
+("INDUSTRY"),
+("HEALTH"),
+("TECHNOLOGY"),
+("TURISM"),
+("FINANCES"),
+("INSURANCE");
