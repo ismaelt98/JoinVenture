@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.joinventure.entities.ProgrammerRole;
-import com.joinventure.entities.User;
+
 import com.joinventure.repositories.ProgrammerRoleRepository;
 import com.joinventure.services.ProgrammerRoleService;
 

@@ -5,17 +5,38 @@
   <style>
     /* Estilos para la tabla */
 #miTabla {
-  width: 100%;
+  width: 70%; /* Puedes ajustar el ancho según lo desees */
+    margin: 0 auto;
+  text-align: center;
   border-collapse: collapse;
-  margin: 25px 0;
+ margin-top: 20px;
   font-size: 0.9em;
   font-family: sans-serif;
 }
 
+#actualizarTabla {
+      margin-top: 20px; /* Espacio arriba del botón para separarlo de la tabla */
+      margin-right: 20px; /* Espacio a la derecha del botón para separarlo del borde */
+      
+      background-color: #009879;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+   
+
+    
 #miTabla thead th {
   background-color: #009879;
   color: #ffffff;
-  text-align: left;
+  text-align: center;
   padding: 12px;
 }
 
@@ -26,16 +47,21 @@
 
 #miTabla tbody tr:nth-of-type(even) {
   background-color: #f3f3f3;
+  
 }
+#miTabla tbody tr td{
+  padding: 10px;
 
+}
 #miTabla tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
+  
 }
 
   </style>
 </head>
 <body>
-
+  <button id="actualizarTabla">Actualizar Tabla</button>
 <table id="miTabla">
   <thead>
     <tr>
@@ -48,39 +74,48 @@
       <!-- Agrega más encabezados según la estructura de tu JSON -->
     </tr>
   </thead>
-  <tbody>
+  <tbody id="tbodyTabla">
     <!-- Aquí se llenarán los datos -->
   </tbody>
 </table>
 
 <script>
-  // Realizar la solicitud a la URL que devuelve el JSON
+  llenarTabla()
+ document.getElementById('actualizarTabla').addEventListener('click', llenarTabla);
+function llenarTabla() {
+ 
+    
   fetch('http://localhost:8080/roleset')
-    .then(response => response.json())
-    .then(data => {
-      const tabla = document.getElementById('miTabla');
+      .then(response => response.json())
+      .then(data => {
+        const tabla = document.getElementById('tbodyTabla');
+        tabla.innerHTML = ''; // Limpiar la tabla antes de rellenarla
 
-      data.forEach(item => {
-        const row = tabla.insertRow(-1); // Insertar una nueva fila al final de la tabla
-        const idCell = row.insertCell(0); // Celdas para ID, nombre, email, etc.
-        const nombreCell = row.insertCell(1);
-        const emailCell = row.insertCell(2);
-        const phoneCell = row.insertCell(3);
-        const roleuser = row.insertCell(4);
-        const roleprogra = row.insertCell(5);
-        // Asignar los valores del JSON a las celdas de la fila
-        idCell.innerHTML = item.user_name;
-        nombreCell.innerHTML = item.last_name;
-        emailCell.innerHTML = item.email;
-        phoneCell.innerHTML = item.phone;
-        roleuser.innerHTML = item.name_role_user;
-        roleprogra.innerHTML = item.name_role_programmer;
-        // Asigna más celdas según la estructura de tu JSON
+        data.forEach(item => {
+          const row = tabla.insertRow(-1); // Insertar una nueva fila al final de la tabla
+          const idCell = row.insertCell(0); // Celdas para ID, nombre, email, etc.
+          const nombreCell = row.insertCell(1);
+          const emailCell = row.insertCell(2);
+          const phoneCell = row.insertCell(3);
+          const roleuser = row.insertCell(4);
+          const roleprogra = row.insertCell(5);
+          // Asignar los valores del JSON a las celdas de la fila
+          idCell.innerHTML = item.user_name;
+          nombreCell.innerHTML = item.last_name;
+          emailCell.innerHTML = item.email;
+          phoneCell.innerHTML = item.phone;
+          roleuser.innerHTML = item.name_role_user;
+          roleprogra.innerHTML = item.name_role_programmer;
+          // Asigna más celdas según la estructura de tu JSON
+        });
+      })
+      .catch(error => {
+        console.error('Error al obtener el JSON:', error);
       });
-    })
-    .catch(error => {
-      console.error('Error al obtener el JSON:', error);
-    });
+  }
+
+  // Realizar la solicitud a la URL que devuelve el JSON
+  
 </script>
 
 </body>

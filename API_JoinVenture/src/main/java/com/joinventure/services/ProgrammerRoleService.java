@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.joinventure.entities.ProgrammerRole;
-import com.joinventure.entities.User;
+
 import com.joinventure.repositories.ProgrammerRoleRepository;
 
 @Service

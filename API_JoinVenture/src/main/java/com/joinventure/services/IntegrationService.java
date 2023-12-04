@@ -12,6 +12,7 @@ import com.joinventure.repositories.IntegrationRepository;
 
 @Service
 public class IntegrationService {
+	
 	@Autowired
 	private IntegrationRepository integrationRepo;
 	

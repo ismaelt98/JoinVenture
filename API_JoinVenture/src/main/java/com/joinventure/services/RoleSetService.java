@@ -1,40 +1,28 @@
 package com.joinventure.services;
 
 import java.util.List;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.joinventure.entities.ProgrammerRole;
 import com.joinventure.entities.RoleSet;
-import com.joinventure.entities.RoleUser;
-import com.joinventure.entities.User;
+
+
 import com.joinventure.entities.DTOs.RoleSetDTO;
-import com.joinventure.repositories.ProgrammerRoleRepository;
+
 import com.joinventure.repositories.RoleSetRepository;
-import com.joinventure.repositories.RoleUserRepository;
-import com.joinventure.repositories.UserRepository;
+
 
 @Service
 public class RoleSetService {
 	
 	@Autowired
 	private RoleSetRepository roleSetRepo;
-	
-	@Autowired
-	private RoleUserRepository roleUserRepo;
-	
-	@Autowired
-	private UserRepository userRepo;
-	
-	@Autowired
-	private ProgrammerRoleRepository proRepo;
 
 	public List<RoleSetDTO> findAllRoleSetUser() {
 
@@ -43,8 +31,7 @@ public class RoleSetService {
 		return users.stream().map(this::convertirAMiTablaDTO).collect(Collectors.toList());
 	}
 
-	public ResponseEntity<String> createNewUser(RoleSet roleSet) {
-		
+	public ResponseEntity<String> createNewUser(RoleSet roleSet) {		
 		
 		roleSet.setUser(roleSet.getUser());
 		roleSet.setProgramrole(roleSet.getProgramrole());
@@ -62,10 +49,7 @@ public class RoleSetService {
 	}
 
 	private RoleSetDTO convertirAMiTablaDTO(RoleSet roleSet) {
-		RoleSetDTO technDTO = new RoleSetDTO();
-		
-	
-	
+		RoleSetDTO technDTO = new RoleSetDTO();	
 		
 		technDTO.setUser_name(roleSet.getUser().getUsername());
 		technDTO.setLast_name(roleSet.getUser().getAlias());
