@@ -39,7 +39,7 @@ public class IntegrationService {
 	
 	public Integration findInteById(Long id) {
 		Integration inte = integrationRepo.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rol no encontrado con id: " + id));
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Integration no encontrado con id: " + id));
 		return inte;
 	}
 }

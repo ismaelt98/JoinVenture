@@ -51,7 +51,7 @@ public class RoleSetService {
 		roleSet.setRoleuser(roleSet.getRoleuser());
 		roleSetRepo.save(roleSet);
 
-		return ResponseEntity.ok().body("Usuario registrado correctamente");
+		return ResponseEntity.ok().body("RolSet registrado correctamente");
 	}
 	
 	public List<RoleSetDTO> getRoleSetsByEmail(String email) {

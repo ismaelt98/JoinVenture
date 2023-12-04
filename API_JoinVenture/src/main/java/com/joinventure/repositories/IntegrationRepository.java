@@ -7,5 +7,5 @@ import com.joinventure.entities.Integration;
 
 @Repository
 public interface IntegrationRepository extends JpaRepository<Integration, Long>{
-	
+
 }

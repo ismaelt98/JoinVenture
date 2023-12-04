@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.joinventure.entities.Technology;
 
@@ -42,5 +45,16 @@ public class TechnologyService {
 		technDTO.setName_language(techn.getLenguage_lenguage_id().getName());
 
 		return technDTO;
+	}
+	
+	public ResponseEntity<String> createNewTechnology(Technology technology) {
+		technoRepo.save(technology);
+		return ResponseEntity.ok().body("Tecnologia registrado correctamente");
+	}
+	
+	public Technology findTechById(Long id) {
+		Technology techno = technoRepo.findById(id).orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tecnologia no encontrado con id: " + id));
+		return techno;
 	}
 }

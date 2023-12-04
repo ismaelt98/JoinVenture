@@ -33,12 +33,13 @@ import lombok.extern.java.Log;
 
 @Log
 @RestController
-@RequestMapping("/integration")
+@RequestMapping("/integrations")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class IntegrationController {
 	
 	@Autowired
 	private IntegrationService inteService;
+	
 	@Autowired
 	private IntegrationRepository inteRepo;
 	
@@ -51,6 +52,11 @@ public class IntegrationController {
 	@GetMapping("")
 	public ResponseEntity<List<IntegrationDTO>> getAllIntegrations(){
 		return ResponseEntity.ok().body(inteService.finAllIntegration());
+	}
+	@GetMapping("/{id}")
+	public ResponseEntity<Integration> getIntegration(@PathVariable(value ="id") Long id){
+		Integration integration = inteService.findInteById(id);
+		return ResponseEntity.ok().body(integration);
 	}
 	
 	@PostMapping("/create")
@@ -82,7 +88,7 @@ public class IntegrationController {
 	}
 	
 	@PutMapping("")
-	public ResponseEntity<Integration> updateRole(@RequestParam Long id, @RequestBody Integration integrationDetails){
+	public ResponseEntity<Integration> updateIntegration(@RequestParam Long id, @RequestBody Integration integrationDetails){
 		Integration integration = inteService.findInteById(id);
 		integration.setProyect_proyect_id(integrationDetails.getProyect_proyect_id());
 		integration.setUser_user_id(integrationDetails.getUser_user_id());
@@ -93,7 +99,7 @@ public class IntegrationController {
 	}
 	
 	@DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteRole(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Map<String, Boolean>> deleteIntegration(@PathVariable(value = "id") Long id) {
 		Integration integration = inteService.findInteById(id);
 
 		inteRepo.delete(integration);
