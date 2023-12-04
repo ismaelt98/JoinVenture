@@ -77,4 +77,10 @@ public class RoleSetService {
 
 		return technDTO;
 	}
+	
+	public RoleSet findRoleSetById(Long id) {
+		RoleSet roleSet = roleSetRepo.findById(id).orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "RoleSet no encontrado con id: " + id));
+		return roleSet;
+	}
 }
