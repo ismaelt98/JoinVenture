@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 import com.joinventure.entities.ProgrammerRole;
 import com.joinventure.entities.RoleUser;
 import com.joinventure.repositories.RoleUserRepository;
 import com.joinventure.services.RoleUserService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.java.Log;
 
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class RoleUserController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<String> createRoleUser(@RequestBody RoleUser roleUser){
+	public ResponseEntity<?> createRoleUser(@RequestBody RoleUser roleUser){
 		
         logger.info("RoleUser received: {}", roleUser);
 
