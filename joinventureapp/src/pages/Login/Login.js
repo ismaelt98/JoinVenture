@@ -1,54 +1,131 @@
-import React from 'react';
-import './Login.css'; // Asegúrate de que la ruta sea correcta
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css'; // Asegúrate de que la ruta al archivo CSS sea correcta
 
 const Login = () => {
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0); // Asegúrate de que esta línea esté presente
 
-    const formData = new FormData(event.target);
-    
+  const navigate = useNavigate();
+
+  const titles = ['JoinVenture: Transformando Ideas en Realidad!', 'Nuestra Misión: Unir Fuerzas para el Éxito'];
+  const paragraphs = ['En el dinámico mundo de los negocios...', 'En JoinVenture, creemos en el poder de la colaboración...'];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTitleIndex((prevIndex) => (prevIndex + 1) % titles.length);
+    }, 8000); // Cambia cada 8 segundos
+    return () => clearInterval(intervalId);
+  }, [titles.length]);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    // Lógica para iniciar sesión...
     try {
-      const response = await fetch("http://localhost:8080/users/login", {
+      const response = await fetch('http://localhost:8080/users/login', {
         method: 'POST',
-        body: formData,
-        redirect: 'follow'
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
       });
-      const result = await response.text();
-      
-      if (result === "true") {
-        console.log("Inicio de sesión exitoso");
+      const data = await response.json();
+      if (data.auth) {
+        // Guardar el token y posiblemente el ID de usuario en el almacenamiento local o en cookies
+        localStorage.setItem('userToken', data.token);
+        navigate('/rutaPrincipal'); // Asegúrate de que esta es la ruta correcta
       } else {
-        alert("EMAIL O CONTRASEÑA INCORRECTAS");
+        // Manejar error de inicio de sesión
+        console.error('Error de inicio de sesión');
       }
     } catch (error) {
-      console.error('error', error);
+      console.error('Error al conectar con la API', error);
+    }
+  };
+
+  const handleRegister = async (event) => {
+    console.log("Intentando registrar"); // Para depuración
+
+    event.preventDefault();
+    // Lógica para registro...
+    if (password !== confirmPassword) {
+      console.error('Las contraseñas no coinciden');
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:8080/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password /* Otros campos aquí */ })
+      });
+      const data = await response.json();
+      if (data.id) {
+        navigate('/rutaPrincipal'); // Asegúrate de que esta es la ruta correcta
+      } else {
+        // Manejar errores de registro
+        console.error('Error de registro');
+      }
+    } catch (error) {
+      console.error('Error al conectar con la API', error);
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Iniciar Sesión</h2>
-      <form id="miFormulario" onSubmit={handleSubmit}>
-        <div className="input-container">
-          <input type="email" id="email" name="email" placeholder="Email" required />
-        </div>
-        <div className="input-container">
-          <input type="password" id="password" name="password" placeholder="Contraseña" required />
-        </div>
-        <button id="btnEntrar" type="submit">ENTRAR</button>
-        <div className="linea-elegante">
-          <span className="texto-en-linea">OR</span>
-        </div>
-        <div className="divAllMedia">
-          <p>Sign with Social Media</p>
-          <div className="divSocialMed">
-              <button className="butSocialMed"><img className="socialMed" src="img/4766956-removebg-preview.png" alt=""/></button>
-          </div>
-        </div>
-        <div id="divCrearCuenta">
-        <Link to="/register">NO TENGO CUENTA</Link>
-        </div>
-      </form>
+    <div className="login-wrapper">
+      <h2>{titles[currentTitleIndex]}</h2>
+      <p>{paragraphs[currentTitleIndex]}</p>
+      {isLogin ? (
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Correo electrónico"
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Contraseña"
+            required
+          />
+          <button type="submit">Iniciar sesión</button>
+        </form>
+      ) : (
+        <form onSubmit={handleRegister}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Correo electrónico"
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Contraseña"
+            required
+          />
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirmar contraseña"
+            required
+          />
+          <button type="submit">Registrarse</button>
+        </form>
+      )}
+      <button onClick={() => setIsLogin(!isLogin)}>
+        {isLogin ? 'Crear cuenta' : 'Volver al inicio de sesión'}
+      </button>
     </div>
   );
 };
