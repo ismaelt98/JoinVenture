@@ -37,22 +37,22 @@ document.getElementById("projectForm").addEventListener("submit", function (even
                 "name": projectName,
                 "numMembers": parseInt(maxMembers),
                 "sector": {
-                    "id": selectElementSector.value
+                  "id": selectElementSector.value
                 },
                 "demand": {
-                    "id": selectElementDemand.value
+                  "id": selectElementDemand.value
                 },
-                "userCreator": {
-                    "id": data.id
+                "user": {
+                  "id": data.id
                 },
                 "userList": [
-                    {
-                        "id": data.id
-
-                    }
-
+                  {
+                    "id": data.id
+                  }
                 ]
-            });
+              });
+
+           
 
             var requestOptions = {
                 method: 'POST',
