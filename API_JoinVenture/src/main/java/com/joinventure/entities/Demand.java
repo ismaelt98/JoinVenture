@@ -47,4 +47,8 @@ public class Demand {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
+	
+	
 }

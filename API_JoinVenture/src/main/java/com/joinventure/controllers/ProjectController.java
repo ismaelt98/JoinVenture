@@ -44,7 +44,7 @@ public class ProjectController {
 	// METODOS POST Y PUT
 
 	@PostMapping("")
-	public ResponseEntity<String> createProject(@RequestBody Project project) {
+	public ResponseEntity<Object> createProject(@RequestBody Project project) {
 
 		return proService.createNewProject(project);
 	}

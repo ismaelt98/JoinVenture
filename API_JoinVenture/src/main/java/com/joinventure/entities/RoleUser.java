@@ -1,7 +1,5 @@
 package com.joinventure.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,10 +14,9 @@ public class RoleUser {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ROLE_ID")
 	private Long id;
-	//cambiado
+	
 	@Column(name = "NAME", nullable = false)
-	@JsonProperty("name")
-    private String name;
+    public String name;
 
 	public RoleUser() {
 		super();

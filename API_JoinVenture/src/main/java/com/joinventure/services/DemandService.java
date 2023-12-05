@@ -1,6 +1,6 @@
 package com.joinventure.services;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.joinventure.entities.Demand;
-import com.joinventure.entities.User;
+
 import com.joinventure.repositories.DemandRepository;
 
 @Service

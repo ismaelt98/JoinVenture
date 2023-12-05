@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
-import com.joinventure.entities.ProgrammerRole;
 import com.joinventure.entities.RoleUser;
 import com.joinventure.repositories.RoleUserRepository;
 import com.joinventure.services.RoleUserService;
@@ -54,7 +53,7 @@ public class RoleUserController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<?> createRoleUser(@RequestBody RoleUser roleUser){
+	public ResponseEntity<String> createRoleUser(@RequestBody RoleUser roleUser){
 		
         logger.info("RoleUser received: {}", roleUser);
 

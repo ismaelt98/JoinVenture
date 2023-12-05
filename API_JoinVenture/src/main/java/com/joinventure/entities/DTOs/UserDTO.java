@@ -1,18 +1,74 @@
 package com.joinventure.entities.DTOs;
 
+import java.util.List;
+
 public class UserDTO {
+	
+	Long id;
 	String username;
-	String password;
+	
 	String alias;
 	String email;
+	String name_role;
+	List<String> projectNames;
 	
 	public UserDTO() {}
 	
-	public UserDTO(String username, String password, String alias, String email) {
+	
+
+	
+
+
+
+
+	
+
+
+
+
+	public UserDTO(Long id, String username, String alias, String email, String name_role,
+			List<String> projectNames) {
+		super();
+		this.id = id;
 		this.username = username;
-		this.password = password;
 		this.alias = alias;
 		this.email = email;
+		this.name_role = name_role;
+		this.projectNames = projectNames;
+	}
+
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public List<String> getProjectNames() {
+		return projectNames;
+	}
+
+	public void setProjectNames(List<String> projectNames) {
+		this.projectNames = projectNames;
+	}
+
+
+
+
+	public String getName_role() {
+		return name_role;
+	}
+
+	public void setName_role(String name_role) {
+		this.name_role = name_role;
 	}
 
 	public String getUsername() {
@@ -23,13 +79,6 @@ public class UserDTO {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	
 
@@ -51,6 +100,6 @@ public class UserDTO {
 
 	@Override
 	public String toString() {
-		return "UserDTO [username=" + username + ", password=" + password + ", alias=" + alias + ", email=" + email + "]";
+		return "UserDTO [username=" + username + ", alias=" + alias + ", email=" + email + ", role=" + name_role + "]";
 	}
 }
