@@ -21,9 +21,7 @@ public class UserDTO {
 
 
 
-	public List<String> getProjectNames() {
-		return projectNames;
-	}
+	
 
 
 
@@ -54,7 +52,9 @@ public class UserDTO {
 	}
 
 
-
+	public List<String> getProjectNames() {
+		return projectNames;
+	}
 
 	public void setProjectNames(List<String> projectNames) {
 		this.projectNames = projectNames;
