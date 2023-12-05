@@ -69,15 +69,15 @@ public class ProjectService {
 				.orElseThrow(() -> new EntityNotFoundException("Proyecto no encontrado."));
 
 		List<User> userList = project.getUserList();
-		if(userToAdd.isPresent()) {
-			for (User user : userList) {
-				if(user.getId() == userToAdd.get().getId()) {
-					
-				}
-			}
-			userList.add(userToAdd.get());
-			project.setUserList(userList);
-			projectRepo.save(project);
+		
+		if(userToAdd.isPresent()) {	
+
+			if (!project.getUserList().contains(userToAdd)) {
+				userList.add(userToAdd.get());
+				project.setUserList(userList);
+				projectRepo.save(project);
+	        }
+			
 		}
 
 		

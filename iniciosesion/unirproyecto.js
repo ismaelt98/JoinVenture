@@ -6,13 +6,13 @@ myHeaders.append("Content-Type", "application/json");
 var requestOptions = {
     method: 'GET',
     headers: myHeaders,
-  
+
     redirect: 'follow'
 };
 
 fetch(`http://localhost:8080/users/buscarEmail?email=${email}`, requestOptions)
     .then(response => {
-      return  response.json()
+        return response.json()
     })
     .then(result => {
         console.log(result);
@@ -37,7 +37,25 @@ fetch('http://localhost:8080/projects')
             const botonUnir = document.createElement('button');
             botonUnir.innerText = 'Unir Proyecto';
             botonUnir.addEventListener('click', () => {
-                console.log(proyecto.id)
+                const user_id = getCookie("id");
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                var requestOptions = {
+                    method: 'PUT',
+                    headers: myHeaders,
+
+                    redirect: 'follow'
+                };
+
+                fetch(`http://localhost:8080/projects/adduserproject?projectId=${proyecto.id}&userId=${user_id}`, requestOptions)
+                    .then(response => {
+                        response.text()}
+                        )
+                    
+                    .catch(error => {
+                        console.log('error', error);
+                        
+                    });
             });
 
             // Mostrar el nombre del proyecto dentro del div

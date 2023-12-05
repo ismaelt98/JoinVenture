@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +27,7 @@ import com.joinventure.repositories.UserRepository;
 import com.joinventure.services.ProjectService;
 import com.joinventure.services.UserService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.java.Log;
 
 @Log
@@ -86,10 +88,34 @@ public class ProjectController {
         try {
             proService.addUserToProject(projectId, userId);
             return ResponseEntity.ok("Usuario agregado al proyecto correctamente.");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El usuario ya está en el proyecto.");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Proyecto no encontrado.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar usuario al proyecto.");
         }
     }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@PutMapping("/project")
 	public ResponseEntity<?> updateProjectById(@RequestParam Long id, @RequestBody Project updatedProject) {

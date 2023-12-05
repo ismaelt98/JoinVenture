@@ -94,7 +94,7 @@ public class UserService {
 		for (User user : users) {
 			UserDTO userDTO = new UserDTO();
 			userDTO.setId(user.getId());
-			userDTO.setName_role(user.getRoleuser().getName()); // Suponiendo que 'nombre' es un campo en RoleUser
+			userDTO.setName_role(user.getRoleuser().getName()); 
 			userDTO.setUsername(user.getUsername());
 			userDTO.setAlias(user.getAlias());
 			userDTO.setEmail(user.getEmail());
