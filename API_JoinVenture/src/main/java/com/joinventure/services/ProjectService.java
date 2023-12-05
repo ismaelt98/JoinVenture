@@ -1,7 +1,9 @@
 package com.joinventure.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.joinventure.entities.Project;
+import com.joinventure.entities.User;
+import com.joinventure.entities.DTOs.ProjectDTO;
+import com.joinventure.entities.DTOs.UserDTO;
 import com.joinventure.repositories.ProjectRepository;
 
 @Service
@@ -18,6 +23,30 @@ public class ProjectService {
 
 	public List<Project> findAllUsers() {
 		return projectRepo.findAll();
+	}
+	
+	public List<ProjectDTO> getAllProjects() {
+		List<Project> projects = projectRepo.findAll();
+		List<ProjectDTO> userDTOs = new ArrayList<>();
+
+		for (Project proj : projects) {
+			ProjectDTO userDTO = new ProjectDTO();
+			userDTO.setName(proj.getName());
+			userDTO.setNumMembers(proj.getNumMembers()); 
+			userDTO.setName_sector(proj.getSector().getName());
+			userDTO.setName_demanda(proj.getDemand().getName());
+			userDTO.setName_creador(proj.getUser().getUsername());
+			userDTO.setEmail_creador(proj.getUser().getEmail());
+			
+
+			List<String> usersNames = proj.getUserList().stream().map(project -> project.getUsername())
+					.collect(Collectors.toList());
+			userDTO.setUsersName(usersNames);
+
+			userDTOs.add(userDTO);
+		}
+
+		return userDTOs;
 	}
 
 	public ResponseEntity<Object> createNewProject(Project project) {

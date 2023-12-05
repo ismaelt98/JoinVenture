@@ -48,8 +48,8 @@ public class Project {
 	private Demand demand;
 
 	@ManyToOne
-	@JoinColumn(name = "user_creator_id")
-	private User userCreator;
+	@JoinColumn(name = "fk_creator_id")
+	private User user;
 
 	@ManyToMany
 	@JoinTable(name = "user_has_proyect", joinColumns = @JoinColumn(name = "PROYECT_ID"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -68,16 +68,16 @@ public class Project {
 		this.createdAt = createdAt;
 		this.sector = sector;
 		this.demand = demand;
-		this.userCreator = user;
+		this.user = user;
 		this.userList = userList;
 	}
 
 	public User getUser() {
-		return userCreator;
+		return user;
 	}
 
 	public void setUser(User user) {
-		this.userCreator = user;
+		this.user = user;
 	}
 
 	public Sector getSector() {
