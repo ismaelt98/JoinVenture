@@ -3,7 +3,6 @@ package com.joinventure.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-
 import org.springframework.data.annotation.CreatedDate;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -39,30 +38,29 @@ public class Project {
 	@Column(name = "CREATED_AT", nullable = false, updatable = false)
 	@CreatedDate
 	private LocalDate createdAt;
-	
-	@ManyToOne
-    @JoinColumn(name = "fk_sector_id")
-    private Sector sector;
 
 	@ManyToOne
-    @JoinColumn(name = "fk_demand_id")
-    private Demand demand;
-	
+	@JoinColumn(name = "fk_sector_id")
+	private Sector sector;
+
+	@ManyToOne
+	@JoinColumn(name = "fk_demand_id")
+	private Demand demand;
+
+	@ManyToOne
+	@JoinColumn(name = "user_creator_id")
+	private User userCreator;
 
 	@ManyToMany
 	@JoinTable(name = "user_has_proyect", joinColumns = @JoinColumn(name = "PROYECT_ID"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	List<User> userList;
-	
-	
-	
+
 	public Project() {
 		super();
 	}
 
-	
-
 	public Project(Long id, String name, Integer numMembers, LocalDate createdAt, Sector sector, Demand demand,
-			List<User> userList) {
+			User user, List<User> userList) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -70,55 +68,41 @@ public class Project {
 		this.createdAt = createdAt;
 		this.sector = sector;
 		this.demand = demand;
+		this.userCreator = user;
 		this.userList = userList;
 	}
 
+	public User getUser() {
+		return userCreator;
+	}
 
-
-//	public Project(Long id, String name, Integer numMembers, LocalDate create, LocalDate update) {
-//		super();
-//		this.id = id;
-//		this.name = name;
-//		this.numMembers = numMembers;
-//		this.createdAt = create;
-//		this.updatedAt = update;
-//	}
+	public void setUser(User user) {
+		this.userCreator = user;
+	}
 
 	public Sector getSector() {
 		return sector;
 	}
 
-
-
 	public void setSector(Sector sector) {
 		this.sector = sector;
 	}
-
-
 
 	public Demand getDemand() {
 		return demand;
 	}
 
-
-
 	public void setDemand(Demand demand) {
 		this.demand = demand;
 	}
-
-
 
 	public List<User> getUserList() {
 		return userList;
 	}
 
-
-
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
 	}
-
-
 
 	public Long getId() {
 		return id;

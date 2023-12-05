@@ -42,6 +42,9 @@ document.getElementById("projectForm").addEventListener("submit", function (even
                 "demand": {
                     "id": selectElementDemand.value
                 },
+                "userCreator": {
+                    "id": data.id
+                },
                 "userList": [
                     {
                         "id": data.id
