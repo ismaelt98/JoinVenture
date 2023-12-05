@@ -45,7 +45,7 @@ public class GoogleController {
 
         if (existingUser.isPresent()) {
             //User user = existingUser.get();
-            return new RedirectView("http://localhost:8080/users");
+            return new RedirectView("http://localhost:5500/logged.html");
         } else {
             User user = new User();
             user.setUsername(firstName);
@@ -53,12 +53,12 @@ public class GoogleController {
             user.setEmail(email);
             user.setPassword(userService.hashSHA256("changethispassword"));
             user.setPhone("999999999");
-            RoleUser role = roleUserService.findRoleById((long) 5);
+            RoleUser role = roleUserService.findRoleById((long) 1);
             user.setRoleuser(role);
 
             userRepository.save(user);
             
-            return new RedirectView("http://localhost:8080/users");
+            return new RedirectView("http://localhost:5500/logged.html");
         }
     }
 }
