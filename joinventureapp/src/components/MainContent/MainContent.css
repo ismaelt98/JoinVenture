@@ -1,0 +1,20 @@
+.main-content {
+    padding: 20px;
+    /* Agrega más estilos para el contenido principal aquí */
+  }
+  
+  .content-section {
+    margin-bottom: 20px;
+    /* Agrega más estilos para la sección de contenido aquí */
+  }
+  
+  .content-section h2 {
+    color: #333;
+    /* Agrega más estilos para el h2 aquí */
+  }
+  
+  .content-section p {
+    color: #666;
+    /* Agrega más estilos para el párrafo aquí */
+  }
+  
