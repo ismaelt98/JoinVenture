@@ -3,7 +3,7 @@ package com.joinventure.entities.DTOs;
 import java.util.List;
 
 public class ProjectDTO {
-	
+	Long id;
 	String name;
 	
 	Integer numMembers;
@@ -18,9 +18,10 @@ public class ProjectDTO {
 	public ProjectDTO() {
 		super();
 	}
-	public ProjectDTO(String name, Integer numMembers, String name_sector, String name_demanda, String name_creador,
+	public ProjectDTO(Long id, String name, Integer numMembers, String name_sector, String name_demanda, String name_creador,
 			String email_creador, List<String> usersName) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.numMembers = numMembers;
 		this.name_sector = name_sector;
@@ -28,6 +29,13 @@ public class ProjectDTO {
 		this.name_creador = name_creador;
 		this.email_creador = email_creador;
 		this.usersName = usersName;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;

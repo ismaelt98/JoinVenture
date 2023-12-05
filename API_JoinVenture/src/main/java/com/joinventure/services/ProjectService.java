@@ -38,6 +38,7 @@ public class ProjectService {
 
 		for (Project proj : projects) {
 			ProjectDTO userDTO = new ProjectDTO();
+			userDTO.setId(proj.getId());
 			userDTO.setName(proj.getName());
 			userDTO.setNumMembers(proj.getNumMembers());
 			userDTO.setName_sector(proj.getSector().getName());
@@ -69,6 +70,11 @@ public class ProjectService {
 
 		List<User> userList = project.getUserList();
 		if(userToAdd.isPresent()) {
+			for (User user : userList) {
+				if(user.getId() == userToAdd.get().getId()) {
+					
+				}
+			}
 			userList.add(userToAdd.get());
 			project.setUserList(userList);
 			projectRepo.save(project);
