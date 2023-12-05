@@ -64,7 +64,7 @@ public class User {
 	List<Language> listLanguage;
     
     @ManyToMany
-	@JoinTable(name = "user_has_proyect", joinColumns = @JoinColumn(name = "fk_user_id"), inverseJoinColumns = @JoinColumn(name = "fk_framework_id"))
+	@JoinTable(name = "user_has_frameworks", joinColumns = @JoinColumn(name = "fk_user_id"), inverseJoinColumns = @JoinColumn(name = "fk_frameworks_id"))
 	List<Framework> listFrameworks;
 	
 	public User() {}

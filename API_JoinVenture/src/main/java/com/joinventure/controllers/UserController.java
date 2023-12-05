@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joinventure.entities.Framework;
+import com.joinventure.entities.Language;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.UserDTO;
+import com.joinventure.entities.DTOs.UserLanguagesDTO;
+import com.joinventure.entities.DTOs.UserProjectsDTO;
 import com.joinventure.repositories.UserRepository;
 import com.joinventure.services.UserService;
 
@@ -35,8 +39,7 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private UserService userService;
-	
+	private UserService userService;	
 	
 	@GetMapping("")
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
@@ -49,12 +52,22 @@ public class UserController {
 		
 		
 		return ResponseEntity.ok().body(user);
+	}	
+	
+	@GetMapping("userProjects")
+	public ResponseEntity<List<UserProjectsDTO>> getAllProjectsByUser(@RequestParam Long id){
+		return ResponseEntity.ok().body(userService.getAllProjectsByUser(id));
 	}
 	
-	@GetMapping("/buscar/{username}")
-	public ResponseEntity<User> getUserByUsername(@PathVariable(value = "username") String username){
-		User user = userService.findUserByUsername(username);
-		return ResponseEntity.ok().body(user);
+	@GetMapping("userLanguages")
+	public ResponseEntity<List<Language>> getAllLanguagesByUser(@RequestParam Long id){
+		return ResponseEntity.ok().body(userService.getAllLanguagesByUser(id));
+	}
+	
+	
+	@GetMapping("userFrameworks")
+	public ResponseEntity<List<Framework>> getAllFrameworksByUser(@RequestParam Long id){
+		return ResponseEntity.ok().body(userService.getAllFrameworksByUser(id));
 	}
 	
 	@GetMapping("/buscarEmail")
@@ -71,17 +84,27 @@ public class UserController {
 		return userService.createNewUser(user);
 	}
 	
+	
+	
+	
+	
+	
+//	
+//	
+//	
+//	@GetMapping("/buscar/{username}")
+//	public ResponseEntity<User> getUserByUsername(@PathVariable(value = "username") String username){
+//		User user = userService.findUserByUsername(username);
+//		return ResponseEntity.ok().body(user);
+//	}
+	
+	
+	
 //	@PutMapping("/updateUser")
-//    public ResponseEntity<User> updateUser(@RequestParam Long id, @RequestBody User userDetails){
-//        User user = userService.findUserById(id);
-//        user.setUsername(userDetails.getUsername());
-//        user.setPassword(userService.hashSHA256(userDetails.getPassword()));
-//        user.setAlias(userDetails.getAlias());
-//        user.setUpdatedAt(userDetails.getUpdatedAt());
-//
-//        final User updatedUser = userRepository.save(user);
-//        return ResponseEntity.ok().body(updatedUser);
-//    }
+//	 public ResponseEntity<Object> updateUser(@RequestParam Long id, @RequestBody User userDetails){
+//		return userService.updateUser(id, userDetails);
+//	}
+	
 	
 	@PutMapping("/changeusername/{username}")
 	public ResponseEntity<User> updateUsername(@PathVariable(value = "username") String username, @RequestBody User userDetails){
@@ -114,6 +137,16 @@ public class UserController {
 //        return ResponseEntity.ok().body(response);
 //    }
 	
+	
+	 @DeleteMapping("/{userId}")
+	    public ResponseEntity<String> eliminarUsuarioYProyectos(@PathVariable Long userId) {
+	        userService.eliminarUsuarioConProyectos(userId);
+	        return ResponseEntity.ok("Usuario y proyectos eliminados correctamente.");
+	    }
+	
+	//Elimina todos los lenguajes que estan relacionados con este usuario
+	//Elimina todos los frameworks que estan relacionados con este usuario
+	//Elimina el usuario
 	@DeleteMapping("/delete/{username}")
     public ResponseEntity<Map<String, Boolean>> deleteUserByUsername(@PathVariable(value = "username") String username) {
         User user = userService.findUserByUsername(username);
