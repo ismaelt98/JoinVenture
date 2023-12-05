@@ -55,9 +55,20 @@ public class UserService {
 	
 
 	
-	public User findUserById(long id) {
+	public UserDTO findUserById(long id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
-		return user;
+		UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId()); 
+        userDTO.setName_role(user.getRoleuser().getName()); // Suponiendo que 'nombre' es un campo en RoleUser
+        userDTO.setUsername(user.getUsername());
+        userDTO.setAlias(user.getAlias());
+        userDTO.setEmail(user.getEmail());
+
+        List<String> projectNames = user.getProjectList().stream()
+                .map(project -> project.getName()) 
+                .collect(Collectors.toList());
+        userDTO.setProjectNames(projectNames);
+		return userDTO;
 	}
 	
 	public ResponseEntity<Object> createNewUser(User user) {

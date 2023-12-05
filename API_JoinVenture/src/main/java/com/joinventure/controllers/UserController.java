@@ -37,14 +37,15 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	
 	@GetMapping("")
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
 		return ResponseEntity.ok().body(userService.getAllUsers());
 	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id){
-		User user = userService.findUserById(id);
+	@GetMapping("user")
+	public ResponseEntity<UserDTO> getUserById(@RequestParam Long id){
+		UserDTO user = userService.findUserById(id);
 		
 		
 		return ResponseEntity.ok().body(user);
@@ -70,17 +71,17 @@ public class UserController {
 		return userService.createNewUser(user);
 	}
 	
-	@PutMapping("/updateUser")
-    public ResponseEntity<User> updateUser(@RequestParam Long id, @RequestBody User userDetails){
-        User user = userService.findUserById(id);
-        user.setUsername(userDetails.getUsername());
-        user.setPassword(userService.hashSHA256(userDetails.getPassword()));
-        user.setAlias(userDetails.getAlias());
-        user.setUpdatedAt(userDetails.getUpdatedAt());
-
-        final User updatedUser = userRepository.save(user);
-        return ResponseEntity.ok().body(updatedUser);
-    }
+//	@PutMapping("/updateUser")
+//    public ResponseEntity<User> updateUser(@RequestParam Long id, @RequestBody User userDetails){
+//        User user = userService.findUserById(id);
+//        user.setUsername(userDetails.getUsername());
+//        user.setPassword(userService.hashSHA256(userDetails.getPassword()));
+//        user.setAlias(userDetails.getAlias());
+//        user.setUpdatedAt(userDetails.getUpdatedAt());
+//
+//        final User updatedUser = userRepository.save(user);
+//        return ResponseEntity.ok().body(updatedUser);
+//    }
 	
 	@PutMapping("/changeusername/{username}")
 	public ResponseEntity<User> updateUsername(@PathVariable(value = "username") String username, @RequestBody User userDetails){
@@ -103,15 +104,15 @@ public class UserController {
 		return ResponseEntity.ok().body(updatedUser);
 	}
 	
-	@DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable(value = "id") Long id) {
-        User user = userService.findUserById(id);
-
-        userRepository.delete(user);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("eliminado", Boolean.TRUE);
-        return ResponseEntity.ok().body(response);
-    }
+//	@DeleteMapping("/{id}")
+//    public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable(value = "id") Long id) {
+//        User user = userService.findUserById(id);
+//
+//        userRepository.delete(user);
+//        Map<String, Boolean> response = new HashMap<>();
+//        response.put("eliminado", Boolean.TRUE);
+//        return ResponseEntity.ok().body(response);
+//    }
 	
 	@DeleteMapping("/delete/{username}")
     public ResponseEntity<Map<String, Boolean>> deleteUserByUsername(@PathVariable(value = "username") String username) {
