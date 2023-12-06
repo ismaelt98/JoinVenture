@@ -7,31 +7,22 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
-  
-  const [selectedValue, setSelectedValue] = useState('1'); // Estado para almacenar el valor seleccionado
 
-  useEffect(() => {
-    // Ejemplo de una condición de error (puedes ajustarlo según tus necesidades)
-    const hasError = true; // Simulación de un error
-
-    if (hasError) {
-      toast.error('Ocurrió un error'); // Mostrar toast de error
-    }
-  }, []);
   
+  const [selectedValue, setSelectedValue] = useState('1');
+
   const handleChange = (e) => {
     const { value, checked } = e.target;
 
-   
     if (checked) {
       setSelectedValue(value); // Actualiza el estado con el valor del checkbox seleccionado
     } else {
       setSelectedValue(value); // Establece un valor vacío si el checkbox se desmarca
     }
-  }; 
+  };
 
-  
-  
+
+
   const [isLogin, setIsLogin] = useState(true);
 
   const [email, setEmail] = useState('');
@@ -39,7 +30,7 @@ const Login = () => {
   const [alias, setAlias] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  
+
 
   const [projectList] = useState([]);
   const [listLanguage] = useState([]);
@@ -50,7 +41,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const titles = ['JoinVenture: Transformando Ideas en Realidad!', 'Nuestra Misión: Unir Fuerzas para el Éxito'];
-  
+
   const paragraphs = ['En el dinámico mundo de los negocios y la innovación, surge JoinVenture como un faro de colaboración y ejecución. Somos más que una empresa, somos el puente que conecta visionarios con expertos, convirtiendo ideas en proyectos tangibles y exitosos.', 'En JoinVenture, creemos en el poder de la colaboración. Nuestra misión es catalizar el potencial creativo al unir emprendedores con profesionales especializados.', 'En el vasto panorama de proyectos e innovación, JoinVenture destaca como un motor de transformación. Nos definimos como arquitectos de sueños empresariales, trabajando incansablemente para materializar ideas y convertirlas en proyectos prósperos.', 'En el corazón de JoinVenture yace una filosofía de unión. Creemos en el poder de la colaboración, donde visionarios y ejecutores se encuentran para dar forma a ideas que impulsan el cambio y el progreso.'];
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -59,10 +50,11 @@ const Login = () => {
     return () => clearInterval(intervalId);
   }, [titles.length]);
 
- 
+
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     // Lógica para iniciar sesión...
     try {
       var formdata = new FormData();
@@ -81,70 +73,85 @@ const Login = () => {
         localStorage.setItem('userToken', data.token);
         navigate('/rutaPrincipal'); // Asegúrate de que esta es la ruta correcta
       } else {
-        // Manejar error de inicio de sesión
-        console.error('Error de inicio de sesión');
+        toast.error('El email o password no coinciden', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+
       }
-    } catch (error) {
-      console.error('Error al conectar con la API', error);
+    } catch (e) {
+
+
     }
   };
- 
+
   const handleRegister = async (event) => {
     console.log("Intentando registrar"); // Para depuración
 
     event.preventDefault();
     // Lógica para registro...
-    if (password !== confirmPassword) {
-      return (<div>
-        <ToastContainer /> {/* Coloca ToastContainer alrededor de tu aplicación */}
-        {/* Resto de tu código */}
-      </div>);
-     
-    }
-    try {
-      var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
+    if (password === confirmPassword) {
 
-      const responseEmail = await fetch(`http://localhost:8080/users/checkEmail?email=${email}`, requestOptions);
-      const responsePassword = await fetch(`http://localhost:8080/users/checkPassword?password=${password}`, requestOptions)
-      const responsePhone = await fetch(`http://localhost:8080/users/checkPhone?phone=${phone}`, requestOptions)
-      
-      const dataEmail = await responseEmail.json();
-      const dataPassword = await responsePassword.json();
-      const dataPhone = await responsePhone.json();
+      try {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
 
-      if (!dataEmail && !dataPassword && !dataPhone) {
-        const response = await fetch('http://localhost:8080/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, alias, email, password, phone, roleuser: { id: selectedValue }, projectList, listLanguage, listFrameworks })
-        });
-        const data = await response.json();
-        if (data.id) {
-          navigate('/rutaPrincipal'); // Asegúrate de que esta es la ruta correcta
+        const responseEmail = await fetch(`http://localhost:8080/users/checkEmail?email=${email}`, requestOptions);
+        const responsePassword = await fetch(`http://localhost:8080/users/checkPassword?password=${password}`, requestOptions)
+        const responsePhone = await fetch(`http://localhost:8080/users/checkPhone?phone=${phone}`, requestOptions)
+
+        const dataEmail = await responseEmail.json();
+        const dataPassword = await responsePassword.json();
+        const dataPhone = await responsePhone.json();
+
+        if (!dataEmail) {
+          if (!dataPhone) {
+            if (!dataPassword) {
+              const response = await fetch('http://localhost:8080/users', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, alias, email, password, phone, roleuser: { id: selectedValue }, projectList, listLanguage, listFrameworks })
+              });
+
+              const data = await response.json();
+              if (data.id) {
+                navigate('/rutaPrincipal'); // Asegúrate de que esta es la ruta correcta
+              } else {
+                // Manejar errores de registro
+                console.error('Error de registro');
+              }
+              
+            }else{
+              toast.error('El password ya existe', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+            }
+          } else {
+            toast.error('El telefono ya existe', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
         } else {
-          // Manejar errores de registro
-          console.error('Error de registro');
+          toast.error('El email ya existe', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         }
-      } else {
-        
-        //se tendra con el !dataEmail && !dataPassword && !dataPhone algo que salte alerts personalizados por cada uno
-        console.log("Esta mal algo");
-        return;
+
+      } catch (error) {
+        console.error('Error al conectar con la API', error);
       }
-
-
-    } catch (error) {
-      console.error('Error al conectar con la API', error);
+    } else {
+      toast.error('El password no coincide', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 
   return (
-    
+
     <div className="login-wrapper">
       <div className='l1'>
         <div className='div1l1'>
@@ -159,30 +166,32 @@ const Login = () => {
         </div>
       </div>
       <div className='l2'>
-      <h2 id="h2CrearCuenta" >{isLogin ? 'Iniciar Sesión':'Crear Cuenta'}</h2>
-        
-      <div style={{ display: isLogin ? 'none' : 'block' }} id="divElige" className="userType-buttons">
-      <label>
-        <input
-          type="checkbox"
-         value="1"
-          onChange={handleChange}
-          checked={selectedValue === "1"}
-        />
-        Programador
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          value="2"
-          onChange={handleChange}
-          checked={selectedValue === "2"}
-        />
-        Empresa
-      </label>
-    </div>
-        
-    
+        <h2 id="h2CrearCuenta" >{isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}</h2>
+        <div>
+          <ToastContainer />
+        </div>
+        <div style={{ display: isLogin ? 'none' : 'block' }} id="divElige" className="userType-buttons">
+          <label>
+            <input
+              type="checkbox"
+              value="1"
+              onChange={handleChange}
+              checked={selectedValue === "1"}
+            />
+            Programador
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="2"
+              onChange={handleChange}
+              checked={selectedValue === "2"}
+            />
+            Empresa
+          </label>
+        </div>
+
+
 
         {isLogin ? (
           <form className='signup-form' onSubmit={handleLogin}>
@@ -202,7 +211,7 @@ const Login = () => {
             />
             <button className='submit-btn' type="submit">Iniciar sesión</button>
           </form>
-        ) :  (
+        ) : (
 
           <form className='signup-form' onSubmit={handleRegister}>
             <input
