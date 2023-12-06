@@ -74,22 +74,20 @@ public class ProjectController {
 		return new ResponseEntity<>(projectsDTO, HttpStatus.OK);
 	}
 
+//	@GetMapping("/project")
+//	public ResponseEntity<?> getProjectById(@RequestParam Long id) {
+//		Optional<Project> project = proService.findProjectById(id);
+//		return project.isPresent() ? ResponseEntity.ok(project)
+//				: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Proyecto no encontrado");
+//	}
+
+	// METODOS POST Y PUT
+
 	@PostMapping("")
 	public ResponseEntity<Object> createProject(@RequestBody Project project) {
 
 		return proService.createNewProject(project);
 	}
-	
-	
-	@PutMapping("/adduserproject")
-    public ResponseEntity<String> addUserToProject(@RequestParam Long projectId, @RequestParam Long userId) {
-        try {
-            proService.addUserToProject(projectId, userId);
-            return ResponseEntity.ok("Usuario agregado al proyecto correctamente.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar usuario al proyecto.");
-        }
-    }
 
 	@PutMapping("/project")
 	public ResponseEntity<?> updateProjectById(@RequestParam Long id, @RequestBody Project updatedProject) {
