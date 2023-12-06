@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'; // Asegúrate de que la ruta al archivo CSS sea correcta
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
 
+  
   const [selectedValue, setSelectedValue] = useState('1'); // Estado para almacenar el valor seleccionado
 
+  useEffect(() => {
+    // Ejemplo de una condición de error (puedes ajustarlo según tus necesidades)
+    const hasError = true; // Simulación de un error
+
+    if (hasError) {
+      toast.error('Ocurrió un error'); // Mostrar toast de error
+    }
+  }, []);
+  
   const handleChange = (e) => {
     const { value, checked } = e.target;
 
@@ -77,15 +88,18 @@ const Login = () => {
       console.error('Error al conectar con la API', error);
     }
   };
-
+ 
   const handleRegister = async (event) => {
     console.log("Intentando registrar"); // Para depuración
 
     event.preventDefault();
     // Lógica para registro...
     if (password !== confirmPassword) {
-      console.error('Las contraseñas no coinciden');
-      return;
+      return (<div>
+        <ToastContainer /> {/* Coloca ToastContainer alrededor de tu aplicación */}
+        {/* Resto de tu código */}
+      </div>);
+     
     }
     try {
       var requestOptions = {
@@ -130,6 +144,7 @@ const Login = () => {
   };
 
   return (
+    
     <div className="login-wrapper">
       <div className='l1'>
         <div className='div1l1'>
@@ -167,7 +182,7 @@ const Login = () => {
       </label>
     </div>
         
-        
+    
 
         {isLogin ? (
           <form className='signup-form' onSubmit={handleLogin}>
