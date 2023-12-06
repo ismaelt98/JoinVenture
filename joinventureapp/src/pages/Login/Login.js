@@ -91,11 +91,15 @@ const Login = () => {
         redirect: 'follow'
       };
 
-      const res = await fetch(`http://localhost:8080/users/checkEmail?email=${email}`, requestOptions);
+      const responseEmail = await fetch(`http://localhost:8080/users/checkEmail?email=${email}`, requestOptions);
+      const responsePassword = await fetch(`http://localhost:8080/users/checkPassword?password=${password}`, requestOptions)
+      const responsePhone = await fetch(`http://localhost:8080/users/checkPhone?phone=${phone}`, requestOptions)
+      
+      const dataEmail = await responseEmail.json();
+      const dataPassword = await responsePassword.json();
+      const dataPhone = await responsePhone.json();
 
-      const da = await res.json();
-
-      if (!da) {
+      if (!dataEmail && !dataPassword && !dataPhone) {
         const response = await fetch('http://localhost:8080/users', {
           method: 'POST',
           headers: {
@@ -111,7 +115,9 @@ const Login = () => {
           console.error('Error de registro');
         }
       } else {
-        console.log('El email ya existe');
+        
+        //se tendra con el !dataEmail && !dataPassword && !dataPhone algo que salte alerts personalizados por cada uno
+        console.log("Esta mal algo");
         return;
       }
 
