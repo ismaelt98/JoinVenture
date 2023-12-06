@@ -20,6 +20,7 @@ import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.UserDTO;
 import com.joinventure.entities.DTOs.UserProjectsDTO;
+import com.joinventure.repositories.FrameworkRepository;
 import com.joinventure.repositories.ProjectRepository;
 import com.joinventure.repositories.UserRepository;
 
@@ -29,7 +30,13 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private ProjectRepository userRepository1;
+	private ProjectRepository proRepo;
+	
+	@Autowired
+	private FrameworkRepository framRepo;
+	
+	@Autowired
+	private ProjectRepository proRepo1;
 
 	public List<User> findAllUsers() {
 		return userRepository.findAll();
@@ -163,15 +170,31 @@ public class UserService {
         if (user != null) {
             
             List<Project> proyectos = user.getProjectList();
-            
-            
+            List<Framework> frameworks = user.getListFrameworks();
+            List<Language> languages = user.getListLanguage();
             if (proyectos != null) {
                 for (Project proyecto : proyectos) {
                     
-                	userRepository1.delete(proyecto);
+                	proRepo.delete(proyecto);
                 }
             
             }
+            if (frameworks != null) {
+                for (Framework fram : frameworks) {
+                    
+                	proRepo.delete(fram);
+                }
+            
+            }
+            if (languages != null) {
+                for (Project proyecto : proyectos) {
+                    
+                	proRepo.delete(proyecto);
+                }
+            
+            }
+            
+            
             
         }
             
