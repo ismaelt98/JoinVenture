@@ -6,15 +6,20 @@ import './Login.css'; // Asegúrate de que la ruta al archivo CSS sea correcta
 
 const Login = () => {
 
-  const [selectedType, setSelectedType] = useState(0); // Estado para mantener el checkbox seleccionado
+  const [selectedValue, setSelectedValue] = useState('1'); // Estado para almacenar el valor seleccionado
 
-  const showProgramador = () => {
-    setSelectedType(selectedType === 1 ? 0 : 1); // Cambiar el tipo si está seleccionado o deseleccionado
-  };
+  const handleChange = (e) => {
+    const { value, checked } = e.target;
 
-  const showEmpresa = () => {
-    setSelectedType(selectedType === 2 ? 0 : 2); // Cambiar el tipo si está seleccionado o deseleccionado
-  };
+   
+    if (checked) {
+      setSelectedValue(value); // Actualiza el estado con el valor del checkbox seleccionado
+    } else {
+      setSelectedValue(value); // Establece un valor vacío si el checkbox se desmarca
+    }
+  }; 
+
+  
   
   const [isLogin, setIsLogin] = useState(true);
 
@@ -23,12 +28,7 @@ const Login = () => {
   const [alias, setAlias] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [roleuser] = useState({
-    // Aquí defines el estado para los datos del formulario
-    // Supongamos que tienes un campo para el ID del RoleUser
-    id: 1,
-    // Otros campos del formulario si los hay
-  });
+  
 
   const [projectList] = useState([]);
   const [listLanguage] = useState([]);
@@ -47,6 +47,8 @@ const Login = () => {
     }, 8000); // Cambia cada 8 segundos
     return () => clearInterval(intervalId);
   }, [titles.length]);
+
+ 
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -105,7 +107,7 @@ const Login = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ username, alias, email, password, phone, roleuser, projectList, listLanguage, listFrameworks })
+          body: JSON.stringify({ username, alias, email, password, phone, roleuser: { id: selectedValue }, projectList, listLanguage, listFrameworks })
         });
         const data = await response.json();
         if (data.id) {
@@ -148,18 +150,18 @@ const Login = () => {
       <label>
         <input
           type="checkbox"
-          checked={selectedType === 1}
-          onChange={showProgramador}
-          value="1"
+         value="1"
+          onChange={handleChange}
+          checked={selectedValue === "1"}
         />
         Programador
       </label>
       <label>
         <input
           type="checkbox"
-          checked={selectedType === 2}
-          onChange={showEmpresa}
           value="2"
+          onChange={handleChange}
+          checked={selectedValue === "2"}
         />
         Empresa
       </label>
