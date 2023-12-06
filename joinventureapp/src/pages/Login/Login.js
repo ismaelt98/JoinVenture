@@ -39,8 +39,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const titles = ['JoinVenture: Transformando Ideas en Realidad!', 'Nuestra Misión: Unir Fuerzas para el Éxito'];
-  const paragraphs = ['En el dinámico mundo de los negocios...', 'En JoinVenture, creemos en el poder de la colaboración...'];
-
+  
+  const paragraphs = ['En el dinámico mundo de los negocios y la innovación, surge JoinVenture como un faro de colaboración y ejecución. Somos más que una empresa, somos el puente que conecta visionarios con expertos, convirtiendo ideas en proyectos tangibles y exitosos.', 'En JoinVenture, creemos en el poder de la colaboración. Nuestra misión es catalizar el potencial creativo al unir emprendedores con profesionales especializados.', 'En el vasto panorama de proyectos e innovación, JoinVenture destaca como un motor de transformación. Nos definimos como arquitectos de sueños empresariales, trabajando incansablemente para materializar ideas y convertirlas en proyectos prósperos.', 'En el corazón de JoinVenture yace una filosofía de unión. Creemos en el poder de la colaboración, donde visionarios y ejecutores se encuentran para dar forma a ideas que impulsan el cambio y el progreso.'];
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentTitleIndex((prevIndex) => (prevIndex + 1) % titles.length);
@@ -168,7 +168,7 @@ const Login = () => {
         
 
         {isLogin ? (
-          <form onSubmit={handleLogin}>
+          <form className='signup-form' onSubmit={handleLogin}>
             <input
               type="email"
               value={email}
@@ -187,7 +187,7 @@ const Login = () => {
           </form>
         ) :  (
 
-          <form onSubmit={handleRegister}>
+          <form className='signup-form' onSubmit={handleRegister}>
             <input
               type="text"
               value={username}

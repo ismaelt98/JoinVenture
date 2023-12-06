@@ -9,7 +9,7 @@ margin-top: 30px;
 
 }
 .userType-button {
-  text-align: center;
+  text-align: left;
      margin-bottom: 20px;
    
      border-radius: 5px;
@@ -57,7 +57,7 @@ input[type="password"] {
   display: flex;
   flex-direction: column;
   width: 800px;
-  height: 700px;
+  height: 500px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -95,9 +95,11 @@ border-radius: 8px;
 .div1l1{
   height: 400px;
   width: 600px;
+  text-align: left;
 }
 .div2l1{
-  margin-top: 100px;
+  margin-top: 40px;
+  text-align: left;
 }
 .l1 p {
   color: white;
@@ -109,12 +111,18 @@ border-radius: 8px;
   text-align: center;
   margin-top: 50px;
 }
+.signup-form {
+  width: 300px;
+  padding-left: 13%;
+ 
+
+}
 .l2 {
   width: 400px;
   border: none;
       border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
-  height: 700px;
+  height: 500px;
   background-color: white;
 }
 form {
