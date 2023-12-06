@@ -224,6 +224,15 @@ public class UserService {
 	public boolean verificarEmailExistente(String email) {
 		return userRepository.existsByEmail(email);
 	}
+	public boolean verificarPasswordExistente(String password) {
+		
+		return userRepository.existsByPassword(hashSHA256(password));
+	}
+public boolean verificarPhoneExistente(String phone) {
+		
+		return userRepository.existsByPhone(phone);
+	}
+	
 
 //    public Optional<User> findUserByEmail(String email) {
 //        Optional<User> user = userRepository.findAll().stream()
