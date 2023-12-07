@@ -51,6 +51,11 @@ public class ProjectController {
 	public ResponseEntity<List<ProjectDTO>> getAllProjects() {
 		return ResponseEntity.ok().body(proService.getAllProjects());
 	}
+	
+	@GetMapping("/projectsUser")
+	public ResponseEntity<List<ProjectDTO>> getAllProjectsByUser(@RequestParam Long id){
+		return ResponseEntity.ok().body(proService.getAllProjectsByUser(id));
+	}
 
 	@GetMapping("/projectsCreator")
 	public ResponseEntity<List<ProjectDTO>> getProjectsByCreator(@RequestParam Long id) {

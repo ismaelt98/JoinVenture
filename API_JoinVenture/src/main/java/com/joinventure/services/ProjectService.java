@@ -31,6 +31,41 @@ public class ProjectService {
 	public List<Project> findAllUsers() {
 		return projectRepo.findAll();
 	}
+	
+	public List<ProjectDTO> getAllProjectsByUser(Long id) {
+		
+		Optional<User> usuario = userRepo.findById(id);
+		List<ProjectDTO> userDTOs = new ArrayList<>();
+        
+		if(usuario.isPresent()) {
+			List<Project> projects = usuario.get().getProjectList();
+			for (Project proj : projects) {
+				ProjectDTO userDTO = new ProjectDTO();
+				userDTO.setId(proj.getId());
+				userDTO.setName(proj.getName());
+				userDTO.setNumMembers(proj.getNumMembers());
+				userDTO.setName_sector(proj.getSector().getName());
+				userDTO.setName_demanda(proj.getDemand().getName());
+				userDTO.setName_creador(proj.getUser().getUsername());
+				userDTO.setEmail_creador(proj.getUser().getEmail());
+
+				List<String> usersNames = proj.getUserList().stream().map(project -> project.getUsername())
+						.collect(Collectors.toList());
+				userDTO.setUsersName(usersNames);
+
+				userDTOs.add(userDTO);
+			}
+		}
+
+		
+		
+
+		
+			
+
+		return userDTOs;
+	}
+	
 
 	public List<ProjectDTO> getAllProjects() {
 		List<Project> projects = projectRepo.findAll();

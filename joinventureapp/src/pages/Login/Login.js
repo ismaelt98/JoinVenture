@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'; // Asegúrate de que la ruta al archivo CSS sea correcta
 import { toast, ToastContainer } from 'react-toastify';
@@ -66,12 +67,25 @@ const Login = () => {
         body: formdata,
         redirect: 'follow'
       };
+      var requestOptions1 = {
+        method: 'GET',
+        
+        redirect: 'follow'
+      };
       const response = await fetch('http://localhost:8080/users/login', requestOptions);
       const data = await response.json();
       if (data) {
+        const responseId = await fetch(`http://localhost:8080/users/buscarEmail?email=${email}`, requestOptions1);
+        const dataId = await responseId.json();
+
+        const cookieValue = dataId.id; // Convertir el JSON en un string para la cookie
+        const cookieRoleUser = dataId.name_role;
+          // Crear la cookie con el valor obtenido del JSON
+        Cookies.set('id', cookieValue, { expires: 10 });
+        Cookies.set('roleuser', cookieRoleUser, { expires: 10 });
         // Guardar el token y posiblemente el ID de usuario en el almacenamiento local o en cookies
         localStorage.setItem('userToken', data.token);
-        navigate('/rutaPrincipal'); // Asegúrate de que esta es la ruta correcta
+        navigate('../App'); // Asegúrate de que esta es la ruta correcta
       } else {
         toast.error('El email o password no coinciden', {
           position: toast.POSITION.TOP_RIGHT,

@@ -205,27 +205,38 @@ public class UserService {
         }
         
 
-	public UserDTO findUserByEmail(String email) {
-		List<User> users = userRepository.findAll();
+    public UserDTO findUserByEmail(String email) {
+        List<User> users = userRepository.findAll();
 
-		for (User user : users) {
-			if (user.getEmail().equals(email)) {
-				UserDTO userDTO = new UserDTO();
-				userDTO.setId(user.getId());
-				userDTO.setName_role(user.getRoleuser().getName());
-				userDTO.setUsername(user.getUsername());
-				userDTO.setAlias(user.getAlias());
-				userDTO.setEmail(user.getEmail());
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                UserDTO userDTO = new UserDTO();
+                userDTO.setId(user.getId());
+                userDTO.setName_role(user.getRoleuser().getName());
+                userDTO.setUsername(user.getUsername());
+                userDTO.setAlias(user.getAlias());
+                userDTO.setEmail(user.getEmail());
 
-				List<String> projectNames = user.getProjectList().stream().map(project -> project.getName())
-						.collect(Collectors.toList());
-				userDTO.setProjectNames(projectNames);
+                List<String> projectNames;
+                List<Project> userProjects = user.getProjectList();
 
-				return userDTO;
-			}
-		}
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + email);
-	}
+                if (userProjects != null && !userProjects.isEmpty()) {
+                    projectNames = userProjects.stream()
+                            .map(Project::getName)
+                            .collect(Collectors.toList());
+                } else {
+                    projectNames = new ArrayList<>(); // Devolver una lista vacía si no hay proyectos
+                }
+
+                userDTO.setProjectNames(projectNames);
+
+                return userDTO;
+            }
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + email);
+    }
+
 
 	public User findUserByUsername(String username) {
 		List<User> users = userRepository.findAll();
