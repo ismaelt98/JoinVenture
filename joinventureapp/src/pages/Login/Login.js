@@ -85,7 +85,7 @@ const Login = () => {
         Cookies.set('roleuser', cookieRoleUser, { expires: 10 });
         // Guardar el token y posiblemente el ID de usuario en el almacenamiento local o en cookies
         localStorage.setItem('userToken', data.token);
-        navigate('../App'); // Asegúrate de que esta es la ruta correcta
+        navigate('/'); // Asegúrate de que esta es la ruta correcta
       } else {
         toast.error('El email o password no coinciden', {
           position: toast.POSITION.TOP_RIGHT,
@@ -132,7 +132,7 @@ const Login = () => {
 
               const data = await response.json();
               if (data.id) {
-                navigate('/rutaPrincipal'); // Asegúrate de que esta es la ruta correcta
+                navigate('/login'); // Asegúrate de que esta es la ruta correcta
               } else {
                 // Manejar errores de registro
                 console.error('Error de registro');
