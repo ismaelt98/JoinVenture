@@ -21,6 +21,7 @@ import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.UserDTO;
 import com.joinventure.entities.DTOs.UserProjectsDTO;
 import com.joinventure.repositories.FrameworkRepository;
+import com.joinventure.repositories.LenguageRepository;
 import com.joinventure.repositories.ProjectRepository;
 import com.joinventure.repositories.UserRepository;
 
@@ -35,8 +36,10 @@ public class UserService {
 	@Autowired
 	private FrameworkRepository framRepo;
 	
+	
 	@Autowired
-	private ProjectRepository proRepo1;
+	private LenguageRepository langRepo;
+	
 
 	public List<User> findAllUsers() {
 		return userRepository.findAll();
@@ -182,14 +185,14 @@ public class UserService {
             if (frameworks != null) {
                 for (Framework fram : frameworks) {
                     
-                	proRepo.delete(fram);
+                	framRepo.delete(fram);
                 }
             
             }
             if (languages != null) {
-                for (Project proyecto : proyectos) {
+                for (Language lang : languages) {
                     
-                	proRepo.delete(proyecto);
+                	langRepo.delete(lang);
                 }
             
             }

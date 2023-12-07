@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.joinventure.entities.RoleUser;
 import com.joinventure.entities.User;
 import com.joinventure.repositories.UserRepository;
+import com.joinventure.services.RoleUserService;
 import com.joinventure.services.UserService;
 
 @RestController
@@ -23,6 +25,9 @@ public class GoogleController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private RoleUserService roleuserService;
     
     @GetMapping
     public RedirectView redirectToGoogleAuthorization() {
@@ -39,8 +44,7 @@ public class GoogleController {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            return new RedirectView("http://localhost:8080/users/buscar/" + user.getUsername());
+        	return new RedirectView("http://localhost:5500/logged.html");
         } else {
             User user = new User();
             user.setUsername(firstName);
@@ -48,10 +52,11 @@ public class GoogleController {
             user.setEmail(email);
             user.setPassword(userService.hashSHA256("changethispassword"));
             user.setPhone("999999999");
-
+            RoleUser role = roleuserService.findRoleById((long) 1);
+            user.setRoleuser(role);
             userRepository.save(user);
             
-            return new RedirectView("http://localhost:8080/users/buscar/" + firstName);
+            return new RedirectView("http://localhost:5500/logged.html");
         }
     }
 }
