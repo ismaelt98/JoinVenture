@@ -156,7 +156,7 @@ const Projects = () => {
       <div style={{ display: isMisProyectos ? 'block' : 'none' }} className='project-container'>
         {data1.map((objeto, index) => (
           <div className='project-card' key={index}>
-            <p>{objeto.numMembers}</p>
+            <p>{objeto.name}</p>
             <p>{objeto.numMembers}</p>
             <p>{objeto.name_sector}</p>
             <p>{objeto.name_demanda}</p>

@@ -1,19 +1,154 @@
-.App {
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 600px;
+  justify-content: center;
+margin-top: 30px;
+  height: 100vh;
+
+}
+.userType-button {
+  text-align: left;
+     margin-bottom: 20px;
+   
+     border-radius: 5px;
+     overflow: hidden;
+ }
+ 
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.login-form input[type="email"],
+.login-form input[type="password"],
+.login-form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.submit-btn:hover {
+  background-color: #2980b9;
+}
+input[type="number"],
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.l1{
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  height: 500px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.767);
+  color: white;
+  border: none;
+
+}
+.userType-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+border-radius: 8px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.userType-button:hover {
+  background-color: #555;
+  color: white;
+}
+.l1>div{
+  margin-bottom: 20px;
+}
+.l1 h2 {
+  color: white;
+  
+  font-size: 34px;
+  
+}
+
+
+.div1l1{
+  height: 400px;
+  width: 600px;
+  text-align: left;
+}
+.div2l1{
+  margin-top: 40px;
+  text-align: left;
+}
+.l1 p {
+  color: white;
+  font-size: 16px;
+}
+.l2 h2{
+  color: #333;
+  font-size: 24px;
   text-align: center;
+  margin-top: 50px;
+}
+.signup-form {
+  width: 300px;
+  padding-left: 13%;
+ 
+
+}
+.l2 {
+  width: 400px;
+  border: none;
+      border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  height: 500px;
+  background-color: white;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  
 }
 
-/* Añade aquí estilos globales adicionales que afectan a la aplicación completa */
-/* Por ejemplo, podrías querer un fondo para todo el sitio */
-body {
-  background-color: #eaeaea; /* Esto puede variar según la captura de pantalla que estés emulando */
+input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-/* Estilos para mantener la coherencia en los márgenes y el padding */
-* {
-  box-sizing: border-box;
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
 }
 
-/* Asegúrate de que todos los textos utilicen la tipografía correcta */
-body, button, input, textarea {
-  font-family: 'Roboto', sans-serif; /* Sustituye 'Roboto' por la tipografía que desees */
+button:hover {
+  background-color: #0056b3;
 }
