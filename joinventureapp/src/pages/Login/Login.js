@@ -84,8 +84,8 @@ const Login = () => {
         Cookies.set('id', cookieValue, { expires: 10 });
         Cookies.set('roleuser', cookieRoleUser, { expires: 10 });
         // Guardar el token y posiblemente el ID de usuario en el almacenamiento local o en cookies
-        localStorage.setItem('userToken', data.token);
-        navigate('/'); // Asegúrate de que esta es la ruta correcta
+        
+        navigate('/projects'); // Asegúrate de que esta es la ruta correcta
       } else {
         toast.error('El email o password no coinciden', {
           position: toast.POSITION.TOP_RIGHT,
