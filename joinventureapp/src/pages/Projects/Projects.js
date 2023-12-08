@@ -10,8 +10,12 @@ const Projects = () => {
   const [isMisProyectos, setMisProyectos] = useState(false);
   const [isAllProyectos, setAllProyectos] = useState(true);
   const [dataRoleUser, setDataRoleUser] = useState();
+  const [sectors, setSectors] = useState([]);
+  const [selectedSector, setSelectedSector] = useState('');
+  const [demands, setDemands] = useState([]);
+  const [selectedDemand, setSelectedDemand] = useState('');
   const roleuser = Cookies.get('roleuser');
-  
+
   const updateDataRoleUser = () => {
     if (roleuser === 'PROGRAMADOR') {
       setDataRoleUser(true);
@@ -20,9 +24,11 @@ const Projects = () => {
     }
   };
 
-  // useEffect para ejecutar la función cuando `roleuser` cambie
+
   useEffect(() => {
+
     updateDataRoleUser();
+    // eslint-disable-next-line
   }, [roleuser]);
 
   const handleClick = (option, event) => {
@@ -31,9 +37,16 @@ const Projects = () => {
       setMostrarProyectos(option);
     }
   };
+  const handleSectorChange = (event) => {
+    setSelectedSector(event.target.value);
+    
+  };
+  const handleDemandChange = (event) => {
+    setSelectedDemand(event.target.value);
+  };
 
   useEffect(() => {
-    
+
     const fetchData = async () => {
       try {
         const responseAll = await fetch('http://localhost:8080/projects');
@@ -43,6 +56,13 @@ const Projects = () => {
 
         const responseById = await fetch(`http://localhost:8080/projects/projectsUser?id=${id}`);
         const jsonDataById = await responseById.json();
+        const responseSectors = await fetch('http://localhost:8080/sectors');
+        const dataSectors = await responseSectors.json();
+        const responseDemands = await fetch('http://localhost:8080/demands');
+        const dataDemands = await responseDemands.json();
+
+        setSectors(dataSectors);
+        setDemands(dataDemands);
         setData(jsonDataAll);
         setData1(jsonDataById);
       } catch (error) {
@@ -53,8 +73,8 @@ const Projects = () => {
   }, []);
 
   return (
-    <div style={{display: dataRoleUser ? 'block': 'none'}}>
-      <div  className="navbar1">
+    <div >
+      <div style={{ display: dataRoleUser ? 'flex' : 'none' }} className="navbar1">
         <button
           className={mostrarProyectos === 'todos' ? 'active' : ''}
           onClick={(e) => {
@@ -97,7 +117,7 @@ const Projects = () => {
             <p>{objeto.numMembers}</p>
             <p>{objeto.name_sector}</p>
             <p>{objeto.name_demanda}</p>
-            <button>UNIRSE PROYECTO</button>
+            <button>{dataRoleUser ? 'UNIRSE PROYECTO' : 'VER PROYECTO'}</button>
           </div>
         ))}
       </div>
@@ -126,16 +146,24 @@ const Projects = () => {
           </div>
           <div className="form-group">
             <label htmlFor="sector">Sector:</label>
-            <select id="sector" name="sector" required>
+            <select id="sector" name="sector" value={selectedSector} onChange={handleSectorChange} required>
               <option value="" disabled selected hidden>Selecciona un sector</option>
-              {/* Aquí puedes agregar opciones para el sector */}
+              {sectors.map((sector) => (
+                <option key={sector.id} value={sector.id}>
+                  {sector.name}
+                </option>
+              ))}
             </select>
           </div>
           <div className="form-group">
             <label htmlFor="demand">Demanda:</label>
-            <select id="demand" name="demand" required>
-              <option value="" disabled selected hidden>Selecciona una demanda</option>
-              {/* Aquí puedes agregar opciones para la demanda */}
+            <select id="demand" name="demand" value={selectedDemand} onChange={handleDemandChange} required>
+            <option value="" disabled selected hidden>Selecciona una demanda</option>
+              {demands.map((demand) => (
+                <option key={demand.id} value={demand.id}>
+                  {demand.name}
+                </option>
+              ))}
             </select>
           </div>
           <div className="form-group">

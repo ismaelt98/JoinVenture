@@ -132,6 +132,7 @@ const Login = () => {
 
               const data = await response.json();
               if (data.id) {
+                setIsLogin(true);
                 navigate('/login'); // Asegúrate de que esta es la ruta correcta
               } else {
                 // Manejar errores de registro
