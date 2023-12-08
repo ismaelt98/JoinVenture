@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import './Projects.css'; // Asegúrate de crear este archivo si quieres estilos específicos
 
 const Projects = () => {
+  const [nameProject, setNameProject] = useState('');
+  const [numMembers, setNumMembers] = useState();
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
   const [mostrarProyectos, setMostrarProyectos] = useState('todos');
@@ -15,6 +17,7 @@ const Projects = () => {
   const [demands, setDemands] = useState([]);
   const [selectedDemand, setSelectedDemand] = useState('');
   const roleuser = Cookies.get('roleuser');
+  const idUser = Cookies.get('id');
 
   const updateDataRoleUser = () => {
     if (roleuser === 'PROGRAMADOR') {
@@ -24,6 +27,32 @@ const Projects = () => {
     }
   };
 
+
+  const handleCrearProject = async (event) => {
+    event.preventDefault();
+   
+    try {
+      
+
+      var requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Añade este encabezado
+        },
+        body: JSON.stringify({ name:nameProject, numMembers, sector: { id: selectedSector }, demand: { id: parseInt(selectedDemand) }, user: {id:idUser}, userList: [{id: idUser}]}),
+        redirect: 'follow'
+      };
+      
+      const response = await fetch('http://localhost:8080/projects', requestOptions);
+      const data = await response.json();
+      
+      console.log(data);
+      
+    } catch (e) {
+
+
+    }
+  };
 
   useEffect(() => {
 
@@ -51,10 +80,10 @@ const Projects = () => {
       try {
         const responseAll = await fetch('http://localhost:8080/projects');
         const jsonDataAll = await responseAll.json();
-        const id = Cookies.get('id');
+        
 
 
-        const responseById = await fetch(`http://localhost:8080/projects/projectsUser?id=${id}`);
+        const responseById = await fetch(`http://localhost:8080/projects/projectsUser?id=${idUser}`);
         const jsonDataById = await responseById.json();
         const responseSectors = await fetch('http://localhost:8080/sectors');
         const dataSectors = await responseSectors.json();
@@ -69,7 +98,9 @@ const Projects = () => {
         console.error('Error fetching data:', error);
       }
     };
+
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -135,14 +166,27 @@ const Projects = () => {
       </div>
 
       <div style={{ display: isCrearProyecto ? 'block' : 'none' }} className='container'>
-        <form id="projectForm">
+        <form id="projectForm" onSubmit={handleCrearProject}>
           <div className="form-group">
             <label htmlFor="projectName">Nombre del Proyecto:</label>
-            <input type="text" id="projectName" name="projectName" required />
+            <input
+              type="text"
+              value={nameProject}
+              onChange={(e) => setNameProject(e.target.value)}
+              
+              required
+            />
+            
           </div>
           <div className="form-group">
             <label htmlFor="maxMembers">Límite de participantes:</label>
-            <input type="number" id="maxMembers" name="maxMembers" required />
+            <input
+              type="number"
+              value={numMembers}
+              onChange={(e) => setNumMembers(e.target.value)}
+              
+              required
+            />
           </div>
           <div className="form-group">
             <label htmlFor="sector">Sector:</label>
