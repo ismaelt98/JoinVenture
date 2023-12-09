@@ -142,19 +142,7 @@ public class UserService {
 		}
 	}
 
-	public boolean getUserProject(Long idProject, Long idUser) {
-		Optional<Project> pro = proRepo.findById(idProject);
-		if (pro != null) {
-			List<User> users = pro.get().getUserList();
-			for (User usuario : users) {
-				if (usuario.getId().equals(idUser)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
+	
 
 	public ResponseEntity<Object> updateUser(Long id, User userDetails) {
 		User user = userRepository.findById(id).orElseThrow(
