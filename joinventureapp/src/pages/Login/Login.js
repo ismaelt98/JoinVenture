@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
 
   Cookies.remove("id");
-  window.location.reload();
+  
   
   const [selectedValue, setSelectedValue] = useState('1');
 

@@ -28,6 +28,9 @@
   padding: 0.5rem 1rem; /* Espaciado adecuado para los enlaces */
   transition: color 0.3s ease, border-bottom 0.3s ease; /* Transición suave para el hover */
 }
+.imgLogo{
+  width: 80px;
+}
 
 .navbar-links a:hover,
 .navbar-links .active {
