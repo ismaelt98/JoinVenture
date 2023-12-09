@@ -12,6 +12,7 @@ const Projects = () => {
   const [isMisProyectos, setMisProyectos] = useState(false);
   const [isAllProyectos, setAllProyectos] = useState(true);
   const [dataRoleUser, setDataRoleUser] = useState();
+  
   const [sectors, setSectors] = useState([]);
   const [selectedSector, setSelectedSector] = useState('');
   const [demands, setDemands] = useState([]);
@@ -20,6 +21,19 @@ const Projects = () => {
   const idUser = Cookies.get('id');
 
   //window.location.reload();
+
+  
+
+
+
+  const estaUnidoAlProyecto = (usuariosProyecto) => {
+    return (
+      Array.isArray(usuariosProyecto) &&
+      document.getElementById('nameProject').innerText &&
+      usuariosProyecto.some(user => user.innerText && user.innerText === document.getElementById('nameProject').innerText)
+    );
+  };
+ 
 
   const updateDataRoleUser = () => {
     if (roleuser === 'PROGRAMADOR') {
@@ -112,6 +126,7 @@ const Projects = () => {
           className={mostrarProyectos === 'todos' ? 'active' : ''}
           onClick={(e) => {
             handleClick('todos', e);
+            
             setAllProyectos(true);
             setMisProyectos(false);
             setCrearProyecto(false);
@@ -146,10 +161,15 @@ const Projects = () => {
       <div style={{ display: isAllProyectos ? 'block' : 'none' }} className='project-container'>
         {data.map((objeto, index) => (
           <div className='project-card' key={index}>
-            <p>{objeto.name}</p>
+            <p id='nameProject'>{objeto.name}</p>
             <p>{objeto.numMembers}</p>
             <p>{objeto.name_sector}</p>
             <p>{objeto.name_demanda}</p>
+            <p>
+                {estaUnidoAlProyecto(objeto.usersName)
+                  ? 'Estás unido a este proyecto'
+                  : 'No estás unido a este proyecto'}
+              </p>
             <button>{dataRoleUser ? 'UNIRSE PROYECTO' : 'VER PROYECTO'}</button>
           </div>
         ))}
@@ -162,7 +182,7 @@ const Projects = () => {
             <p>{objeto.numMembers}</p>
             <p>{objeto.name_sector}</p>
             <p>{objeto.name_demanda}</p>
-            <button>UNIRSE PROYECTO</button>
+            
           </div>
         ))}
       </div>

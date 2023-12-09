@@ -29,17 +29,15 @@ import com.joinventure.repositories.UserRepository;
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private ProjectRepository proRepo;
-	
+
 	@Autowired
 	private FrameworkRepository framRepo;
-	
-	
+
 	@Autowired
 	private LenguageRepository langRepo;
-	
 
 	public List<User> findAllUsers() {
 		return userRepository.findAll();
@@ -50,30 +48,28 @@ public class UserService {
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
 
 		List<Language> languages = new ArrayList<>();
-		
+
 		for (Language user1 : user.getListLanguage()) {
 			Language lang = new Language();
 			lang.setId(user1.getId());
 			lang.setName(user1.getName());
-		
 
 			languages.add(lang);
 		}
 		return languages;
 	}
-	
+
 	public List<Framework> getAllFrameworksByUser(Long id) {
 		User user = userRepository.findById(id).orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
 
 		List<Framework> frameworks = new ArrayList<>();
-		
+
 		for (Framework framework : user.getListFrameworks()) {
-			
+
 			Framework fram = new Framework();
 			fram.setId(framework.getId());
 			fram.setName(framework.getName());
-		
 
 			frameworks.add(fram);
 		}
@@ -104,7 +100,7 @@ public class UserService {
 		for (User user : users) {
 			UserDTO userDTO = new UserDTO();
 			userDTO.setId(user.getId());
-			userDTO.setName_role(user.getRoleuser().getName()); 
+			userDTO.setName_role(user.getRoleuser().getName());
 			userDTO.setUsername(user.getUsername());
 			userDTO.setAlias(user.getAlias());
 			userDTO.setEmail(user.getEmail());
@@ -122,7 +118,7 @@ public class UserService {
 	public UserDTO findUserById(long id) {
 		User user = userRepository.findById(id).orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
-		
+
 		UserDTO userDTO = new UserDTO();
 		userDTO.setId(user.getId());
 		userDTO.setName_role(user.getRoleuser().getName()); // Suponiendo que 'nombre' es un campo en RoleUser
@@ -145,98 +141,103 @@ public class UserService {
 			return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
 		}
 	}
-	
 
+	public boolean getUserProject(Long idProject, Long idUser) {
+		Optional<Project> pro = proRepo.findById(idProject);
+		if (pro != null) {
+			List<User> users = pro.get().getUserList();
+			for (User usuario : users) {
+				if (usuario.getId().equals(idUser)) {
+					return true;
+				}
+			}
+		}
 
-    public ResponseEntity<Object> updateUser(Long id, User userDetails){
-        User user = userRepository.findById(id).orElseThrow(
+		return false;
+	}
+
+	public ResponseEntity<Object> updateUser(Long id, User userDetails) {
+		User user = userRepository.findById(id).orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
-        
-        System.out.println(user);
-        user.setUsername(userDetails.getUsername());
-        user.setPassword(hashSHA256(userDetails.getPassword()));
-        user.setEmail(user.getEmail());
-        user.setAlias(userDetails.getAlias());  
-        user.setPhone(user.getPhone());
-        user.setProjectList(user.getProjectList());
-        user.setListLanguage(user.getListLanguage());
-        user.setListFrameworks(user.getListFrameworks());
-        final User updatedUser = userRepository.save(user);
-        return ResponseEntity.ok().body(updatedUser);
-    }
-    
-    
-    public void eliminarUsuarioConProyectos(Long userId) {
-        
-        User user = userRepository.findById(userId).orElse(null);
-        
-        if (user != null) {
-            
-            List<Project> proyectos = user.getProjectList();
-            List<Framework> frameworks = user.getListFrameworks();
-            List<Language> languages = user.getListLanguage();
-            if (proyectos != null) {
-                for (Project proyecto : proyectos) {
-                    
-                	proRepo.delete(proyecto);
-                }
-            
-            }
-            if (frameworks != null) {
-                for (Framework fram : frameworks) {
-                    
-                	framRepo.delete(fram);
-                }
-            
-            }
-            if (languages != null) {
-                for (Language lang : languages) {
-                    
-                	langRepo.delete(lang);
-                }
-            
-            }
-            
-            
-            
-        }
-            
-            userRepository.delete(user);
-        }
-        
 
-    public UserDTO findUserByEmail(String email) {
-        List<User> users = userRepository.findAll();
+		System.out.println(user);
+		user.setUsername(userDetails.getUsername());
+		user.setPassword(hashSHA256(userDetails.getPassword()));
+		user.setEmail(user.getEmail());
+		user.setAlias(userDetails.getAlias());
+		user.setPhone(user.getPhone());
+		user.setProjectList(user.getProjectList());
+		user.setListLanguage(user.getListLanguage());
+		user.setListFrameworks(user.getListFrameworks());
+		final User updatedUser = userRepository.save(user);
+		return ResponseEntity.ok().body(updatedUser);
+	}
 
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                UserDTO userDTO = new UserDTO();
-                userDTO.setId(user.getId());
-                userDTO.setName_role(user.getRoleuser().getName());
-                userDTO.setUsername(user.getUsername());
-                userDTO.setAlias(user.getAlias());
-                userDTO.setEmail(user.getEmail());
+	public void eliminarUsuarioConProyectos(Long userId) {
 
-                List<String> projectNames;
-                List<Project> userProjects = user.getProjectList();
+		User user = userRepository.findById(userId).orElse(null);
 
-                if (userProjects != null && !userProjects.isEmpty()) {
-                    projectNames = userProjects.stream()
-                            .map(Project::getName)
-                            .collect(Collectors.toList());
-                } else {
-                    projectNames = new ArrayList<>(); // Devolver una lista vacía si no hay proyectos
-                }
+		if (user != null) {
 
-                userDTO.setProjectNames(projectNames);
+			List<Project> proyectos = user.getProjectList();
+			List<Framework> frameworks = user.getListFrameworks();
+			List<Language> languages = user.getListLanguage();
+			if (proyectos != null) {
+				for (Project proyecto : proyectos) {
 
-                return userDTO;
-            }
-        }
+					proRepo.delete(proyecto);
+				}
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + email);
-    }
+			}
+			if (frameworks != null) {
+				for (Framework fram : frameworks) {
 
+					framRepo.delete(fram);
+				}
+
+			}
+			if (languages != null) {
+				for (Language lang : languages) {
+
+					langRepo.delete(lang);
+				}
+
+			}
+
+		}
+
+		userRepository.delete(user);
+	}
+
+	public UserDTO findUserByEmail(String email) {
+		List<User> users = userRepository.findAll();
+
+		for (User user : users) {
+			if (user.getEmail().equals(email)) {
+				UserDTO userDTO = new UserDTO();
+				userDTO.setId(user.getId());
+				userDTO.setName_role(user.getRoleuser().getName());
+				userDTO.setUsername(user.getUsername());
+				userDTO.setAlias(user.getAlias());
+				userDTO.setEmail(user.getEmail());
+
+				List<String> projectNames;
+				List<Project> userProjects = user.getProjectList();
+
+				if (userProjects != null && !userProjects.isEmpty()) {
+					projectNames = userProjects.stream().map(Project::getName).collect(Collectors.toList());
+				} else {
+					projectNames = new ArrayList<>(); // Devolver una lista vacía si no hay proyectos
+				}
+
+				userDTO.setProjectNames(projectNames);
+
+				return userDTO;
+			}
+		}
+
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + email);
+	}
 
 	public User findUserByUsername(String username) {
 		List<User> users = userRepository.findAll();
@@ -261,15 +262,16 @@ public class UserService {
 	public boolean verificarEmailExistente(String email) {
 		return userRepository.existsByEmail(email);
 	}
+
 	public boolean verificarPasswordExistente(String password) {
-		
+
 		return userRepository.existsByPassword(hashSHA256(password));
 	}
-public boolean verificarPhoneExistente(String phone) {
-		
+
+	public boolean verificarPhoneExistente(String phone) {
+
 		return userRepository.existsByPhone(phone);
 	}
-	
 
 //    public Optional<User> findUserByEmail(String email) {
 //        Optional<User> user = userRepository.findAll().stream()

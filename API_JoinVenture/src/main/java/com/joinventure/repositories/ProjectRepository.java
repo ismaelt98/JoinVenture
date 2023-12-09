@@ -10,6 +10,7 @@ import com.joinventure.entities.Project;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
+	Optional <Project> findByName(String name);
 	Optional<Project> findById(Long id);
 
 }

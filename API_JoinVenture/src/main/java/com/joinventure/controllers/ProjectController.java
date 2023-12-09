@@ -51,9 +51,9 @@ public class ProjectController {
 	public ResponseEntity<List<ProjectDTO>> getAllProjects() {
 		return ResponseEntity.ok().body(proService.getAllProjects());
 	}
-	
+
 	@GetMapping("/projectsUser")
-	public ResponseEntity<List<ProjectDTO>> getAllProjectsByUser(@RequestParam Long id){
+	public ResponseEntity<List<ProjectDTO>> getAllProjectsByUser(@RequestParam Long id) {
 		return ResponseEntity.ok().body(proService.getAllProjectsByUser(id));
 	}
 
@@ -86,41 +86,29 @@ public class ProjectController {
 
 		return proService.createNewProject(project);
 	}
-	
-	
+
+	@PostMapping("/userProject")
+	public boolean getLogin(@RequestParam String nameProject, @RequestParam Long idUser) {
+		
+		return proService.getUserProject(nameProject, idUser); 
+		
+		
+	}
+
 	@PutMapping("/adduserproject")
-    public ResponseEntity<String> addUserToProject(@RequestParam Long projectId, @RequestParam Long userId) {
-        try {
-            proService.addUserToProject(projectId, userId);
-            return ResponseEntity.ok("Usuario agregado al proyecto correctamente.");
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El usuario ya está en el proyecto.");
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Proyecto no encontrado.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar usuario al proyecto.");
-        }
-    }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public ResponseEntity<String> addUserToProject(@RequestParam Long projectId, @RequestParam Long userId) {
+		try {
+			proService.addUserToProject(projectId, userId);
+			return ResponseEntity.ok("Usuario agregado al proyecto correctamente.");
+		} catch (DataIntegrityViolationException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El usuario ya está en el proyecto.");
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Proyecto no encontrado.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error al agregar usuario al proyecto.");
+		}
+	}
 
 	@PutMapping("/project")
 	public ResponseEntity<?> updateProjectById(@RequestParam Long id, @RequestBody Project updatedProject) {

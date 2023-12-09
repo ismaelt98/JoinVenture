@@ -95,6 +95,20 @@ public class ProjectService {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(projectRepo.save(project));
 	}
+	
+	public boolean getUserProject(String nameProject, Long idUser) {
+		Optional<Project> pro = projectRepo.findByName(nameProject);
+		if (pro != null) {
+			List<User> users = pro.get().getUserList();
+			for (User usuario : users) {
+				if (usuario.getId().equals(idUser)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	@Transactional
 	public void addUserToProject(Long projectId, Long userId) {
