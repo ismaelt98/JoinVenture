@@ -5,10 +5,14 @@ import Cookies from 'js-cookie';
 
 const Contact = () => {
   const id = Cookies.get("id");
-  const [data1, setData1] = useState();
-  
-  
-  useEffect(() => { 
+  const [data1, setData1] = useState({
+    username: '',
+    alias: '',
+    email: '',
+  });
+
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const requestOptions = {
@@ -26,23 +30,26 @@ const Contact = () => {
         console.error('Error fetching data:', error);
       }
     };
-fetchData();
-  }, [id]);
-  
+    fetchData();
+    //eslint-disable-next-line
+  }, []);
 
-  
+
+
 
   return (
     <div>
       <div className='project-container'>
         
-          <div className='project-card' >
-          <p>{data1.username}</p>
-          <p>{data1.alias}</p>
-          <p>{data1.email}</p>
-              
-          </div>
-        
+        <h2 className='username'>{data1.username}</h2>
+        <p className='bio'>Descripción corta sobre el usuario</p>
+        <ul className='profile-details'>
+          <li><strong>Alias:</strong>{data1.alias}</li>
+          <li><strong>Email:</strong>{data1.email}</li>
+        </ul>
+
+
+
       </div>
       {/* Aquí va el resto de tu contenido para la página de Proyectos */}
     </div>

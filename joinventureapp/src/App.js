@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+
 import Projects from './pages/Projects/Projects';
 import Recommendations from './pages/Recommendations/Recommendations';
 import About from './pages/About/About';
@@ -30,7 +30,7 @@ function App() {
           <Route path="/interactive-map" element={<InteractiveMap />} />
 
         </Routes>
-        <Footer />
+        
       </div>
     </Router>
   );

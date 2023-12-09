@@ -1,0 +1,40 @@
+.profile {
+    width: 300px;
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px auto;
+    background-color: red;
+  }
+  
+  .profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .username {
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+  
+  .bio {
+    color: #666;
+  }
+  
+  .profile-details {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .profile-details li {
+    margin-bottom: 8px;
+  }
+  
+  .profile-details li strong {
+    font-weight: bold;
+    margin-right: 5px;
+  }
