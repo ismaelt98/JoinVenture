@@ -182,4 +182,16 @@ public class UserController {
         
         return ResponseEntity.ok(existe);
     }
+    
+    @GetMapping("/checkPassword")
+    public ResponseEntity<Boolean> checkifExistUserPassword(@RequestParam String password){
+    	boolean existe = userService.verificarPasswordExistente(password);
+    	return ResponseEntity.ok(existe); 
+    }
+    
+    @GetMapping("/checkPhone")
+    public ResponseEntity<Boolean> checkifExistUserPhone(@RequestParam String phone){
+    	boolean existe = userService.verificarPhoneExistente(phone);
+    	return ResponseEntity.ok(existe); 
+    }
 }

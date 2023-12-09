@@ -76,6 +76,6 @@ public class RoleUserController {
         roleUserRepository.delete(user);
         Map<String, Boolean> response = new HashMap<>();
         response.put("eliminado", Boolean.TRUE);
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(response); 
 	}
 }

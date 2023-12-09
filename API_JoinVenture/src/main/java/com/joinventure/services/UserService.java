@@ -20,6 +20,8 @@ import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.UserDTO;
 import com.joinventure.entities.DTOs.UserProjectsDTO;
+import com.joinventure.repositories.FrameworkRepository;
+import com.joinventure.repositories.LenguageRepository;
 import com.joinventure.repositories.ProjectRepository;
 import com.joinventure.repositories.UserRepository;
 
@@ -29,7 +31,15 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private ProjectRepository userRepository1;
+	private ProjectRepository proRepo;
+	
+	@Autowired
+	private FrameworkRepository framRepo;
+	
+	
+	@Autowired
+	private LenguageRepository langRepo;
+	
 
 	public List<User> findAllUsers() {
 		return userRepository.findAll();
@@ -94,7 +104,7 @@ public class UserService {
 		for (User user : users) {
 			UserDTO userDTO = new UserDTO();
 			userDTO.setId(user.getId());
-			userDTO.setName_role(user.getRoleuser().getName()); // Suponiendo que 'nombre' es un campo en RoleUser
+			userDTO.setName_role(user.getRoleuser().getName()); 
 			userDTO.setUsername(user.getUsername());
 			userDTO.setAlias(user.getAlias());
 			userDTO.setEmail(user.getEmail());
@@ -163,15 +173,31 @@ public class UserService {
         if (user != null) {
             
             List<Project> proyectos = user.getProjectList();
-            
-            
+            List<Framework> frameworks = user.getListFrameworks();
+            List<Language> languages = user.getListLanguage();
             if (proyectos != null) {
                 for (Project proyecto : proyectos) {
                     
-                	userRepository1.delete(proyecto);
+                	proRepo.delete(proyecto);
                 }
             
             }
+            if (frameworks != null) {
+                for (Framework fram : frameworks) {
+                    
+                	framRepo.delete(fram);
+                }
+            
+            }
+            if (languages != null) {
+                for (Language lang : languages) {
+                    
+                	langRepo.delete(lang);
+                }
+            
+            }
+            
+            
             
         }
             
@@ -179,27 +205,38 @@ public class UserService {
         }
         
 
-	public UserDTO findUserByEmail(String email) {
-		List<User> users = userRepository.findAll();
+    public UserDTO findUserByEmail(String email) {
+        List<User> users = userRepository.findAll();
 
-		for (User user : users) {
-			if (user.getEmail().equals(email)) {
-				UserDTO userDTO = new UserDTO();
-				userDTO.setId(user.getId());
-				userDTO.setName_role(user.getRoleuser().getName());
-				userDTO.setUsername(user.getUsername());
-				userDTO.setAlias(user.getAlias());
-				userDTO.setEmail(user.getEmail());
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                UserDTO userDTO = new UserDTO();
+                userDTO.setId(user.getId());
+                userDTO.setName_role(user.getRoleuser().getName());
+                userDTO.setUsername(user.getUsername());
+                userDTO.setAlias(user.getAlias());
+                userDTO.setEmail(user.getEmail());
 
-				List<String> projectNames = user.getProjectList().stream().map(project -> project.getName())
-						.collect(Collectors.toList());
-				userDTO.setProjectNames(projectNames);
+                List<String> projectNames;
+                List<Project> userProjects = user.getProjectList();
 
-				return userDTO;
-			}
-		}
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + email);
-	}
+                if (userProjects != null && !userProjects.isEmpty()) {
+                    projectNames = userProjects.stream()
+                            .map(Project::getName)
+                            .collect(Collectors.toList());
+                } else {
+                    projectNames = new ArrayList<>(); // Devolver una lista vacía si no hay proyectos
+                }
+
+                userDTO.setProjectNames(projectNames);
+
+                return userDTO;
+            }
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + email);
+    }
+
 
 	public User findUserByUsername(String username) {
 		List<User> users = userRepository.findAll();
@@ -224,6 +261,15 @@ public class UserService {
 	public boolean verificarEmailExistente(String email) {
 		return userRepository.existsByEmail(email);
 	}
+	public boolean verificarPasswordExistente(String password) {
+		
+		return userRepository.existsByPassword(hashSHA256(password));
+	}
+public boolean verificarPhoneExistente(String phone) {
+		
+		return userRepository.existsByPhone(phone);
+	}
+	
 
 //    public Optional<User> findUserByEmail(String email) {
 //        Optional<User> user = userRepository.findAll().stream()

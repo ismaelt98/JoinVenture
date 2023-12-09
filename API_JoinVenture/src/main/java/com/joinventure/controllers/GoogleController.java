@@ -27,7 +27,7 @@ public class GoogleController {
     private UserService userService;
     
     @Autowired
-	private RoleUserService roleUserService;
+    private RoleUserService roleuserService;
     
     @GetMapping
     public RedirectView redirectToGoogleAuthorization() {
@@ -44,8 +44,7 @@ public class GoogleController {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isPresent()) {
-            //User user = existingUser.get();
-            return new RedirectView("http://localhost:5500/logged.html");
+        	return new RedirectView("http://localhost:3000/projects");
         } else {
             User user = new User();
             user.setUsername(firstName);
@@ -53,12 +52,11 @@ public class GoogleController {
             user.setEmail(email);
             user.setPassword(userService.hashSHA256("changethispassword"));
             user.setPhone("999999999");
-            RoleUser role = roleUserService.findRoleById((long) 1);
+            RoleUser role = roleuserService.findRoleById((long) 4);
             user.setRoleuser(role);
-
             userRepository.save(user);
             
-            return new RedirectView("http://localhost:5500/logged.html");
+            return new RedirectView("http://localhost:3000/projects");
         }
     }
 }

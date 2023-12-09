@@ -48,7 +48,7 @@ public class Project {
 	private Demand demand;
 
 	@ManyToOne
-	@JoinColumn(name = "fk_creator_id")
+	@JoinColumn(name = "user_creator_id")
 	private User user;
 
 	@ManyToMany
