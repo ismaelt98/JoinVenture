@@ -39,13 +39,14 @@ const Contact = () => {
 
   return (
     <div>
-      <div className='project-container'>
+      <div className='profile'>
         
         <h2 className='username'>{data1.username}</h2>
         <p className='bio'>Descripción corta sobre el usuario</p>
         <ul className='profile-details'>
           <li><strong>Alias:</strong>{data1.alias}</li>
           <li><strong>Email:</strong>{data1.email}</li>
+          <li><strong>Telefono:</strong>{data1.phone}</li>
         </ul>
 
 

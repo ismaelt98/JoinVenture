@@ -22,8 +22,7 @@ function Navbar() {
         {cookieExists ? (
           <>
             <NavLink to="/projects" activeClassName="active">Proyectos</NavLink>
-            <NavLink to="/recommendations" activeClassName="active">Recomendaciones</NavLink>
-            <NavLink to="/about" activeClassName="active">Nosotros</NavLink>
+          
             <NavLink to="/contact" activeClassName="active">Mi Perfil</NavLink>
             {/* Agrega más enlaces aquí utilizando NavLink */}
             <NavLink to="/login" activeClassName="active" className="button">Logout</NavLink>

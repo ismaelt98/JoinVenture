@@ -9,6 +9,7 @@ public class UserDTO {
 	
 	String alias;
 	String email;
+	String phone;
 	String name_role;
 	List<String> projectNames;
 	
@@ -26,16 +27,78 @@ public class UserDTO {
 
 
 
-	public UserDTO(Long id, String username, String alias, String email, String name_role,
+	
+
+
+
+
+	public UserDTO(Long id, String username, String alias, String email, String phone, String name_role,
 			List<String> projectNames) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.alias = alias;
 		this.email = email;
+		this.phone = phone;
 		this.name_role = name_role;
 		this.projectNames = projectNames;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -125,7 +125,7 @@ public class UserService {
 		userDTO.setUsername(user.getUsername());
 		userDTO.setAlias(user.getAlias());
 		userDTO.setEmail(user.getEmail());
-
+		userDTO.setPhone(user.getPhone());
 		List<String> projectNames = user.getProjectList().stream().map(project -> project.getName())
 				.collect(Collectors.toList());
 		userDTO.setProjectNames(projectNames);

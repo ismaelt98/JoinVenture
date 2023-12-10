@@ -11,6 +11,7 @@ public class ProjectDTO {
 	String name_demanda;
 	String name_creador;
 	String email_creador;
+	
 	List<String> usersName;
 	
 	
