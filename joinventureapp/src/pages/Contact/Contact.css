@@ -1,40 +1,75 @@
 .profile {
-    width: 300px;
-    border: 2px solid #ccc;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    margin: 20px auto;
-    background-color: red;
-  }
-  
-  .profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
-  
-  .username {
-    font-size: 24px;
-    margin-bottom: 5px;
-  }
-  
-  .bio {
-    color: #666;
-  }
-  
-  .profile-details {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .profile-details li {
-    margin-bottom: 8px;
-  }
-  
-  .profile-details li strong {
-    font-weight: bold;
-    margin-right: 5px;
-  }
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos para el encabezado del perfil */
+.profile-header {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.username {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.bio {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Estilos para los detalles del perfil */
+.profile-details {
+  padding: 20px;
+}
+
+.profile-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-details li {
+  margin-bottom: 10px;
+}
+
+.profile-details li strong {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estilos para el botón de editar perfil */
+.edit-profile-btn {
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-top: 20px;
+}
+
+.edit-profile-btn:hover {
+  background-color: #357ae8;
+}

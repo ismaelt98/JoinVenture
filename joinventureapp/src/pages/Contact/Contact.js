@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Contact.css'; // Asegúrate de crear este archivo si quieres estilos específicos
 import Cookies from 'js-cookie';
-
+import imagen from '../../assets/perfil.png';
 
 const Contact = () => {
   const id = Cookies.get("id");
@@ -40,18 +40,24 @@ const Contact = () => {
   return (
     <div>
       <div className='profile'>
+        <div >
+          <h2 className='username'>{data1.username}</h2>
+          <p className='bio'>Descripción corta sobre el usuario</p>
+          <ul className='profile-details'>
+            <li><strong>Alias: </strong>{data1.alias}</li>
+            <li><strong>Email: </strong>{data1.email}</li>
+            <li><strong>Telefono: </strong>{data1.phone}</li>
+          </ul>
+          <button className='edit-profile-btn'>Editar Perfil</button>
+        </div>
+        <div>
+          <img src={imagen} alt='Imagen de perfil' className='profile-image' />
+          
+        </div>
         
-        <h2 className='username'>{data1.username}</h2>
-        <p className='bio'>Descripción corta sobre el usuario</p>
-        <ul className='profile-details'>
-          <li><strong>Alias:</strong>{data1.alias}</li>
-          <li><strong>Email:</strong>{data1.email}</li>
-          <li><strong>Telefono:</strong>{data1.phone}</li>
-        </ul>
-
-
 
       </div>
+      
       {/* Aquí va el resto de tu contenido para la página de Proyectos */}
     </div>
   );
