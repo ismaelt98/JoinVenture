@@ -24,13 +24,14 @@ function Navbar() {
         {cookieExists ? (
           <>
             <NavLink to="/projects" activeClassName="active">Proyectos</NavLink>
-            <NavLink to="/contact" activeClassName="active">Mi Perfil</NavLink>
+            
             {roleUser === 'ADMIN' && (
               <>
                 <NavLink to="/admin/users" activeClassName="active">Administrar Usuarios</NavLink>
                 <NavLink to="/admin/projects" activeClassName="active">Administrar Proyectos</NavLink>
               </>
             )}
+            <NavLink to="/contact" activeClassName="active">Mi Perfil</NavLink>
             <NavLink to="/login" activeClassName="active" className="button">Logout</NavLink>
           </>
         ) : (

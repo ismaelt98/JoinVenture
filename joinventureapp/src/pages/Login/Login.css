@@ -2,10 +2,11 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  height: 600px;
+  height: 550px;
+  
+  margin-bottom: 40px;
   justify-content: center;
 margin-top: 30px;
-  height: 100vh;
 
 }
 .userType-button {
@@ -57,7 +58,7 @@ input[type="password"] {
   display: flex;
   flex-direction: column;
   width: 800px;
-  height: 500px;
+  
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -83,6 +84,13 @@ border-radius: 8px;
   background-color: #555;
   color: white;
 }
+#divElige{
+  text-align: center;
+  margin-bottom: 5px;
+}
+input{
+  margin-top: 5px;
+}
 .l1>div{
   margin-bottom: 20px;
 }
@@ -95,7 +103,7 @@ border-radius: 8px;
 
 
 .div1l1{
-  height: 400px;
+ 
   width: 600px;
   text-align: left;
 }
@@ -119,12 +127,13 @@ border-radius: 8px;
  
 
 }
+
 .l2 {
   width: 400px;
   border: none;
       border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
-  height: 500px;
+
   background-color: white;
 }
 form {

@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import './Contact.css';
 import Cookies from 'js-cookie';
 import imagen from '../../assets/perfil.png';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
   const id = Cookies.get("id");
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     username: '',
     alias: '',
     email: '',
     phone: '' // Asegúrate de que este campo se devuelva desde la API.
   });
- 
-  /*const handleDelete = async () => {
+
+  const handleDelete = async () => {
     try {
       const requestOptions = {
         method: 'DELETE',
@@ -35,7 +35,7 @@ const Contact = () => {
     }
   
   };
-  */
+  
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -49,7 +49,7 @@ const Contact = () => {
         };
 
         const response = await fetch(`http://localhost:8080/users/user?id=${id}`, requestOptions);
-        if(response.ok) {
+        if (response.ok) {
           const data = await response.json();
           setProfileData({
             username: data.username,
@@ -70,16 +70,19 @@ const Contact = () => {
 
   return (
     <div className='profile'>
-      <h2 className='username'>{profileData.username}</h2>
-      <p className='bio'>Descripción corta sobre el usuario</p>
-      <ul className='profile-details'>
-        <li><strong>Alias: </strong>{profileData.alias}</li>
-        <li><strong>Email: </strong>{profileData.email}</li>
-        <li><strong>Teléfono: </strong>{profileData.phone}</li>
-        {/* Más detalles que quieras mostrar del perfil */}
-      </ul>
-      <button className='edit-profile-btn'>Editar Perfil</button>
-      <button className='delete-profile-btn'>Eliminar cuenta</button>
+      <div className='divImp'>
+        <h2 className='username'><strong>Nombre Usuario: </strong>{profileData.username}</h2>
+        
+        <ul className='profile-details'>
+          <li><strong>Alias: </strong>{profileData.alias}</li>
+          <li><strong>Email: </strong>{profileData.email}</li>
+          <li><strong>Teléfono: </strong>{profileData.phone}</li>
+          {/* Más detalles que quieras mostrar del perfil */}
+        </ul>
+        <button className='edit-profile-btn'>Editar Perfil</button>
+      <button className='delete-profile-btn' onClick={handleDelete}>Eliminar cuenta</button>
+      </div>
+      
       <div>
         <img src={imagen} alt='Imagen de perfil' className='profile-image' />
       </div>

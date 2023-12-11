@@ -129,13 +129,13 @@ const Projects = () => {
         <button className={mostrarProyectos === 'crear' ? 'active' : ''} onClick={(e) => handleClick('crear', e)}>Crear Proyecto</button>
       </div>
 
-      <div style={{ display: isAllProyectos ? 'block' : 'none' }} className='project-container'>
+      <div style={{ display: isAllProyectos ? 'flex' : 'none' }} className='project-container'>
         {data.map((objeto, index) => (
           <div className='project-card' key={index}>
-            <p>{objeto.name}</p>
-            <p>{objeto.numMembers}</p>
-            <p>{objeto.name_sector}</p>
-            <p>{objeto.name_demanda}</p>
+            <p><strong>Nombre Proyecto: </strong>{objeto.name}</p>
+            <p><strong>Máximo Integrantes: </strong>{objeto.numMembers}</p>
+            <p><strong>Sector: </strong>{objeto.name_sector}</p>
+            <p><strong>Demanda: </strong>{objeto.name_demanda}</p>
             {dataRoleUser && !objeto.usersName.includes(data1.name) && <button onClick={() => unirseAlProyecto(objeto.id)}>Unirse al Proyecto</button>}
             {roleuser === 'EMPRESA' && <button onClick={() => verParticipantes(objeto.id)}>Ver Participantes</button>}
           </div>
@@ -145,7 +145,7 @@ const Projects = () => {
         </div>
       </div>
 
-      <div style={{ display: isMisProyectos ? 'block' : 'none' }} className='project-container'>
+      <div style={{ display: isMisProyectos ? 'flex' : 'none' }} className='project-container'>
         {data1.map((objeto, index) => (
           <div className='project-card' key={index}>
             <p>{objeto.name}</p>

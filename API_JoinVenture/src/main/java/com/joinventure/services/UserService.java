@@ -148,20 +148,31 @@ public class UserService {
 		User user = userRepository.findById(userId).orElse(null);
 
 		if (user != null) {
-
-			List<Project> proyectos = user.getProjectList();
-			if (proyectos != null) {
-				for (Project proj : proyectos) {
-					proj.getUserList().remove(userRepository.findById(userId).orElse(null));
-
-				}
-			}
-
-			userRepository.delete(user);
-			return true;
-
+		    List<Project> proyectos = user.getProjectList();
+		    if (proyectos != null) {
+		        for (Project proj : proyectos) {
+		            proj.getUserList().remove(user);
+		        }
+		    }
+		    userRepository.delete(user); // Guarda el usuario actualizado sin el proyecto
+		    return true;
 		}
-		return false; 
+		return false;
+//		if (user != null) {
+//
+//			List<Project> proyectos = user.getProjectList();
+//			if (proyectos != null) {
+//				for (Project proj : proyectos) {
+//					proj.getUserList().remove(userRepository.findById(userId).orElse(null));
+//
+//				}
+//			}
+//
+//			userRepository.delete(user);
+//			return true;
+//
+//		}
+//		return false; 
 
 	}
 
