@@ -56,24 +56,25 @@ public class ProjectController {
 	public ResponseEntity<List<ProjectDTO>> getAllProjects() {
 		return ResponseEntity.ok().body(proService.getAllProjects());
 	}
+
 	@GetMapping("/project")
 	public ResponseEntity<ProjectDTO> getProjectById(@RequestParam Long id) {
-		return ResponseEntity.ok().body(proService.getProjectById(id)); 
+		return ResponseEntity.ok().body(proService.getProjectById(id));
 	}
 
 	@GetMapping("/projectsUser")
 	public ResponseEntity<List<ProjectsUserDTO>> getAllProjectsByUser(@RequestParam Long id) {
-		return ResponseEntity.ok().body(proService.getAllProjectsByUser(id)); 
+		return ResponseEntity.ok().body(proService.getAllProjectsByUser(id));
 	}
-	
+
 	@GetMapping("/{idProyecto}/participantes")
-    public ResponseEntity<List<UserProjectDTO>> getUsersByProjectId(@PathVariable Long idProyecto) {
-        List<UserProjectDTO> userList = proService.getUserListByProjectId(idProyecto);
-        if (userList != null) {
-            return ResponseEntity.ok(userList);
-        }
-        return ResponseEntity.notFound().build();   
-    }
+	public ResponseEntity<List<UserProjectDTO>> getUsersByProjectId(@PathVariable Long idProyecto) {
+		List<UserProjectDTO> userList = proService.getUserListByProjectId(idProyecto);
+		if (userList != null) {
+			return ResponseEntity.ok(userList);
+		}
+		return ResponseEntity.notFound().build();
+	}
 
 	@GetMapping("/projectsCreator")
 	public ResponseEntity<List<ProjectDTO>> getProjectsByCreator(@RequestParam Long id) {
@@ -92,8 +93,9 @@ public class ProjectController {
 				projDTO.setName_demanda(proj.getDemand().getName());
 				projDTO.setName_creador(proj.getUser().getUsername());
 				projDTO.setEmail_creador(proj.getUser().getEmail());
-				List<UserProjectDTO> usersNames = proj.getUserList().stream().map(user1 -> new UserProjectDTO(user1.getId(),
-						user1.getUsername(), user1.getAlias(), user1.getEmail(), user1.getPhone()))
+				List<UserProjectDTO> usersNames = proj.getUserList().stream()
+						.map(user1 -> new UserProjectDTO(user1.getId(), user1.getUsername(), user1.getAlias(),
+								user1.getEmail(), user1.getPhone()))
 						.collect(Collectors.toList());
 
 				projDTO.setUsersName(usersNames);
@@ -112,25 +114,30 @@ public class ProjectController {
 
 	@PostMapping("/userProject")
 	public boolean getLogin(@RequestParam String nameProject, @RequestParam Long idUser) {
-		
-		return proService.getUserProject(nameProject, idUser); 
-		
-		
+
+		return proService.getUserProject(nameProject, idUser);
+
 	}
-	
-	 @PostMapping("/{projectId}/unirse")
-	    public ResponseEntity<String> joinProject(@PathVariable Long projectId, @RequestBody JoinRequest joinRequest) {
-	        Long userId = joinRequest.getIdUsuario(); 
 
-	        
-	        boolean joined = proService.addUserToProject1(projectId, userId);
+	@PostMapping("/estaUnido")
+	public boolean estaUnido(@RequestParam Long idProject, @RequestParam Long idUser) {
 
-	        if (joined) {
-	            return ResponseEntity.ok("Usuario unido al proyecto correctamente");
-	        } else {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo unir al proyecto");
-	        }
-	    }
+		return proService.estaUnido(idProject, idUser);
+
+	}
+
+	@PostMapping("/{projectId}/unirse")
+	public ResponseEntity<String> joinProject(@PathVariable Long projectId, @RequestBody JoinRequest joinRequest) {
+		Long userId = joinRequest.getIdUsuario();
+
+		boolean joined = proService.addUserToProject1(projectId, userId);
+
+		if (joined) {
+			return ResponseEntity.ok("Usuario unido al proyecto correctamente");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo unir al proyecto");
+		}
+	}
 
 	@PutMapping("/adduserproject")
 	public ResponseEntity<String> addUserToProject(@RequestParam Long projectId, @RequestParam Long userId) {

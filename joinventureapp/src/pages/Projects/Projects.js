@@ -12,6 +12,7 @@ const Projects = () => {
   const [mostrarProyectos, setMostrarProyectos] = useState('todos');
   const [isCrearProyecto, setCrearProyecto] = useState(false);
   const [isMisProyectos, setMisProyectos] = useState(false);
+  const [unidoProyecto, setUnidoProyecto] = useState(false);
   const [isAllProyectos, setAllProyectos] = useState(true);
   const [dataRoleUser, setDataRoleUser] = useState();
   const [participantes, setParticipantes] = useState([]);
@@ -29,31 +30,47 @@ const Projects = () => {
     const data = await response.json();
     //falta mirar en la api el metodo
     setParticipantes(data);
-    
+
   };
 
   const unirseAlProyecto = async (idProyecto) => {
-    const response = await fetch(`http://localhost:8080/projects/${idProyecto}/unirse`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ idUsuario: idUser })
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "idUsuario": idUser
     });
-    if (response.ok) {
-      toast.done('TE UNISTE AL PROYECTO', {
-        position: toast.POSITION.TOP_RIGHT,
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch(`http://localhost:8080/projects/${idProyecto}/unirse`, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        toast.success('TE UNISTE AL PROYECTO', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      })
+      .catch(error => {
+        toast.error('💣BOOOOM!💣', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        console.log('error', error)
       });
-    }else{
-      toast.error('YA TE UNISTE AL PROYECTO', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
+
   };
 
   const estaUnidoAlProyecto = (proyecto) => {
     return proyecto.userIds.includes(idUser);
   };
+
+
+
 
   useEffect(() => {
     updateDataRoleUser();
@@ -80,16 +97,24 @@ const Projects = () => {
   const handleCrearProject = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/projects', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: nameProject, numMembers, sector: { id: selectedSector }, demand: { id: parseInt(selectedDemand) }, user: { id: idUser }, userList: [{id:idUser}] })
-      });
-      if (response.ok) {
-        // Actualizar el estado o la UI según sea necesario
+      if (numMembers >= 0) {
+        const response = await fetch('http://localhost:8080/projects', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name: nameProject, numMembers, sector: { id: selectedSector }, demand: { id: parseInt(selectedDemand) }, user: { id: idUser }, userList: [{ id: idUser }] })
+        });
+        if (response.ok) {
+          // Actualizar el estado o la UI según sea necesario
+        }
+      } else {
+        // Si el número de miembros es negativo, muestra un mensaje de error o toma la acción necesaria
+        toast.error('El limite de integrantes no puede ser negativo', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
+
     } catch (error) {
       console.error('Error creating project:', error);
     }
@@ -136,7 +161,11 @@ const Projects = () => {
             <p><strong>Máximo Integrantes: </strong>{objeto.numMembers}</p>
             <p><strong>Sector: </strong>{objeto.name_sector}</p>
             <p><strong>Demanda: </strong>{objeto.name_demanda}</p>
-            {dataRoleUser && !objeto.usersName.includes(data1.name) && <button onClick={() => unirseAlProyecto(objeto.id)}>Unirse al Proyecto</button>}
+            {/* { dataRoleUser }  */objeto.usersName.id === idUser ?
+             <button>🚪⬅️Salir del Proyecto</button>: <button onClick={() => unirseAlProyecto(objeto.id)}>➡️🚪Unirse al Proyecto</button>}
+            <div>
+              <ToastContainer />
+            </div>
             {roleuser === 'EMPRESA' && <button onClick={() => verParticipantes(objeto.id)}>Ver Participantes</button>}
           </div>
         ))}
@@ -165,6 +194,9 @@ const Projects = () => {
           <div className="form-group">
             <label htmlFor="maxMembers">Límite de participantes:</label>
             <input type="number" value={numMembers} onChange={(e) => setNumMembers(e.target.value)} required />
+          </div>
+          <div>
+            <ToastContainer />
           </div>
           <div className="form-group">
             <label htmlFor="sector">Sector:</label>

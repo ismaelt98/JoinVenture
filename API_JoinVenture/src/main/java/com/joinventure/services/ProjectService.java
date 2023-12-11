@@ -147,6 +147,19 @@ public class ProjectService {
 
 		return false;
 	}
+	public boolean estaUnido(Long idProject, Long idUser) {
+		Optional<Project> us = projectRepo.findById(idProject);
+		if (us != null) {
+		List<User> users = us.get().getUserList();				
+			for (User usuario : users) {
+				if (usuario.getId().equals(idUser)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 	
 	public boolean addUserToProject1(Long projectId, Long userId) {
         Optional<Project> projectOptional = projectRepo.findById(projectId);

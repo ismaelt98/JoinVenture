@@ -19,7 +19,6 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <Header/>
         
         <Routes>
           <Route path="/projects" element={<AuthGuard><Projects /></AuthGuard>} />
