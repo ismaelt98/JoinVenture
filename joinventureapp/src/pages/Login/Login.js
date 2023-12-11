@@ -120,6 +120,8 @@ const Login = () => {
         const dataPassword = await responsePassword.json();
         const dataPhone = await responsePhone.json();
 
+        
+
         if (!dataEmail) {
           if (!dataPhone) {
             if (!dataPassword) {
@@ -133,8 +135,15 @@ const Login = () => {
 
               const data = await response.json();
               if (data.id) {
-                setIsLogin(true);
-                navigate('/login'); // Asegúrate de que esta es la ruta correcta
+                // Limpia los campos después del registro exitoso
+                setUsername('');
+                setAlias('');
+                setEmail('');
+                setPhone('');
+                setPassword('');
+                setConfirmPassword('');
+                setIsLogin(true); // Cambia al modo de inicio de sesión
+                navigate('/login'); // Redirecciona al login     
               } else {
                 // Manejar errores de registro
                 console.error('Error de registro');

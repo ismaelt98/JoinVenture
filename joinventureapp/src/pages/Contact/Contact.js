@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import './Contact.css'; // Asegúrate de crear este archivo si quieres estilos específicos
+import './Contact.css';
 import Cookies from 'js-cookie';
 import imagen from '../../assets/perfil.png';
 
 const Contact = () => {
   const id = Cookies.get("id");
-  const [data1, setData1] = useState({
+  const [profileData, setProfileData] = useState({
     username: '',
     alias: '',
     email: '',
+    phone: '' // Asegúrate de que este campo se devuelva desde la API.
   });
 
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProfileData = async () => {
       try {
         const requestOptions = {
           method: 'GET',
@@ -24,41 +24,39 @@ const Contact = () => {
         };
 
         const response = await fetch(`http://localhost:8080/users/user?id=${id}`, requestOptions);
-        const data = await response.json();
-        setData1(data);
+        if(response.ok) {
+          const data = await response.json();
+          setProfileData({
+            username: data.username,
+            alias: data.alias,
+            email: data.email,
+            phone: data.phone // Aquí asignamos el teléfono desde la respuesta.
+          });
+        } else {
+          console.error('Error fetching profile data:', response.statusText);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-    fetchData();
-    //eslint-disable-next-line
-  }, []);
 
-
-
+    fetchProfileData();
+  }, [id]); // Dependencia en id para reaccionar a los cambios de usuario.
 
   return (
-    <div>
-      <div className='profile'>
-        <div >
-          <h2 className='username'>{data1.username}</h2>
-          <p className='bio'>Descripción corta sobre el usuario</p>
-          <ul className='profile-details'>
-            <li><strong>Alias: </strong>{data1.alias}</li>
-            <li><strong>Email: </strong>{data1.email}</li>
-            <li><strong>Telefono: </strong>{data1.phone}</li>
-          </ul>
-          <button className='edit-profile-btn'>Editar Perfil</button>
-        </div>
-        <div>
-          <img src={imagen} alt='Imagen de perfil' className='profile-image' />
-          
-        </div>
-        
-
+    <div className='profile'>
+      <h2 className='username'>{profileData.username}</h2>
+      <p className='bio'>Descripción corta sobre el usuario</p>
+      <ul className='profile-details'>
+        <li><strong>Alias: </strong>{profileData.alias}</li>
+        <li><strong>Email: </strong>{profileData.email}</li>
+        <li><strong>Teléfono: </strong>{profileData.phone}</li>
+        {/* Más detalles que quieras mostrar del perfil */}
+      </ul>
+      <button className='edit-profile-btn'>Editar Perfil</button>
+      <div>
+        <img src={imagen} alt='Imagen de perfil' className='profile-image' />
       </div>
-      
-      {/* Aquí va el resto de tu contenido para la página de Proyectos */}
     </div>
   );
 };
