@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.joinventure.entities.JoinRequest;
 import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.ProjectDTO;
@@ -83,13 +85,18 @@ public class ProjectController {
 		for (Project proj : projects) {
 			ProjectDTO projDTO = new ProjectDTO();
 			if (proj.getUser().getId() == user.get().getId()) {
+				projDTO.setId(proj.getId());
 				projDTO.setName(proj.getName());
 				projDTO.setNumMembers(proj.getNumMembers());
 				projDTO.setName_sector(proj.getSector().getName());
 				projDTO.setName_demanda(proj.getDemand().getName());
 				projDTO.setName_creador(proj.getUser().getUsername());
 				projDTO.setEmail_creador(proj.getUser().getEmail());
+				List<UserProjectDTO> usersNames = proj.getUserList().stream().map(user1 -> new UserProjectDTO(user1.getId(),
+						user1.getUsername(), user1.getAlias(), user1.getEmail(), user1.getPhone()))
+						.collect(Collectors.toList());
 
+				projDTO.setUsersName(usersNames);
 				projectsDTO.add(projDTO);
 			}
 
@@ -110,6 +117,20 @@ public class ProjectController {
 		
 		
 	}
+	
+	 @PostMapping("/{projectId}/unirse")
+	    public ResponseEntity<String> joinProject(@PathVariable Long projectId, @RequestBody JoinRequest joinRequest) {
+	        Long userId = joinRequest.getIdUsuario(); 
+
+	        
+	        boolean joined = proService.addUserToProject1(projectId, userId);
+
+	        if (joined) {
+	            return ResponseEntity.ok("Usuario unido al proyecto correctamente");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo unir al proyecto");
+	        }
+	    }
 
 	@PutMapping("/adduserproject")
 	public ResponseEntity<String> addUserToProject(@RequestParam Long projectId, @RequestParam Long userId) {

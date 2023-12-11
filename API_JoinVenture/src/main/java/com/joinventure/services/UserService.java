@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,8 +77,6 @@ public class UserService {
 		return frameworks;
 	}
 
-	
-
 	public List<UserDTO> getAllUsers() {
 		List<User> users = userRepository.findAll();
 		List<UserDTO> userDTOs = new ArrayList<>();
@@ -127,8 +126,6 @@ public class UserService {
 		}
 	}
 
-	
-
 	public ResponseEntity<Object> updateUser(Long id, User userDetails) {
 		User user = userRepository.findById(id).orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
@@ -146,40 +143,26 @@ public class UserService {
 		return ResponseEntity.ok().body(updatedUser);
 	}
 
-	public void eliminarUsuarioConProyectos(Long userId) {
+	public boolean eliminarUsuarioConProyectos(Long userId) {
 
 		User user = userRepository.findById(userId).orElse(null);
 
 		if (user != null) {
 
 			List<Project> proyectos = user.getProjectList();
-			List<Framework> frameworks = user.getListFrameworks();
-			List<Language> languages = user.getListLanguage();
 			if (proyectos != null) {
-				for (Project proyecto : proyectos) {
+				for (Project proj : proyectos) {
+					proj.getUserList().remove(userRepository.findById(userId).orElse(null));
 
-					proRepo.delete(proyecto);
 				}
-
 			}
-			if (frameworks != null) {
-				for (Framework fram : frameworks) {
 
-					framRepo.delete(fram);
-				}
-
-			}
-			if (languages != null) {
-				for (Language lang : languages) {
-
-					langRepo.delete(lang);
-				}
-
-			}
+			userRepository.delete(user);
+			return true;
 
 		}
+		return false; 
 
-		userRepository.delete(user);
 	}
 
 	public UserDTO findUserByEmail(String email) {

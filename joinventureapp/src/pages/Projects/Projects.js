@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import './Projects.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Projects = () => {
   const [nameProject, setNameProject] = useState('');
@@ -39,7 +41,13 @@ const Projects = () => {
       body: JSON.stringify({ idUsuario: idUser })
     });
     if (response.ok) {
-      // Actualizar el estado o la UI según sea necesario
+      toast.done('TE UNISTE AL PROYECTO', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }else{
+      toast.error('YA TE UNISTE AL PROYECTO', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 
@@ -128,10 +136,13 @@ const Projects = () => {
             <p>{objeto.numMembers}</p>
             <p>{objeto.name_sector}</p>
             <p>{objeto.name_demanda}</p>
-            {dataRoleUser && !objeto.usersName.includes(data1.username) && <button onClick={() => unirseAlProyecto(objeto.id)}>Unirse al Proyecto</button>}
+            {dataRoleUser && !objeto.usersName.includes(data1.name) && <button onClick={() => unirseAlProyecto(objeto.id)}>Unirse al Proyecto</button>}
             {roleuser === 'EMPRESA' && <button onClick={() => verParticipantes(objeto.id)}>Ver Participantes</button>}
           </div>
         ))}
+        <div>
+          <ToastContainer />
+        </div>
       </div>
 
       <div style={{ display: isMisProyectos ? 'block' : 'none' }} className='project-container'>

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -135,10 +136,18 @@ public class UserController {
 //    }
 	
 	
-	 @DeleteMapping("/{userId}")
-	    public ResponseEntity<String> eliminarUsuarioYProyectos(@PathVariable Long userId) {
-	        userService.eliminarUsuarioConProyectos(userId);
-	        return ResponseEntity.ok("Usuario y proyectos eliminados correctamente.");
+	 @DeleteMapping("/deleteUser")
+	    public ResponseEntity<String> eliminarUsuarioYProyectos(@RequestParam Long userId) {
+		 
+		 boolean joined =  userService.eliminarUsuarioConProyectos(userId);
+
+	        if (joined) {
+	            return ResponseEntity.ok("Usuario y proyectos eliminados correctamente.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo unir al proyecto");
+	        }
+	       
+	        
 	    }
 	
 	//Elimina todos los lenguajes que estan relacionados con este usuario

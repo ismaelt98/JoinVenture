@@ -147,6 +147,28 @@ public class ProjectService {
 
 		return false;
 	}
+	
+	public boolean addUserToProject1(Long projectId, Long userId) {
+        Optional<Project> projectOptional = projectRepo.findById(projectId);
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+
+            
+             if (project.getUserList().contains(userRepo.findById(userId).orElse(null))) {
+                 return false; 
+             }
+
+            
+             project.getUserList().add(userRepo.findById(userId).orElse(null));
+             projectRepo.save(project);
+
+            
+
+            return true; 
+        }
+
+        return false; 
+    }
 
 	@Transactional
 	public void addUserToProject(Long projectId, Long userId) {

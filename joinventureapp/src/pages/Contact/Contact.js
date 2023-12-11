@@ -2,15 +2,40 @@ import React, { useEffect, useState } from 'react';
 import './Contact.css';
 import Cookies from 'js-cookie';
 import imagen from '../../assets/perfil.png';
+//import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
   const id = Cookies.get("id");
+  //const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     username: '',
     alias: '',
     email: '',
     phone: '' // Asegúrate de que este campo se devuelva desde la API.
   });
+ 
+  /*const handleDelete = async () => {
+    try {
+      const requestOptions = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        redirect: 'follow',
+      };
+
+      const response = await fetch(`http://localhost:8080/users/deleteUser?userId=${id}`, requestOptions);
+      if(response.ok) {
+        navigate('/login');
+      } else {
+        
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  
+  };
+  */
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -54,6 +79,7 @@ const Contact = () => {
         {/* Más detalles que quieras mostrar del perfil */}
       </ul>
       <button className='edit-profile-btn'>Editar Perfil</button>
+      <button className='delete-profile-btn'>Eliminar cuenta</button>
       <div>
         <img src={imagen} alt='Imagen de perfil' className='profile-image' />
       </div>

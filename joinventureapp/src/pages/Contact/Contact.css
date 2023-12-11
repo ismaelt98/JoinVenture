@@ -69,7 +69,18 @@
   display: block;
   margin-top: 20px;
 }
-
+.delete-profile-btn{
+  background-color: red;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-top: 20px;
+}
 .edit-profile-btn:hover {
   background-color: #357ae8;
 }
