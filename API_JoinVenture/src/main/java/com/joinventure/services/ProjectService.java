@@ -31,6 +31,20 @@ public class ProjectService {
 	public List<Project> findAllUsers() {
 		return projectRepo.findAll();
 	}
+	public ProjectDTO getUserListByProjectId(Long projectId) {
+        Optional<Project> optionalProject = projectRepo.findById(projectId);
+        ProjectDTO projectDTO = new ProjectDTO();
+        if (optionalProject.isPresent()) {
+        	 List<String> usersName = optionalProject.get().getUserList().stream()
+        	            .map(User::getUsername) // Suponiendo que el nombre del usuario se llama "name" en la entidad User
+        	            .collect(Collectors.toList());
+
+        	    projectDTO.setUsersName(usersName);
+            
+            return projectDTO;
+        }
+        return null; 
+    }
 	
 	public List<ProjectDTO> getAllProjectsByUser(Long id) {
 		

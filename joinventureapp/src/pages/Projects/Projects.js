@@ -13,8 +13,8 @@ const Projects = () => {
   const [isAllProyectos, setAllProyectos] = useState(true);
   const [dataRoleUser, setDataRoleUser] = useState();
   const [participantes, setParticipantes] = useState([]);
-  const [filtroSector, setFiltroSector] = useState('');
-  const [filtroDemanda, setFiltroDemanda] = useState('');
+  /*const [filtroSector, setFiltroSector] = useState('');
+  const [filtroDemanda, setFiltroDemanda] = useState('');*/
   const [sectors, setSectors] = useState([]);
   const [selectedSector, setSelectedSector] = useState('');
   const [demands, setDemands] = useState([]);
@@ -25,7 +25,9 @@ const Projects = () => {
   const verParticipantes = async (idProyecto) => {
     const response = await fetch(`http://localhost:8080/projects/${idProyecto}/participantes`);
     const data = await response.json();
-    setParticipantes(data);
+    
+    setParticipantes(data.usersName);
+    
   };
 
   const unirseAlProyecto = async (idProyecto) => {
@@ -75,7 +77,7 @@ const Projects = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: nameProject, numMembers, sector: { id: selectedSector }, demand: { id: parseInt(selectedDemand) }, user: { id: idUser } })
+        body: JSON.stringify({ name: nameProject, numMembers, sector: { id: selectedSector }, demand: { id: parseInt(selectedDemand) }, user: { id: idUser }, userList: [{id:idUser}] })
       });
       if (response.ok) {
         // Actualizar el estado o la UI según sea necesario

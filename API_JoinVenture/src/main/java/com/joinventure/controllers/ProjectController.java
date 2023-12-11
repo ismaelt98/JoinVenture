@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,6 +57,15 @@ public class ProjectController {
 	public ResponseEntity<List<ProjectDTO>> getAllProjectsByUser(@RequestParam Long id) {
 		return ResponseEntity.ok().body(proService.getAllProjectsByUser(id));
 	}
+	
+	@GetMapping("/{idProyecto}/participantes")
+    public ResponseEntity<ProjectDTO> getUsersByProjectId(@PathVariable Long idProyecto) {
+        ProjectDTO userList = proService.getUserListByProjectId(idProyecto);
+        if (userList != null) {
+            return ResponseEntity.ok(userList);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 	@GetMapping("/projectsCreator")
 	public ResponseEntity<List<ProjectDTO>> getProjectsByCreator(@RequestParam Long id) {
