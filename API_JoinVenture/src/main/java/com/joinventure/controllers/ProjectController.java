@@ -23,6 +23,7 @@ import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.ProjectDTO;
 import com.joinventure.entities.DTOs.UserDTO;
+import com.joinventure.entities.DTOs.UserProjectDTO;
 import com.joinventure.repositories.ProjectRepository;
 import com.joinventure.repositories.UserRepository;
 import com.joinventure.services.ProjectService;
@@ -59,12 +60,12 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/{idProyecto}/participantes")
-    public ResponseEntity<ProjectDTO> getUsersByProjectId(@PathVariable Long idProyecto) {
-        ProjectDTO userList = proService.getUserListByProjectId(idProyecto);
+    public ResponseEntity<List<UserProjectDTO>> getUsersByProjectId(@PathVariable Long idProyecto) {
+        List<UserProjectDTO> userList = proService.getUserListByProjectId(idProyecto);
         if (userList != null) {
             return ResponseEntity.ok(userList);
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();   
     }
 
 	@GetMapping("/projectsCreator")

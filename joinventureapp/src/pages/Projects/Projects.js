@@ -25,8 +25,8 @@ const Projects = () => {
   const verParticipantes = async (idProyecto) => {
     const response = await fetch(`http://localhost:8080/projects/${idProyecto}/participantes`);
     const data = await response.json();
-    
-    setParticipantes(data.usersName);
+    //falta mirar en la api el metodo
+    setParticipantes(data);
     
   };
 

@@ -15,6 +15,7 @@ import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.ProjectDTO;
 import com.joinventure.entities.DTOs.UserDTO;
+import com.joinventure.entities.DTOs.UserProjectDTO;
 import com.joinventure.repositories.ProjectRepository;
 import com.joinventure.repositories.UserRepository;
 
@@ -31,17 +32,25 @@ public class ProjectService {
 	public List<Project> findAllUsers() {
 		return projectRepo.findAll();
 	}
-	public ProjectDTO getUserListByProjectId(Long projectId) {
+	public List<UserProjectDTO> getUserListByProjectId(Long projectId) {
         Optional<Project> optionalProject = projectRepo.findById(projectId);
-        ProjectDTO projectDTO = new ProjectDTO();
+        List<UserProjectDTO> projectDTO = new ArrayList<>(); 
         if (optionalProject.isPresent()) {
-        	 List<String> usersName = optionalProject.get().getUserList().stream()
-        	            .map(User::getUsername) // Suponiendo que el nombre del usuario se llama "name" en la entidad User
-        	            .collect(Collectors.toList());
-
-        	    projectDTO.setUsersName(usersName);
+        	List<User> users = optionalProject.get().getUserList();
+        	for (User us : users) {
+        		UserProjectDTO userDTO = new UserProjectDTO();
+				userDTO.setId(us.getId());
+				userDTO.setUsername(us.getUsername());
+				userDTO.setAlias(us.getAlias());
+				userDTO.setEmail(us.getEmail());
+				userDTO.setPhone(us.getPhone());;
+        	
+        	
+				projectDTO.add(userDTO);
+        	}
+        	
             
-            return projectDTO;
+            return projectDTO; 
         }
         return null; 
     }
@@ -49,60 +58,71 @@ public class ProjectService {
 	public List<ProjectDTO> getAllProjectsByUser(Long id) {
 		
 		Optional<User> usuario = userRepo.findById(id);
-		List<ProjectDTO> userDTOs = new ArrayList<>();
-        
-		if(usuario.isPresent()) {
-			List<Project> projects = usuario.get().getProjectList();
-			for (Project proj : projects) {
-				ProjectDTO userDTO = new ProjectDTO();
-				userDTO.setId(proj.getId());
-				userDTO.setName(proj.getName());
-				userDTO.setNumMembers(proj.getNumMembers());
-				userDTO.setName_sector(proj.getSector().getName());
-				userDTO.setName_demanda(proj.getDemand().getName());
-				userDTO.setName_creador(proj.getUser().getUsername());
-				userDTO.setEmail_creador(proj.getUser().getEmail());
+	    List<ProjectDTO> userDTOs = new ArrayList<>();
 
-				List<String> usersNames = proj.getUserList().stream().map(project -> project.getUsername())
-						.collect(Collectors.toList());
-				userDTO.setUsersName(usersNames);
+	    if (usuario.isPresent()) {
+	        User user = usuario.get();
+	        List<Project> projects = user.getProjectList();
 
-				userDTOs.add(userDTO);
-			}
-		}
+	        for (Project proj : projects) {
+	            ProjectDTO userDTO = new ProjectDTO();
+	            userDTO.setId(proj.getId());
+	            userDTO.setName(proj.getName());
+	            userDTO.setNumMembers(proj.getNumMembers());
+	            userDTO.setName_sector(proj.getSector().getName());
+	            userDTO.setName_demanda(proj.getDemand().getName());
+	            userDTO.setName_creador(proj.getUser().getUsername());
+	            userDTO.setEmail_creador(proj.getUser().getEmail());
 
+	            List<UserProjectDTO> usersNames = proj.getUserList()
+	                    .stream()
+	                    .map(u -> new UserProjectDTO(
+	                            u.getId(),
+	                            u.getUsername(),
+	                            u.getAlias(),
+	                            u.getEmail(),
+	                            u.getPhone()))
+	                    .collect(Collectors.toList());
+
+	            userDTO.setUsersName(usersNames);
+	            userDTOs.add(userDTO);
+	        }
+	    }
+
+	    return userDTOs;
 		
-		
-
-		
-			
-
-		return userDTOs;
 	}
 	
 
 	public List<ProjectDTO> getAllProjects() {
-		List<Project> projects = projectRepo.findAll();
-		List<ProjectDTO> userDTOs = new ArrayList<>();
+		 List<Project> projects = projectRepo.findAll();
+		    List<ProjectDTO> projectDTOs = new ArrayList<>();
 
-		for (Project proj : projects) {
-			ProjectDTO userDTO = new ProjectDTO();
-			userDTO.setId(proj.getId());
-			userDTO.setName(proj.getName());
-			userDTO.setNumMembers(proj.getNumMembers());
-			userDTO.setName_sector(proj.getSector().getName());
-			userDTO.setName_demanda(proj.getDemand().getName());
-			userDTO.setName_creador(proj.getUser().getUsername());
-			userDTO.setEmail_creador(proj.getUser().getEmail());
+		    for (Project proj : projects) {
+		        ProjectDTO projectDTO = new ProjectDTO();
+		        projectDTO.setId(proj.getId());
+		        projectDTO.setName(proj.getName());
+		        projectDTO.setNumMembers(proj.getNumMembers());
+		        projectDTO.setName_sector(proj.getSector().getName());
+		        projectDTO.setName_demanda(proj.getDemand().getName());
+		        projectDTO.setName_creador(proj.getUser().getUsername());
+		        projectDTO.setEmail_creador(proj.getUser().getEmail());
 
-			List<String> usersNames = proj.getUserList().stream().map(project -> project.getUsername())
-					.collect(Collectors.toList());
-			userDTO.setUsersName(usersNames);
+		        List<UserProjectDTO> usersNames = proj.getUserList()
+		                .stream()
+		                .map(user -> new UserProjectDTO(
+		                        user.getId(),
+		                        user.getUsername(),
+		                        user.getAlias(),
+		                        user.getEmail(),
+		                        user.getPhone()))
+		                .collect(Collectors.toList());
 
-			userDTOs.add(userDTO);
-		}
+		        projectDTO.setUsersName(usersNames);
+		        projectDTOs.add(projectDTO);
+		    }
 
-		return userDTOs;
+		    return projectDTOs;
 	}
 
 	public ResponseEntity<Object> createNewProject(Project project) {

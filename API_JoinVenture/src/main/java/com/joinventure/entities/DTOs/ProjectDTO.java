@@ -12,7 +12,7 @@ public class ProjectDTO {
 	String name_creador;
 	String email_creador;
 	
-	List<String> usersName;
+	List<UserProjectDTO> usersName;
 	
 	
 	
@@ -20,7 +20,7 @@ public class ProjectDTO {
 		super();
 	}
 	public ProjectDTO(Long id, String name, Integer numMembers, String name_sector, String name_demanda, String name_creador,
-			String email_creador, List<String> usersName) {
+			String email_creador, List<UserProjectDTO> usersName) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -74,10 +74,10 @@ public class ProjectDTO {
 	public void setEmail_creador(String email_creador) {
 		this.email_creador = email_creador;
 	}
-	public List<String> getUsersName() {
+	public List<UserProjectDTO> getUsersName() {
 		return usersName;
 	}
-	public void setUsersName(List<String> usersName) {
+	public void setUsersName(List<UserProjectDTO> usersName) {
 		this.usersName = usersName;
 	}
 	
