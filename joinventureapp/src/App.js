@@ -10,6 +10,7 @@ import Contact from './pages/Contact/Contact';
 import InteractiveMap from './components/InteractiveMap/InteractiveMap';
 
 import Login from './pages/Login/Login';
+import AuthGuard from './pages/AuthGuard/AuthGuard';
 // ... otros imports si son necesarios
 import './App.css';
 
@@ -21,13 +22,13 @@ function App() {
         <Header/>
         
         <Routes>
-          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects" element={<AuthGuard><Projects /></AuthGuard>} />
         
         
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/contact" element={<AuthGuard><Contact /></AuthGuard>} />
           <Route path="/login" element={<Login />} />
           {/* Define más rutas aquí si es necesario */}
-          <Route path="/interactive-map" element={<InteractiveMap />} />
+          <Route path="/interactive-map" element={<AuthGuard><InteractiveMap /></AuthGuard>} />
 
         </Routes>
         
