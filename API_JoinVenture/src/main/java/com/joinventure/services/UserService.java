@@ -19,7 +19,7 @@ import com.joinventure.entities.Language;
 import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.UserDTO;
-import com.joinventure.entities.DTOs.UserProjectsDTO;
+
 import com.joinventure.repositories.FrameworkRepository;
 import com.joinventure.repositories.LenguageRepository;
 import com.joinventure.repositories.ProjectRepository;
@@ -76,22 +76,7 @@ public class UserService {
 		return frameworks;
 	}
 
-	public List<UserProjectsDTO> getAllProjectsByUser(Long id) {
-		User user = userRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
-
-		List<UserProjectsDTO> userDTOs = new ArrayList<>();
-
-		for (Project user1 : user.getProjectList()) {
-			UserProjectsDTO userDTO = new UserProjectsDTO();
-			userDTO.setId(user1.getId());
-			userDTO.setName(user1.getName());
-			userDTO.setMembers(user1.getNumMembers());
-
-			userDTOs.add(userDTO);
-		}
-		return userDTOs;
-	}
+	
 
 	public List<UserDTO> getAllUsers() {
 		List<User> users = userRepository.findAll();

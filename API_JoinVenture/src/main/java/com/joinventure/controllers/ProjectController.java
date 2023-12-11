@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.ProjectDTO;
+import com.joinventure.entities.DTOs.ProjectsUserDTO;
 import com.joinventure.entities.DTOs.UserDTO;
 import com.joinventure.entities.DTOs.UserProjectDTO;
 import com.joinventure.repositories.ProjectRepository;
@@ -53,10 +54,14 @@ public class ProjectController {
 	public ResponseEntity<List<ProjectDTO>> getAllProjects() {
 		return ResponseEntity.ok().body(proService.getAllProjects());
 	}
+	@GetMapping("/project")
+	public ResponseEntity<ProjectDTO> getProjectById(@RequestParam Long id) {
+		return ResponseEntity.ok().body(proService.getProjectById(id)); 
+	}
 
 	@GetMapping("/projectsUser")
-	public ResponseEntity<List<ProjectDTO>> getAllProjectsByUser(@RequestParam Long id) {
-		return ResponseEntity.ok().body(proService.getAllProjectsByUser(id));
+	public ResponseEntity<List<ProjectsUserDTO>> getAllProjectsByUser(@RequestParam Long id) {
+		return ResponseEntity.ok().body(proService.getAllProjectsByUser(id)); 
 	}
 	
 	@GetMapping("/{idProyecto}/participantes")

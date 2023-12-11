@@ -23,7 +23,7 @@ import com.joinventure.entities.Language;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.UserDTO;
 import com.joinventure.entities.DTOs.UserLanguagesDTO;
-import com.joinventure.entities.DTOs.UserProjectsDTO;
+
 import com.joinventure.repositories.UserRepository;
 import com.joinventure.services.UserService;
 
@@ -54,10 +54,7 @@ public class UserController {
 		return ResponseEntity.ok().body(user);
 	}	
 	
-	@GetMapping("userProjects")
-	public ResponseEntity<List<UserProjectsDTO>> getAllProjectsByUser(@RequestParam Long id){
-		return ResponseEntity.ok().body(userService.getAllProjectsByUser(id));
-	}
+	
 	
 	@GetMapping("userLanguages")
 	public ResponseEntity<List<Language>> getAllLanguagesByUser(@RequestParam Long id){
