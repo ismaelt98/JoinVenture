@@ -1,0 +1,21 @@
+.divGeneral{
+    background-color: white(231, 201, 201);
+}
+
+.navbar1 {
+
+    overflow: hidden;
+   
+   margin-top: 3px;
+    display: flex;
+    justify-content: space-around;
+}
+.btnProjectsG{
+    background-color: transparent;
+    color: black;
+    width: 200px;
+}
+.btnProjectsG:hover{
+    background-color: black;
+    color: white;
+}

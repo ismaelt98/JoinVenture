@@ -23,8 +23,6 @@ import com.joinventure.entities.Framework;
 import com.joinventure.entities.Language;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.UserDTO;
-import com.joinventure.entities.DTOs.UserLanguagesDTO;
-
 import com.joinventure.repositories.UserRepository;
 import com.joinventure.services.UserService;
 
@@ -72,25 +70,11 @@ public class UserController {
 
 	}
 
-	@PostMapping("")
+	@PostMapping
 	public ResponseEntity<Object> createUser(@RequestBody User user) {
 
 		return userService.createNewUser(user);
 	}
-
-//	
-//	
-//	
-//	@GetMapping("/buscar/{username}")
-//	public ResponseEntity<User> getUserByUsername(@PathVariable(value = "username") String username){
-//		User user = userService.findUserByUsername(username);
-//		return ResponseEntity.ok().body(user);
-//	}
-
-//	@PutMapping("/updateUser")
-//	 public ResponseEntity<Object> updateUser(@RequestParam Long id, @RequestBody User userDetails){
-//		return userService.updateUser(id, userDetails);
-//	}
 
 	@PutMapping("/changeusername/{username}")
 	public ResponseEntity<User> updateUsername(@PathVariable(value = "username") String username,
@@ -114,16 +98,6 @@ public class UserController {
 		final User updatedUser = userRepository.save(user);
 		return ResponseEntity.ok().body(updatedUser);
 	}
-
-//	@DeleteMapping("/{id}")
-//    public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable(value = "id") Long id) {
-//        User user = userService.findUserById(id);
-//
-//        userRepository.delete(user);
-//        Map<String, Boolean> response = new HashMap<>();
-//        response.put("eliminado", Boolean.TRUE);
-//        return ResponseEntity.ok().body(response);
-//    }
 
 	@DeleteMapping("/deleteUser")
 	public ResponseEntity<String> eliminarUsuarioYProyectos(@RequestParam Long userId) {
@@ -152,24 +126,23 @@ public class UserController {
 		return ResponseEntity.ok().body(response);
 	}
 
-	@PostMapping("/login")
-	public boolean getLogin(@RequestParam String email, @RequestParam String password) {
-		Optional<User> user = userService.findByEmail(email);
-
-		if (user.isPresent()) {
-			User user1 = user.get();
-			String hashedPassword = userService.hashSHA256(password);
-			return hashedPassword.equals(user1.getPassword());
-		}
-
-		return false;
-	}
+//	@PostMapping("/login")
+//	public boolean getLogin(@RequestParam String email, @RequestParam String password) {
+//		Optional<User> user = userService.findByEmail(email);
+//
+//		if (user.isPresent()) {
+//			User user1 = user.get();
+//			String hashedPassword = userService.hashSHA256(password);
+//			return hashedPassword.equals(user1.getPassword());
+//		}
+//
+//		return false;
+//	}
 
 	@PostMapping("/login1")
-	public Object getLogin1(@RequestParam String email, @RequestParam String password) {
-
-		return userService.getLoginUser(email, password); 
-		
+	public ResponseEntity<Object> getLogin1(@RequestParam String email, @RequestParam String password) {
+		Optional<User> optionalUser = userService.getLoginUser(email, password);
+		return optionalUser.isPresent()?ResponseEntity.ok(optionalUser.get()):ResponseEntity.noContent().build();
 	}
 
 	@PostMapping("/password/cifrar")

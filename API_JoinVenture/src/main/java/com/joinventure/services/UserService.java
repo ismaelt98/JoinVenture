@@ -4,8 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,7 +19,6 @@ import com.joinventure.entities.Language;
 import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.entities.DTOs.UserDTO;
-
 import com.joinventure.repositories.FrameworkRepository;
 import com.joinventure.repositories.LenguageRepository;
 import com.joinventure.repositories.ProjectRepository;
@@ -89,6 +86,7 @@ public class UserService {
 			userDTO.setUsername(user.getUsername());
 			userDTO.setAlias(user.getAlias());
 			userDTO.setEmail(user.getEmail());
+			userDTO.setPhone(user.getPhone());
 
 			List<String> projectNames = user.getProjectList().stream().map(project -> project.getName())
 					.collect(Collectors.toList());
@@ -116,21 +114,19 @@ public class UserService {
 		userDTO.setProjectNames(projectNames);
 		return userDTO;
 	}
-	public Object getLoginUser(String email, String password) {
-		Optional<User> user = userRepository.findByEmail(email);
 
-		if (user.isPresent()) {
-			User user1 = user.get();
-			String hashedPassword = hashSHA256(password);
-			if (hashedPassword.equals(user1.getPassword())) {
-				return user1;
-			}
-			
-		}
-		return ResponseEntity.ok(Collections.emptyList());
-		
+	public Optional<User> getLoginUser(String email, String password) {
+		Optional<User> user = userRepository.findAll().stream()
+				.filter(u -> u.getEmail().equals(email) && u.getPassword().equals(hashSHA256(password))).findFirst();
+
+//		if (user.isPresent()) {
+//			String hashedPassword = hashSHA256(password);
+//			if (hashedPassword.equals(user.get().getPassword())) {
+//				return user;
+//			}
+//		}
+		return user;
 	}
-	
 
 	public ResponseEntity<Object> createNewUser(User user) {
 		if (userRepository.existsByEmail(user.getEmail())) {
@@ -164,32 +160,16 @@ public class UserService {
 		User user = userRepository.findById(userId).orElse(null);
 
 		if (user != null) {
-		    List<Project> proyectos = user.getProjectList();
-		    if (proyectos != null) {
-		        for (Project proj : proyectos) {
-		            proj.getUserList().remove(user);
-		        }
-		    }
-		    userRepository.delete(user); // Guarda el usuario actualizado sin el proyecto
-		    return true;
+			List<Project> proyectos = user.getProjectList();
+			if (proyectos != null) {
+				for (Project proj : proyectos) {
+					proj.getUserList().remove(user);
+				}
+			}
+			userRepository.delete(user); // Guarda el usuario actualizado sin el proyecto
+			return true;
 		}
 		return false;
-//		if (user != null) {
-//
-//			List<Project> proyectos = user.getProjectList();
-//			if (proyectos != null) {
-//				for (Project proj : proyectos) {
-//					proj.getUserList().remove(userRepository.findById(userId).orElse(null));
-//
-//				}
-//			}
-//
-//			userRepository.delete(user);
-//			return true;
-//
-//		}
-//		return false; 
-
 	}
 
 	public UserDTO findUserByEmail(String email) {
@@ -234,13 +214,13 @@ public class UserService {
 				"Usuario no encontrado con el nombre de usuario: " + username);
 	}
 
-	public Optional<User> getPasswordByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
-
-	public Optional<User> findByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
+//	public Optional<User> getPasswordByEmail(String email) {
+//		return userRepository.findByEmail(email);
+//	}
+//
+//	public Optional<User> findByEmail(String email) {
+//		return userRepository.findByEmail(email);
+//	}
 
 	public boolean verificarEmailExistente(String email) {
 		return userRepository.existsByEmail(email);
