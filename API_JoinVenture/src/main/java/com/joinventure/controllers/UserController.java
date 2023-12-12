@@ -1,8 +1,6 @@
 package com.joinventure.controllers;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,162 +9,64 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.joinventure.entities.Framework;
-import com.joinventure.entities.Language;
 import com.joinventure.entities.User;
-import com.joinventure.entities.DTOs.UserDTO;
-import com.joinventure.repositories.UserRepository;
 import com.joinventure.services.UserService;
 
-import lombok.extern.java.Log;
-
-@Log
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private UserService userService;
 
-	@GetMapping("")
-	public ResponseEntity<List<UserDTO>> getAllUsers() {
-		return ResponseEntity.ok().body(userService.getAllUsers());
+	@GetMapping
+	public ResponseEntity<?> getAllUsers() {
+		List<User> users = userService.findAllUsers();
+		return users.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(users);
 	}
 
-	@GetMapping("user")
-	public ResponseEntity<UserDTO> getUserById(@RequestParam Long id) {
-		UserDTO user = userService.findUserById(id);
-
-		return ResponseEntity.ok().body(user);
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Long id) {
+		Optional<User> user = userService.findUserById(id);
+		return user.isPresent()? ResponseEntity.ok(user): ResponseEntity.noContent().build();
 	}
-
-	@GetMapping("userLanguages")
-	public ResponseEntity<List<Language>> getAllLanguagesByUser(@RequestParam Long id) {
-		return ResponseEntity.ok().body(userService.getAllLanguagesByUser(id));
-	}
-
-	@GetMapping("userFrameworks")
-	public ResponseEntity<List<Framework>> getAllFrameworksByUser(@RequestParam Long id) {
-		return ResponseEntity.ok().body(userService.getAllFrameworksByUser(id));
-	}
-
-	@GetMapping("/buscarEmail")
-	public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
-		UserDTO user = userService.findUserByEmail(email);
-
-		return ResponseEntity.ok().body(user);
-
-	}
-
-	@PostMapping
-	public ResponseEntity<Object> createUser(@RequestBody User user) {
-
-		return userService.createNewUser(user);
-	}
-
-	@PutMapping("/changeusername/{username}")
-	public ResponseEntity<User> updateUsername(@PathVariable(value = "username") String username,
-			@RequestBody User userDetails) {
-		User user = userService.findUserByUsername(username);
-
-		user.setUsername(userDetails.getUsername());
-
-		final User updatedUser = userRepository.save(user);
-		return ResponseEntity.ok().body(updatedUser);
-	}
-
-	@PutMapping("/changepassword/{username}")
-	public ResponseEntity<?> updatePassword(@PathVariable(value = "username") String username,
-			@RequestBody User userDetails) {
-		User user = userService.findUserByUsername(username);
-
-		user.setPassword(userService.hashSHA256(userDetails.getPassword()));
-		user.setUpdatedAt(userDetails.getUpdatedAt());
-
-		final User updatedUser = userRepository.save(user);
-		return ResponseEntity.ok().body(updatedUser);
-	}
-
-	@DeleteMapping("/deleteUser")
-	public ResponseEntity<String> eliminarUsuarioYProyectos(@RequestParam Long userId) {
-
-		boolean joined = userService.eliminarUsuarioConProyectos(userId);
-
-		if (joined) {
-			return ResponseEntity.ok("Usuario y proyectos eliminados correctamente.");
-		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo unir al proyecto");
-		}
-
-	}
-
-	// Elimina todos los lenguajes que estan relacionados con este usuario
-	// Elimina todos los frameworks que estan relacionados con este usuario
-	// Elimina el usuario
-	@DeleteMapping("/delete/{username}")
-	public ResponseEntity<Map<String, Boolean>> deleteUserByUsername(
-			@PathVariable(value = "username") String username) {
-		User user = userService.findUserByUsername(username);
-
-		userRepository.delete(user);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("eliminado", Boolean.TRUE);
-		return ResponseEntity.ok().body(response);
-	}
-
-//	@PostMapping("/login")
-//	public boolean getLogin(@RequestParam String email, @RequestParam String password) {
-//		Optional<User> user = userService.findByEmail(email);
-//
-//		if (user.isPresent()) {
-//			User user1 = user.get();
-//			String hashedPassword = userService.hashSHA256(password);
-//			return hashedPassword.equals(user1.getPassword());
-//		}
-//
-//		return false;
-//	}
-
-	@PostMapping("/login1")
-	public ResponseEntity<Object> getLogin1(@RequestParam String email, @RequestParam String password) {
-		Optional<User> optionalUser = userService.getLoginUser(email, password);
-		return optionalUser.isPresent()?ResponseEntity.ok(optionalUser.get()):ResponseEntity.noContent().build();
-	}
-
-	@PostMapping("/password/cifrar")
-	public String cifrarPassword(@RequestParam String password) {
-		String passwordCifrado = userService.hashSHA256(password);
-		return passwordCifrado;
-	}
-
+	
 	@GetMapping("/checkEmail")
-	public ResponseEntity<Boolean> checkIfExistUserEmail(@RequestParam String email) {
-		boolean existe = userService.verificarEmailExistente(email);
-
-		return ResponseEntity.ok(existe);
+	public ResponseEntity<String> checkIfExistEmail(@RequestParam String email) {
+		Optional<User> existEmail = userService.findIfExistEmail(email);
+		return existEmail.isPresent()? ResponseEntity.status(HttpStatus.IM_USED).body(existEmail.get().getEmail() + " ya está regitrado"): ResponseEntity.notFound().build();
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUserById(@PathVariable(value = "id") Long id){
+		/* Para mirar más tarde */ 
+		boolean userIsDeleted = userService.deleteUser(id);
+		return userIsDeleted?ResponseEntity.ok("User was deleted!"): ResponseEntity.notFound().build();
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> addUser(@RequestBody User user){
+		User userSaved = userService.saveUser(user);
+		if(userSaved != null){
+			return ResponseEntity.ok(userSaved);
+		}
+		return ResponseEntity.status(HttpStatus.IM_USED).body("No se ha podido crear el user, prueba con otro email o haz login");
+	}
+	
+	@PatchMapping("/{id}")
+	public void updateUser(@PathVariable Long id, @RequestBody User user){
+		user.setId(id);
+		userService.updateUser(user);
 	}
 
-	@GetMapping("/checkPassword")
-	public ResponseEntity<Boolean> checkifExistUserPassword(@RequestParam String password) {
-		boolean existe = userService.verificarPasswordExistente(password);
-		return ResponseEntity.ok(existe);
-	}
-
-	@GetMapping("/checkPhone")
-	public ResponseEntity<Boolean> checkifExistUserPhone(@RequestParam String phone) {
-		boolean existe = userService.verificarPhoneExistente(phone);
-		return ResponseEntity.ok(existe);
-	}
+	
 }

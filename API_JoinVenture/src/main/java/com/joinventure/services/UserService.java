@@ -2,26 +2,13 @@ package com.joinventure.services;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.joinventure.entities.Framework;
-import com.joinventure.entities.Language;
-import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
-import com.joinventure.entities.DTOs.UserDTO;
-import com.joinventure.repositories.FrameworkRepository;
-import com.joinventure.repositories.LenguageRepository;
-import com.joinventure.repositories.ProjectRepository;
 import com.joinventure.repositories.UserRepository;
 
 @Service
@@ -29,219 +16,41 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private ProjectRepository proRepo;
-
-	@Autowired
-	private FrameworkRepository framRepo;
-
-	@Autowired
-	private LenguageRepository langRepo;
-
 	public List<User> findAllUsers() {
 		return userRepository.findAll();
 	}
 
-	public List<Language> getAllLanguagesByUser(Long id) {
-		User user = userRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
-
-		List<Language> languages = new ArrayList<>();
-
-		for (Language user1 : user.getListLanguage()) {
-			Language lang = new Language();
-			lang.setId(user1.getId());
-			lang.setName(user1.getName());
-
-			languages.add(lang);
-		}
-		return languages;
+	public Optional<User> findUserById(Long id) {
+		return userRepository.findById(id);
 	}
 
-	public List<Framework> getAllFrameworksByUser(Long id) {
-		User user = userRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
-
-		List<Framework> frameworks = new ArrayList<>();
-
-		for (Framework framework : user.getListFrameworks()) {
-
-			Framework fram = new Framework();
-			fram.setId(framework.getId());
-			fram.setName(framework.getName());
-
-			frameworks.add(fram);
-		}
-		return frameworks;
+	public Optional<User> findIfExistEmail(String email) {
+		return userRepository.findAll().stream().filter(e -> e.getEmail().equals(email)).findFirst();
 	}
 
-	public List<UserDTO> getAllUsers() {
-		List<User> users = userRepository.findAll();
-		List<UserDTO> userDTOs = new ArrayList<>();
-
-		for (User user : users) {
-			UserDTO userDTO = new UserDTO();
-			userDTO.setId(user.getId());
-			userDTO.setName_role(user.getRoleuser().getName());
-			userDTO.setUsername(user.getUsername());
-			userDTO.setAlias(user.getAlias());
-			userDTO.setEmail(user.getEmail());
-			userDTO.setPhone(user.getPhone());
-
-			List<String> projectNames = user.getProjectList().stream().map(project -> project.getName())
-					.collect(Collectors.toList());
-			userDTO.setProjectNames(projectNames);
-
-			userDTOs.add(userDTO);
-		}
-
-		return userDTOs;
-	}
-
-	public UserDTO findUserById(long id) {
-		User user = userRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
-
-		UserDTO userDTO = new UserDTO();
-		userDTO.setId(user.getId());
-		userDTO.setName_role(user.getRoleuser().getName()); // Suponiendo que 'nombre' es un campo en RoleUser
-		userDTO.setUsername(user.getUsername());
-		userDTO.setAlias(user.getAlias());
-		userDTO.setEmail(user.getEmail());
-		userDTO.setPhone(user.getPhone());
-		List<String> projectNames = user.getProjectList().stream().map(project -> project.getName())
-				.collect(Collectors.toList());
-		userDTO.setProjectNames(projectNames);
-		return userDTO;
-	}
-
-	public Optional<User> getLoginUser(String email, String password) {
-		Optional<User> user = userRepository.findAll().stream()
-				.filter(u -> u.getEmail().equals(email) && u.getPassword().equals(hashSHA256(password))).findFirst();
-
-//		if (user.isPresent()) {
-//			String hashedPassword = hashSHA256(password);
-//			if (hashedPassword.equals(user.get().getPassword())) {
-//				return user;
-//			}
-//		}
-		return user;
-	}
-
-	public ResponseEntity<Object> createNewUser(User user) {
-		if (userRepository.existsByEmail(user.getEmail())) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El email ya existe en la base de datos");
-		} else {
-			user.setPassword(hashSHA256(user.getPassword()));
-
-			return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
-		}
-	}
-
-	public ResponseEntity<Object> updateUser(Long id, User userDetails) {
-		User user = userRepository.findById(id).orElseThrow(
-				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con id: " + id));
-
-		System.out.println(user);
-		user.setUsername(userDetails.getUsername());
-		user.setPassword(hashSHA256(userDetails.getPassword()));
-		user.setEmail(user.getEmail());
-		user.setAlias(userDetails.getAlias());
-		user.setPhone(user.getPhone());
-		user.setProjectList(user.getProjectList());
-		user.setListLanguage(user.getListLanguage());
-		user.setListFrameworks(user.getListFrameworks());
-		final User updatedUser = userRepository.save(user);
-		return ResponseEntity.ok().body(updatedUser);
-	}
-
-	public boolean eliminarUsuarioConProyectos(Long userId) {
-
-		User user = userRepository.findById(userId).orElse(null);
-
-		if (user != null) {
-			List<Project> proyectos = user.getProjectList();
-			if (proyectos != null) {
-				for (Project proj : proyectos) {
-					proj.getUserList().remove(user);
-				}
-			}
-			userRepository.delete(user); // Guarda el usuario actualizado sin el proyecto
+	public boolean deleteUser(Long id) {
+		if (userRepository.existsById(id)) {
+			userRepository.deleteById(id);
 			return true;
 		}
 		return false;
 	}
-
-	public UserDTO findUserByEmail(String email) {
-		List<User> users = userRepository.findAll();
-
-		for (User user : users) {
-			if (user.getEmail().equals(email)) {
-				UserDTO userDTO = new UserDTO();
-				userDTO.setId(user.getId());
-				userDTO.setName_role(user.getRoleuser().getName());
-				userDTO.setUsername(user.getUsername());
-				userDTO.setAlias(user.getAlias());
-				userDTO.setEmail(user.getEmail());
-
-				List<String> projectNames;
-				List<Project> userProjects = user.getProjectList();
-
-				if (userProjects != null && !userProjects.isEmpty()) {
-					projectNames = userProjects.stream().map(Project::getName).collect(Collectors.toList());
-				} else {
-					projectNames = new ArrayList<>(); // Devolver una lista vacía si no hay proyectos
-				}
-
-				userDTO.setProjectNames(projectNames);
-
-				return userDTO;
-			}
-		}
-
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con el email: " + email);
-	}
-
-	public User findUserByUsername(String username) {
-		List<User> users = userRepository.findAll();
-
-		for (User user : users) {
-			if (user.getUsername().equals(username)) {
+	
+	public User saveUser(User user) {
+		try {
+			Optional<User> existsUser = userRepository.findAll().stream().filter(u -> u.getEmail().equals(user.getEmail())).findFirst();
+			if(existsUser.isPresent()) {
+				return null;
+			}else {
+				user.setPassword(hashSHA256(user.getPassword()));
+				userRepository.save(user);
 				return user;
 			}
+		}catch (Exception e) {
+			return null;
 		}
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-				"Usuario no encontrado con el nombre de usuario: " + username);
 	}
-
-//	public Optional<User> getPasswordByEmail(String email) {
-//		return userRepository.findByEmail(email);
-//	}
-//
-//	public Optional<User> findByEmail(String email) {
-//		return userRepository.findByEmail(email);
-//	}
-
-	public boolean verificarEmailExistente(String email) {
-		return userRepository.existsByEmail(email);
-	}
-
-	public boolean verificarPasswordExistente(String password) {
-
-		return userRepository.existsByPassword(hashSHA256(password));
-	}
-
-	public boolean verificarPhoneExistente(String phone) {
-
-		return userRepository.existsByPhone(phone);
-	}
-
-//    public Optional<User> findUserByEmail(String email) {
-//        Optional<User> user = userRepository.findAll().stream()
-//                .filter(user1 -> user1.getEmail().equals(email)).findFirst();
-//
-//        return user;
-//    }
+	
 	public String hashSHA256(String password) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -254,11 +63,17 @@ public class UserService {
 					hexString.append('0');
 				hexString.append(hex);
 			}
-
 			return hexString.toString();
-		} catch (NoSuchAlgorithmException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public void updateUser(User user) {
+		user.setUsername(user.getUsername());
+		user.setAlias(user.getAlias());
+		user.setPassword(hashSHA256(user.getPassword()));
+		userRepository.save(user);
 	}
 }
