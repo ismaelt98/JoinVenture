@@ -51,16 +51,22 @@ function Register(): any {
     roleuser: ''
   });
 
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const { name, value} = e.target;   
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+    
+    
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+    e.preventDefault();  
+  
+   
     // Handle form submission with formData
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -93,7 +99,6 @@ function Register(): any {
     <>
       <form className={style.signupForm} onSubmit={handleSubmit}>
         <div>
-
           <label>
             Username:
             <input
