@@ -5,6 +5,7 @@ function Test(): any {
     return (
         <div className={style.l1}>
             <div className={style.div1l1}>
+                <h1>HOLA</h1>
                 {/* <h2>{titles[currentTitleIndex]}</h2> */}
                 {/* <p>{paragraphs[currentTitleIndex]}</p> */}
             </div>

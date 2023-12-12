@@ -23,7 +23,7 @@
   
   .navbar-links a {
     text-decoration: none;
-    color: black; /* Texto blanco para los enlaces */
+    color: white; /* Texto blanco para los enlaces */
     margin: 0 1rem;
     padding: 0.5rem 1rem; /* Espaciado adecuado para los enlaces */
     transition: color 0.3s ease, border-bottom 0.3s ease; /* Transición suave para el hover */
@@ -34,12 +34,12 @@
   
   .navbar-links a:hover,
   .navbar-links .active {
-    color: black; /* Cambio de color para el hover y el enlace activo */
-    border-bottom: 2px solid #f1c40f; /* Subrayado para el enlace activo */
+    color: white; /* Cambio de color para el hover y el enlace activo */
+
   }
   
   .button {
-    background-color: #f1c40f; /* Color de fondo para el botón */
+    background-color: black; /* Color de fondo para el botón */
     border: none;
     border-radius: 4px; /* Bordes redondeados para el botón */
     padding: 0.5rem 1rem;
@@ -48,6 +48,6 @@
   }
   
   .button:hover {
-    background-color: #d1ac00; /* Oscurecer el botón al hacer hover */
+    background-color: rgba(0, 0, 0, 0.452); /* Oscurecer el botón al hacer hover */
   }
   
