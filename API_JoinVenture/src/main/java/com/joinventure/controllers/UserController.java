@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,5 +69,9 @@ public class UserController {
 		userService.updateUser(user);
 	}
 
-	
+	@PostMapping("/login")
+    public ResponseEntity<Object> getLogin(@RequestParam String email, @RequestParam String password) {
+		Optional<User> optionalUser = userService.getLoginUser(email, password);
+		return optionalUser.isPresent()?ResponseEntity.ok(optionalUser.get()):ResponseEntity.noContent().build();
+    }
 }

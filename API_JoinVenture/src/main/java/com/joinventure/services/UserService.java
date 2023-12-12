@@ -76,4 +76,11 @@ public class UserService {
 		user.setPassword(hashSHA256(user.getPassword()));
 		userRepository.save(user);
 	}
+	
+	public Optional<User> getLoginUser(String email, String password) {
+		Optional<User> user = userRepository.findAll().stream()
+				.filter(u -> u.getEmail().equals(email) && u.getPassword().equals(hashSHA256(password))).findFirst();
+
+		return user;
+	}
 }
