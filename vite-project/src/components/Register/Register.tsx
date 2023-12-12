@@ -110,8 +110,10 @@ function Register(): any {
               onChange={handleChange}
               checked={valueRoleUser === "1"}
             />
+            <span className={style.checkmark}></span>
             Programador
           </label>
+
           <label className={style.labelChecbox}>
             <input
               type="checkbox"
@@ -119,8 +121,10 @@ function Register(): any {
               onChange={handleChange}
               checked={valueRoleUser === "2"}
             />
+            <span className={style.checkmark}></span>
             Empresa
           </label>
+          
         </div>
         <form className={style.signupForm} onSubmit={handleRegister}>
           <input

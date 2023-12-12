@@ -35,58 +35,49 @@ import lombok.extern.java.Log;
 @RequestMapping("/users")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
-	private UserService userService;	
-	
+	private UserService userService;
+
 	@GetMapping("")
-	public ResponseEntity<List<UserDTO>> getAllUsers(){
+	public ResponseEntity<List<UserDTO>> getAllUsers() {
 		return ResponseEntity.ok().body(userService.getAllUsers());
 	}
-	
+
 	@GetMapping("user")
-	public ResponseEntity<UserDTO> getUserById(@RequestParam Long id){
+	public ResponseEntity<UserDTO> getUserById(@RequestParam Long id) {
 		UserDTO user = userService.findUserById(id);
-		
-		
+
 		return ResponseEntity.ok().body(user);
-	}	
-	
-	
-	
+	}
+
 	@GetMapping("userLanguages")
-	public ResponseEntity<List<Language>> getAllLanguagesByUser(@RequestParam Long id){
+	public ResponseEntity<List<Language>> getAllLanguagesByUser(@RequestParam Long id) {
 		return ResponseEntity.ok().body(userService.getAllLanguagesByUser(id));
 	}
-	
-	
+
 	@GetMapping("userFrameworks")
-	public ResponseEntity<List<Framework>> getAllFrameworksByUser(@RequestParam Long id){
+	public ResponseEntity<List<Framework>> getAllFrameworksByUser(@RequestParam Long id) {
 		return ResponseEntity.ok().body(userService.getAllFrameworksByUser(id));
 	}
-	
+
 	@GetMapping("/buscarEmail")
-	public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email){
+	public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
 		UserDTO user = userService.findUserByEmail(email);
-		
+
 		return ResponseEntity.ok().body(user);
-		
+
 	}
-	
+
 	@PostMapping("")
-	public ResponseEntity<Object> createUser(@RequestBody User user){
-		
+	public ResponseEntity<Object> createUser(@RequestBody User user) {
+
 		return userService.createNewUser(user);
 	}
-	
-	
-	
-	
-	
-	
+
 //	
 //	
 //	
@@ -95,36 +86,35 @@ public class UserController {
 //		User user = userService.findUserByUsername(username);
 //		return ResponseEntity.ok().body(user);
 //	}
-	
-	
-	
+
 //	@PutMapping("/updateUser")
 //	 public ResponseEntity<Object> updateUser(@RequestParam Long id, @RequestBody User userDetails){
 //		return userService.updateUser(id, userDetails);
 //	}
-	
-	
+
 	@PutMapping("/changeusername/{username}")
-	public ResponseEntity<User> updateUsername(@PathVariable(value = "username") String username, @RequestBody User userDetails){
+	public ResponseEntity<User> updateUsername(@PathVariable(value = "username") String username,
+			@RequestBody User userDetails) {
 		User user = userService.findUserByUsername(username);
-		
+
 		user.setUsername(userDetails.getUsername());
-		
+
 		final User updatedUser = userRepository.save(user);
 		return ResponseEntity.ok().body(updatedUser);
 	}
-	
+
 	@PutMapping("/changepassword/{username}")
-	public ResponseEntity<?> updatePassword(@PathVariable(value = "username") String username, @RequestBody User userDetails){
+	public ResponseEntity<?> updatePassword(@PathVariable(value = "username") String username,
+			@RequestBody User userDetails) {
 		User user = userService.findUserByUsername(username);
-		
+
 		user.setPassword(userService.hashSHA256(userDetails.getPassword()));
 		user.setUpdatedAt(userDetails.getUpdatedAt());
-		
+
 		final User updatedUser = userRepository.save(user);
 		return ResponseEntity.ok().body(updatedUser);
 	}
-	
+
 //	@DeleteMapping("/{id}")
 //    public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable(value = "id") Long id) {
 //        User user = userService.findUserById(id);
@@ -134,70 +124,76 @@ public class UserController {
 //        response.put("eliminado", Boolean.TRUE);
 //        return ResponseEntity.ok().body(response);
 //    }
-	
-	
-	 @DeleteMapping("/deleteUser")
-	    public ResponseEntity<String> eliminarUsuarioYProyectos(@RequestParam Long userId) {
-		 
-		 boolean joined =  userService.eliminarUsuarioConProyectos(userId);
 
-	        if (joined) {
-	            return ResponseEntity.ok("Usuario y proyectos eliminados correctamente.");
-	        } else {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo unir al proyecto");
-	        }
-	       
-	        
-	    }
-	
-	//Elimina todos los lenguajes que estan relacionados con este usuario
-	//Elimina todos los frameworks que estan relacionados con este usuario
-	//Elimina el usuario
+	@DeleteMapping("/deleteUser")
+	public ResponseEntity<String> eliminarUsuarioYProyectos(@RequestParam Long userId) {
+
+		boolean joined = userService.eliminarUsuarioConProyectos(userId);
+
+		if (joined) {
+			return ResponseEntity.ok("Usuario y proyectos eliminados correctamente.");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo unir al proyecto");
+		}
+
+	}
+
+	// Elimina todos los lenguajes que estan relacionados con este usuario
+	// Elimina todos los frameworks que estan relacionados con este usuario
+	// Elimina el usuario
 	@DeleteMapping("/delete/{username}")
-    public ResponseEntity<Map<String, Boolean>> deleteUserByUsername(@PathVariable(value = "username") String username) {
-        User user = userService.findUserByUsername(username);
+	public ResponseEntity<Map<String, Boolean>> deleteUserByUsername(
+			@PathVariable(value = "username") String username) {
+		User user = userService.findUserByUsername(username);
 
-        userRepository.delete(user);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("eliminado", Boolean.TRUE);
-        return ResponseEntity.ok().body(response);
-    }
-	
+		userRepository.delete(user);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("eliminado", Boolean.TRUE);
+		return ResponseEntity.ok().body(response);
+	}
+
 	@PostMapping("/login")
-    public boolean getLogin(@RequestParam String email, @RequestParam String password) {
-        Optional <User> user = userService.findByEmail(email);
+	public boolean getLogin(@RequestParam String email, @RequestParam String password) {
+		Optional<User> user = userService.findByEmail(email);
 
-        if(user.isPresent()) {
-            User user1 = user.get();
-            String hashedPassword = userService.hashSHA256(password);
-            return hashedPassword.equals(user1.getPassword());
-        }
+		if (user.isPresent()) {
+			User user1 = user.get();
+			String hashedPassword = userService.hashSHA256(password);
+			return hashedPassword.equals(user1.getPassword());
+		}
 
-        return false;
-    }
-	
+		return false;
+	}
+
+	@PostMapping("/login1")
+	public Object getLogin1(@RequestParam String email, @RequestParam String password) {
+
+		return userService.getLoginUser(email, password); 
+		
+	}
+
 	@PostMapping("/password/cifrar")
-    public String cifrarPassword(@RequestParam String password) {
-        String passwordCifrado = userService.hashSHA256(password);
-        return passwordCifrado;
-    }
+	public String cifrarPassword(@RequestParam String password) {
+		String passwordCifrado = userService.hashSHA256(password);
+		return passwordCifrado;
+	}
 
-    @GetMapping("/checkEmail")
-    public ResponseEntity<Boolean> checkIfExistUserEmail(@RequestParam String email) {
-        boolean existe = userService.verificarEmailExistente(email);
-        
-        return ResponseEntity.ok(existe);
-    }
-    
-    @GetMapping("/checkPassword")
-    public ResponseEntity<Boolean> checkifExistUserPassword(@RequestParam String password){
-    	boolean existe = userService.verificarPasswordExistente(password);
-    	return ResponseEntity.ok(existe); 
-    }
-    
-    @GetMapping("/checkPhone")
-    public ResponseEntity<Boolean> checkifExistUserPhone(@RequestParam String phone){
-    	boolean existe = userService.verificarPhoneExistente(phone);
-    	return ResponseEntity.ok(existe); 
-    }
+	@GetMapping("/checkEmail")
+	public ResponseEntity<Boolean> checkIfExistUserEmail(@RequestParam String email) {
+		boolean existe = userService.verificarEmailExistente(email);
+
+		return ResponseEntity.ok(existe);
+	}
+
+	@GetMapping("/checkPassword")
+	public ResponseEntity<Boolean> checkifExistUserPassword(@RequestParam String password) {
+		boolean existe = userService.verificarPasswordExistente(password);
+		return ResponseEntity.ok(existe);
+	}
+
+	@GetMapping("/checkPhone")
+	public ResponseEntity<Boolean> checkifExistUserPhone(@RequestParam String phone) {
+		boolean existe = userService.verificarPhoneExistente(phone);
+		return ResponseEntity.ok(existe);
+	}
 }

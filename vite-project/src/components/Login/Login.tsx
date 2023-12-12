@@ -35,39 +35,23 @@ function Login(): any {
                 redirect: 'follow'
             };
 
-            fetch(`http://localhost:8080/users/login?email=${email}&password=${password}`, requestOptions)
+            fetch(`http://localhost:8080/users/login1?email=${email}&password=${password}`, requestOptions)
                 .then(response => {
                     return response.json()
                 })
                 .then(result => {
-                    if (result) {
-                        var requestOptions: RequestInit = {
-                            method: 'GET',
-                            headers: myHeaders,
-                            redirect: 'follow'
-                        };
-                        fetch("http://localhost:8080/users/buscarEmail?email=davidcamps@hotmail.es", requestOptions)
-                            .then(response => {
-                                return response.json()
-                            })
-                            .then(user => {
-
-                                const cookieValue = user.id; // Convertir el JSON en un string para la cookie
-                                const cookieRoleUser = user.name_role;
-                                // Crear la cookie con el valor obtenido del JSON
-                                Cookies.set('id', cookieValue, { expires: 10 });
-                                Cookies.set('roleuser', cookieRoleUser, { expires: 10 });
-                                navigate('/autenficationpage');
-                            })
-                            .catch(error => console.log('error', error));
-
-                    } else {
-                        toast.error('El email o password no coinciden', {
-                            position: toast.POSITION.TOP_RIGHT,
-                        });
-                    }
+                    const cookieValue = result.id; 
+                    const cookieRoleUser = result.roleuser.name;                    
+                    Cookies.set('id', cookieValue, { expires: 10 });
+                    Cookies.set('roleuser', cookieRoleUser, { expires: 10 });
+                    navigate('/autenficationpage');
                 })
-                .catch(error => console.log('error', error));
+                .catch(() => {
+                    
+                    toast.error('El password no coincide', {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                });
         } catch (e) {
             console.log(e);
         }

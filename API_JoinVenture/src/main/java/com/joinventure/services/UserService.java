@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -115,6 +116,21 @@ public class UserService {
 		userDTO.setProjectNames(projectNames);
 		return userDTO;
 	}
+	public Object getLoginUser(String email, String password) {
+		Optional<User> user = userRepository.findByEmail(email);
+
+		if (user.isPresent()) {
+			User user1 = user.get();
+			String hashedPassword = hashSHA256(password);
+			if (hashedPassword.equals(user1.getPassword())) {
+				return user1;
+			}
+			
+		}
+		return ResponseEntity.ok(Collections.emptyList());
+		
+	}
+	
 
 	public ResponseEntity<Object> createNewUser(User user) {
 		if (userRepository.existsByEmail(user.getEmail())) {
