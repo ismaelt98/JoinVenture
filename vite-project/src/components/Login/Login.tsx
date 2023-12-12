@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import style from './login.module.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,7 +35,7 @@ function Login(): any {
                 redirect: 'follow'
             };
 
-            fetch(`http://localhost:8080/users/login?email=${email}&password=${password}`, requestOptions)
+            fetch(`http://localhost:8080/users/login1?email=${email}&password=${password}`, requestOptions)
                 .then(response => {
                     return response.json()
                 })
@@ -81,7 +81,7 @@ function Login(): any {
                         <ToastContainer />
                     </div>
                 </form>
-                <p>¿Aún no eres usuario? Pues haz click aquí 🪵<button className={style.submitBtn1} type="submit" onClick={() => irRegistro()}>Registrarse</button></p>
+                <p>¿Aún no eres usuario? Pues haz click aquí 🪵 <Link to="../register">Registrarse</Link></p>
             </div>
         </>
     );

@@ -4,181 +4,85 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// function callRegisterEndPoint() {
+//   var myHeaders = new Headers();
+//   myHeaders.append("Content-Type", "application/json");
+
+//   var raw = JSON.stringify({
+//     "username": "test",
+//     "alias": "test1111",
+//     "email": "test@gmailo.cm",
+//     "password": "a197f08204c0b0db8dc9aad1c3ea1971a041fbbcf0158a875ced74536d987585",
+//     "phone": "121212",
+//     "roleuser": "admin"
+//   });
+
+//   var requestOptions: RequestInit = {
+//     method: 'PUT',
+//     headers: myHeaders,
+//     body: raw,
+//     redirect: 'follow'
+//   };
+
+//   fetch("http://localhost:8080/users", requestOptions)
+//     .then(response => response.text())
+//     .then(result => console.log(result))
+//     .catch(error => console.log('error', error));
+// }
+
+// Data form
+interface FormData {
+  username: string
+  alias: string
+  email: string
+  password: string
+  phone: string
+  roleuser: string
+}
+
 function Register(): any {
-
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [alias, setAlias] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [projectList] = useState([]);
-  const [listLanguage] = useState([]);
-  const [listFrameworks] = useState([]);
-  const [valueRoleUser, setValueRoleUser] = useState('1');
-  const navigate = useNavigate();
-
-  const irLogin = () => {
-    navigate('/login');
+  const [formData, setFormData] = useState<FormData>({
+    username: '',
+    alias: '',
+    email: '',
+    password: '',
+    phone: '',
+    roleuser: ''
+  });
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
-
-    if (checked) {
-      setValueRoleUser(value);
-    } else {
-      setValueRoleUser(value);
-    }
-  };
-
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-
+  
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    // Lógica para registro...
-    if (password === confirmPassword) {
-      try {
-        const responseEmail = await fetch(`http://localhost:8080/users/checkEmail?email=${email}`);
-        const responsePassword = await fetch(`http://localhost:8080/users/checkPassword?password=${password}`)
-        const responsePhone = await fetch(`http://localhost:8080/users/checkPhone?phone=${phone}`)
-
-        const booleanExistsEmail = await responseEmail.json();
-        const booleanExistsPassword = await responsePassword.json();
-        const booleanExistsPhone = await responsePhone.json();
-
-        if (!booleanExistsEmail) {
-          if (!booleanExistsPhone) {
-            if (!booleanExistsPassword) {
-              const response = await fetch('http://localhost:8080/users', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, alias, email, password, phone, roleuser: { id: valueRoleUser }, projectList, listLanguage, listFrameworks })
-              });
-
-              const data = await response.json();
-              if (data.id) {
-
-                setUsername('');
-                setAlias('');
-                setEmail('');
-                setPhone('');
-                setPassword('');
-                setConfirmPassword('');
-                navigate('/login');
-
-              } else {
-                console.error('Error de registro');
-              }
-
-            } else {
-              toast.error('El password ya existe', {
-                position: toast.POSITION.TOP_RIGHT,
-              });
-            }
-          } else {
-            toast.error('El telefono ya existe', {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-          }
-        } else {
-          toast.error('El email ya existe', {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        }
-
-      } catch (error) {
-        console.error('Error al conectar con la API', error);
-      }
-    } else {
-      toast.error('El password no coincide', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
+    // Handle form submission with formData
+    alert(formData.username);
+    // You can send formData to an API endpoint, update state, etc.
   };
 
   return (
     <>
-      <div className={style.container}>
-        <h2 className={style.h2TitleC}>CREAR CUENTA</h2>
-        <div className={style.divElige}>
-          <label className={style.labelChecbox}>
+      <form className={style.signupForm} onSubmit={handleSubmit}>
+        <div>
+          dshfjkhdsjkhsjkafd
+          <label>
+            Username:
             <input
-              type="checkbox"
-              value="1"
+              type="text"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
-              checked={valueRoleUser === "1"}
             />
-            <span className={style.checkmark}></span>
-            Programador
           </label>
-
-          <label className={style.labelChecbox}>
-            <input
-              type="checkbox"
-              value="2"
-              onChange={handleChange}
-              checked={valueRoleUser === "2"}
-            />
-            <span className={style.checkmark}></span>
-            Empresa
-          </label>
-          
         </div>
-        <form className={style.signupForm} onSubmit={handleRegister}>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Nombre"
-            required
-          />
-          <input
-            type="text"
-            value={alias}
-            onChange={(e) => setAlias(e.target.value)}
-            placeholder="Alias"
-            required
-          />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Correo electrónico"
-            required
-          />
-          <input
-            type="number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Teléfono"
-            required
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Contraseña"
-            required
-          />
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirmar contraseña"
-            required
-          />
-          <button className={style.submitBtn} type="submit">Registrarse</button>
-          <div>
-            <ToastContainer />
-          </div>
-        </form>
-        <p>¿Eres usuario? Pues haz click aquí 🪵<button className={style.submitBtnIni} onClick={irLogin} type="submit">Iniciar Sesion</button></p>
-      </div>
+      </form>
     </>
   );
 }
 
 export default Register;
-
