@@ -35,7 +35,7 @@ function Login(): any {
                 redirect: 'follow'
             };
 
-            fetch(`http://localhost:8080/users/login1?email=${email}&password=${password}`, requestOptions)
+            fetch(`http://localhost:8080/users/login?email=${email}&password=${password}`, requestOptions)
                 .then(response => {
                     return response.json()
                 })
