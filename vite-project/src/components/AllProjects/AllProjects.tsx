@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import style from './allprojects.module.css';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+
 
 function AllProjects(): any {
     interface User {
@@ -134,7 +134,8 @@ interface ButtonProps {
 }
 
 const Button = ({ idProject, text, clases, onClick }: ButtonProps) => {
-    const navigate = useNavigate();
+    
+    
     const handleClick = () => {
         // Aquí puedes definir el parámetro que quieres pasar a la función onClick
         const parametro = idProject; // Puedes definir el parámetro que necesites
