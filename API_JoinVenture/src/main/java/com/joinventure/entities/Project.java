@@ -27,5 +27,5 @@ public class Project {
     
     @ManyToOne
     @JoinColumn(name = "usercreatorid", nullable = false)
-    private User user;
+    private User userCreator;
 }
