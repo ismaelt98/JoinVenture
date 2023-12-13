@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 82.5vh;
+}
+
+.badgeOutline{
+    border: 1px solid;
+    border-radius: 8px;
+}
+.cardActions{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.image {
+    max-width: 350px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px
+}
+
+.container {
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+}
+
+.button {
+    width: 100px;
+    margin-top: 10px;
+}
+
+.card {
+    backdrop-filter: blur(17px) saturate(63%);
+    -webkit-backdrop-filter: blur(17px) saturate(63%);
+    background-color: rgba(255, 255, 255, 0.36);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+}

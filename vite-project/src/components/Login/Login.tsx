@@ -39,7 +39,7 @@ function Login(): any {
                 console.log(result);
                 Cookies.set('id', result.id, { expires: 10 });
                 Cookies.set('roleuser', result.roleuser, { expires: 10 });
-                navigate('/autenficationpage');
+                navigate('/projects');
             })
             .catch(error => {
                 console.log('error', error);

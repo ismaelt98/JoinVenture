@@ -20,7 +20,6 @@ function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/projects" element={<Projects />} />
       </Routes>
-
     </>
   )
 }

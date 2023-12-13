@@ -21,11 +21,13 @@ function Navbar(): any {
 
     return (
         <nav className="navbar">
-            <div className="navbar-logo"><img className='imgLogo' src={logoImg} alt="Descripción de la imagen" /></div>
+            <div className="navbar-logo">
+                <NavLink to="/" ><img className='imgLogo' src={logoImg} alt="Descripción de la imagen" /></NavLink>
+            </div>
             <div className="navbar-links">
                 {cookieExists ? (
                     <>
-                        <NavLink to="/projects" >Proyectos</NavLink>
+                        <NavLink to="/projects" activeClassName="active">Proyectos</NavLink>
 
                         {roleUser === 'admin' && (
                             <>
@@ -40,7 +42,7 @@ function Navbar(): any {
                     <NavLink to="/login" className="button">Login</NavLink>
                 )}
             </div>
-        </nav>
+        </nav >
     );
 }
 
