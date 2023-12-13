@@ -4,33 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// function callRegisterEndPoint(formData) {
-//   var myHeaders = new Headers();
-//   myHeaders.append("Content-Type", "application/json");
-
-//   var raw = JSON.stringify({
-//     "username": "test",
-//     "alias": "test1111",
-//     "email": "test@gmailo.cm",
-//     "password": "a197f08204c0b0db8dc9aad1c3ea1971a041fbbcf0158a875ced74536d987585",
-//     "phone": "121212",
-//     "roleuser": "PROGRAMADOR"
-//   });
-
-
-//   var requestOptions: RequestInit = {
-//     method: 'PUT',
-//     headers: myHeaders,
-//     body: raw,
-//     redirect: 'follow'
-//   };
-
-//   fetch("http://localhost:8080/users", requestOptions)
-//     .then(response => response.text())
-//     .then(result => console.log(result))
-//     .catch(error => console.log('error', error));
-// }
-
 // Data form
 interface FormData {
   username: string
@@ -40,11 +13,8 @@ interface FormData {
   phone: string
   roleuser: string
 }
-
 function Register(): any {
-
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState<FormData>({
     username: '',
     alias: '',
@@ -53,9 +23,7 @@ function Register(): any {
     phone: '',
     roleuser: ''
   });
-
   const [selectedRole, setSelectedRole] = useState('programador');
-
   const handleRoleChange = (role: string): void => {
     if (selectedRole === role) {
       setSelectedRole('');
@@ -63,7 +31,6 @@ function Register(): any {
       setSelectedRole(role);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -71,13 +38,10 @@ function Register(): any {
       [name]: value,
     }));
   };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    // Handle form submission with formData
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
     var raw = JSON.stringify({
       "username": formData.username,
       "alias": formData.alias,
@@ -86,14 +50,12 @@ function Register(): any {
       "phone": formData.phone,
       "roleuser": selectedRole
     });
-
     var requestOptions: RequestInit = {
       method: 'PUT',
       headers: myHeaders,
       body: raw,
       redirect: 'follow'
     };
-
     fetch("http://localhost:8080/users", requestOptions)
       .then(response => response.json())
       .then(result => {
@@ -106,9 +68,7 @@ function Register(): any {
           position: toast.POSITION.TOP_RIGHT,
         });
       });
-
   };
-
   return (
     <>
       <div>
