@@ -31,7 +31,8 @@ public class ProjectService {
 	}
 
 	public List<Project> findProjectsBySector(String sector) {
-		return projectRepository.findAll().stream().filter(p -> p.getSector().equals(sector)).collect(Collectors.toList());
+		return projectRepository.findAll().stream().filter(p -> p.getSector().equals(sector))
+				.collect(Collectors.toList());
 	}
 
 	public boolean deleteProject(Long id) {

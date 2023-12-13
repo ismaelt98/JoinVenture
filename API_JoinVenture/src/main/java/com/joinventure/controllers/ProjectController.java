@@ -41,15 +41,15 @@ public class ProjectController {
 		Optional<Project> project = projectService.findProjectById(id);
 		return project.isPresent() ? ResponseEntity.ok(project) : ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping("/bySector/{sector}")
-	public ResponseEntity<?> getProjectsBySector(@PathVariable(value = "sector") String sector){
+	public ResponseEntity<?> getProjectsBySector(@PathVariable(value = "sector") String sector) {
 		List<Project> projects = projectService.findProjectsBySector(sector);
 		if (!projects.isEmpty()) {
-	        return ResponseEntity.ok(projects);
-	    } else {
-	        return ResponseEntity.noContent().build();
-	    }
+			return ResponseEntity.ok(projects);
+		} else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 
 	@DeleteMapping("/{id}")
