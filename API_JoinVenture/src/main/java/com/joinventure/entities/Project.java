@@ -1,10 +1,14 @@
 package com.joinventure.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -28,4 +32,10 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "usercreatorid", nullable = false)
     private User userCreator;
+    
+    @ManyToMany
+	@JoinTable(name= "userhasproject",
+		joinColumns = @JoinColumn(name = "projectid"),
+		inverseJoinColumns = @JoinColumn(name = "userid"))
+	List<User> usersList;
 }

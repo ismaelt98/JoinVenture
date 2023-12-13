@@ -8,8 +8,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.repositories.UserRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
@@ -80,7 +83,17 @@ public class UserService {
 	public Optional<User> getLoginUser(String email, String password) {
 		Optional<User> user = userRepository.findAll().stream()
 				.filter(u -> u.getEmail().equals(email) && u.getPassword().equals(hashSHA256(password))).findFirst();
-
 		return user;
 	}
+	
+	public List<Project> getUserProjects(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getProjectsList();
+        } else {
+            throw new EntityNotFoundException("User not found with id: " + userId);
+        }
+    }
 }

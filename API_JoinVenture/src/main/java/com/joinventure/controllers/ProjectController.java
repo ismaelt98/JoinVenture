@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.joinventure.entities.Project;
 import com.joinventure.services.ProjectService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/projects")
@@ -59,4 +62,16 @@ public class ProjectController {
 		project.setId(id);
 		projectService.updateProject(project);
 	}
+	
+	@PostMapping("/{projectId}/addMember/{userId}")
+    public ResponseEntity<Project> addMemberToProject(@PathVariable Long projectId, @PathVariable Long userId) {
+        try {
+            Project updatedProject = projectService.addMemberToProject(projectId, userId);
+            return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

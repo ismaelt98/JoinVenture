@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.joinventure.entities.Project;
 import com.joinventure.entities.User;
 import com.joinventure.services.UserService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/users")
@@ -73,5 +76,15 @@ public class UserController {
     public ResponseEntity<Object> getLogin(@RequestParam String email, @RequestParam String password) {
 		Optional<User> optionalUser = userService.getLoginUser(email, password);
 		return optionalUser.isPresent()?ResponseEntity.ok(optionalUser.get()):ResponseEntity.noContent().build();
+    }
+	
+	@GetMapping("/{userId}/projects")
+    public ResponseEntity<List<Project>> getUserProjects(@PathVariable Long userId) {
+        try {
+            List<Project> projects = userService.getUserProjects(userId);
+            return new ResponseEntity<>(projects, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
