@@ -23,20 +23,18 @@ import lombok.NoArgsConstructor;
 @Table(name = "project")
 public class Project {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private int nummembers;
-    private String sector;
-    private String demand;
-    
-    @ManyToOne
-    @JoinColumn(name = "usercreatorid", nullable = false)
-    private User userCreator;
-    
-    @ManyToMany
-	@JoinTable(name= "userhasproject",
-		joinColumns = @JoinColumn(name = "projectid"),
-		inverseJoinColumns = @JoinColumn(name = "userid"))
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String name;
+	private int nummembers;
+	private String sector;
+	private String demand;
+
+	@ManyToOne
+	@JoinColumn(name = "usercreatorid", nullable = false)
+	private User userCreator;
+
+	@ManyToMany
+	@JoinTable(name = "userhasproject", joinColumns = @JoinColumn(name = "projectid"), inverseJoinColumns = @JoinColumn(name = "userid"))
 	List<User> usersList = new ArrayList<>();
 }
