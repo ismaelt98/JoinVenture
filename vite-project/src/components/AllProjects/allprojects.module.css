@@ -5,10 +5,16 @@
     align-items: center;
     height: 82.5vh;
 }
+.inBtn{
+    background-color: blue;
+    color: white;
+    width: 100px;
+}
 
 .exitBtn{
     background-color: red;
     color: white;
+    width: 100px;
 }
 
 .badgeOutline{

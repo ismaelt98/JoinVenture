@@ -20,11 +20,7 @@ function Projects(): any {
 
   return (
     <div className={style.container}>
-      <div style={{ display: dataRoleUser ? 'flex' : 'none' }} className={style.navbar1}>
-        <button className={style.btnProjectsG}>Todos los Proyectos</button>
-        <button className={style.btnProjectsG}>Mis Proyectos</button>
-        <button className={style.btnProjectsG}>Crear Proyecto</button>
-      </div>
+ 
       <AllProjects />
     </div>
   );

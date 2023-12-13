@@ -117,7 +117,7 @@ function AllProjects(): any {
                         </div>
                         {project.usersList.some(user => user.id.toString() === idUser) ?
                             <Button clases={style.exitBtn} idProject={project.id} text="Salir del proyecto" onClick={salirseDelProyecto} /> :
-                            <Button clases="" idProject={project.id} text="Unirse al proyecto" onClick={unirseAlProyecto} />
+                            <Button clases={style.inBtn} idProject={project.id} text="Unirse al proyecto" onClick={unirseAlProyecto} />
                         }
                     </div>
                 </div>

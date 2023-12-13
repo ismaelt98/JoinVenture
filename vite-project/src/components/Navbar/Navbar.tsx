@@ -1,6 +1,6 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import logoImg from '../../assets/logo.png';
-import { useLocation } from 'react-router-dom';
+
 import Cookies from 'js-cookie';
 import './Navbar.css';
 import { useEffect, useState } from 'react';
@@ -27,12 +27,14 @@ function Navbar(): any {
             <div className="navbar-links">
                 {cookieExists ? (
                     <>
-                        <NavLink to="/projects" activeClassName="active">Proyectos</NavLink>
-
+                    {roleUser !== 'admin' && (
+                        <NavLink to="/projects" activeClassName='active'>Proyectos</NavLink>
+                    )}
+                        
                         {roleUser === 'admin' && (
                             <>
-                                <NavLink to="/login" >Administrar Usuarios</NavLink>
-                                <NavLink to="/login" >Administrar Proyectos</NavLink>
+                                <NavLink to="/adminusers" >Administrar Usuarios</NavLink>
+                                <NavLink to="/adminprojects" >Administrar Proyectos</NavLink>
                             </>
                         )}
                         <NavLink to="/login" >Mi Perfil</NavLink>
