@@ -36,11 +36,9 @@ public class User {
 	private String password;
 	private String phone;
 	private String roleuser;
-	
+
 	@ManyToMany
-	@JoinTable(name= "userhasproject",
-		joinColumns = @JoinColumn(name = "userid"),
-		inverseJoinColumns = @JoinColumn(name = "projectid"))
+	@JoinTable(name = "userhasproject", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "projectid"))
 	@JsonIgnore
 	List<Project> projectsList;
 }

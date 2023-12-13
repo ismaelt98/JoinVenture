@@ -41,50 +41,53 @@ public class UserController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Long id) {
 		Optional<User> user = userService.findUserById(id);
-		return user.isPresent()? ResponseEntity.ok(user): ResponseEntity.noContent().build();
+		return user.isPresent() ? ResponseEntity.ok(user) : ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping("/checkEmail")
 	public ResponseEntity<String> checkIfExistEmail(@RequestParam String email) {
 		Optional<User> existEmail = userService.findIfExistEmail(email);
-		return existEmail.isPresent()? ResponseEntity.status(HttpStatus.IM_USED).body(existEmail.get().getEmail() + " ya está regitrado"): ResponseEntity.notFound().build();
+		return existEmail.isPresent()
+				? ResponseEntity.status(HttpStatus.IM_USED).body(existEmail.get().getEmail() + " ya está regitrado")
+				: ResponseEntity.notFound().build();
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUserById(@PathVariable(value = "id") Long id){
-		/* Para mirar más tarde */ 
+	public ResponseEntity<?> deleteUserById(@PathVariable(value = "id") Long id) {
+		/* Para mirar más tarde */
 		boolean userIsDeleted = userService.deleteUser(id);
-		return userIsDeleted?ResponseEntity.ok("User was deleted!"): ResponseEntity.notFound().build();
+		return userIsDeleted ? ResponseEntity.ok("User was deleted!") : ResponseEntity.notFound().build();
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<?> addUser(@RequestBody User user){
+	public ResponseEntity<?> addUser(@RequestBody User user) {
 		User userSaved = userService.saveUser(user);
-		if(userSaved != null){
+		if (userSaved != null) {
 			return ResponseEntity.ok(userSaved);
 		}
-		return ResponseEntity.status(HttpStatus.IM_USED).body("No se ha podido crear el user, prueba con otro email o haz login");
+		return ResponseEntity.status(HttpStatus.IM_USED)
+				.body("No se ha podido crear el user, prueba con otro email o haz login");
 	}
-	
+
 	@PatchMapping("/{id}")
-	public void updateUser(@PathVariable Long id, @RequestBody User user){
+	public void updateUser(@PathVariable Long id, @RequestBody User user) {
 		user.setId(id);
 		userService.updateUser(user);
 	}
 
 	@PostMapping("/login")
-    public ResponseEntity<Object> getLogin(@RequestParam String email, @RequestParam String password) {
+	public ResponseEntity<Object> getLogin(@RequestParam String email, @RequestParam String password) {
 		Optional<User> optionalUser = userService.getLoginUser(email, password);
-		return optionalUser.isPresent()?ResponseEntity.ok(optionalUser.get()):ResponseEntity.noContent().build();
-    }
-	
+		return optionalUser.isPresent() ? ResponseEntity.ok(optionalUser.get()) : ResponseEntity.noContent().build();
+	}
+
 	@GetMapping("/{userId}/projects")
-    public ResponseEntity<List<Project>> getUserProjects(@PathVariable Long userId) {
-        try {
-            List<Project> projects = userService.getUserProjects(userId);
-            return new ResponseEntity<>(projects, HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	public ResponseEntity<List<Project>> getUserProjects(@PathVariable Long userId) {
+		try {
+			List<Project> projects = userService.getUserProjects(userId);
+			return new ResponseEntity<>(projects, HttpStatus.OK);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }

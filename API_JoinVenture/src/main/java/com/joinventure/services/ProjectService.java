@@ -2,6 +2,7 @@ package com.joinventure.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class ProjectService {
 		return projectRepository.findById(id);
 	}
 
+	public List<Project> findProjectsBySector(String sector) {
+		return projectRepository.findAll().stream().filter(p -> p.getSector().equals(sector)).collect(Collectors.toList());
+	}
+
 	public boolean deleteProject(Long id) {
 		if (projectRepository.existsById(id)) {
 			projectRepository.deleteById(id);
@@ -42,8 +47,8 @@ public class ProjectService {
 //			Optional<Project> existsProject = projectRepository.findAll().stream().filter(p -> p.)
 //		}
 		if (project.getUserCreator() != null && !project.getUsersList().contains(project.getUserCreator())) {
-            project.getUsersList().add(project.getUserCreator());
-        }
+			project.getUsersList().add(project.getUserCreator());
+		}
 		projectRepository.save(project);
 		return project;
 	}
@@ -67,10 +72,10 @@ public class ProjectService {
 		if (project.getNummembers() < project.getUsersList().size() + 1) {
 			throw new RuntimeException("Project has reached the maximum number of members.");
 		}
-		
+
 		if (project.getUsersList().contains(user)) {
-	        throw new RuntimeException("User is already a member of the project.");
-	    }
+			throw new RuntimeException("User is already a member of the project.");
+		}
 
 		if (!project.getUsersList().contains(user)) {
 			project.getUsersList().add(user);
@@ -78,19 +83,19 @@ public class ProjectService {
 
 		return projectRepository.save(project);
 	}
-	
+
 	public Project deleteMemberFromProject(Long projectId, Long userId) {
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new EntityNotFoundException("Project not found with id: " + projectId));
+		Project project = projectRepository.findById(projectId)
+				.orElseThrow(() -> new EntityNotFoundException("Project not found with id: " + projectId));
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 
-        if (!project.getUsersList().contains(user)) {
-            throw new RuntimeException("User is not a member of the project.");
-        }
+		if (!project.getUsersList().contains(user)) {
+			throw new RuntimeException("User is not a member of the project.");
+		}
 
-        project.getUsersList().remove(user);
-        return projectRepository.save(project);
-    }
+		project.getUsersList().remove(user);
+		return projectRepository.save(project);
+	}
 }

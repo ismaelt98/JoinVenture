@@ -38,22 +38,23 @@ public class UserService {
 		}
 		return false;
 	}
-	
+
 	public User saveUser(User user) {
 		try {
-			Optional<User> existsUser = userRepository.findAll().stream().filter(u -> u.getEmail().equals(user.getEmail())).findFirst();
-			if(existsUser.isPresent()) {
+			Optional<User> existsUser = userRepository.findAll().stream()
+					.filter(u -> u.getEmail().equals(user.getEmail())).findFirst();
+			if (existsUser.isPresent()) {
 				return null;
-			}else {
+			} else {
 				user.setPassword(hashSHA256(user.getPassword()));
 				userRepository.save(user);
 				return user;
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	public String hashSHA256(String password) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -72,28 +73,28 @@ public class UserService {
 			return null;
 		}
 	}
-	
+
 	public void updateUser(User user) {
 		user.setUsername(user.getUsername());
 		user.setAlias(user.getAlias());
 		user.setPassword(hashSHA256(user.getPassword()));
 		userRepository.save(user);
 	}
-	
+
 	public Optional<User> getLoginUser(String email, String password) {
 		Optional<User> user = userRepository.findAll().stream()
 				.filter(u -> u.getEmail().equals(email) && u.getPassword().equals(hashSHA256(password))).findFirst();
 		return user;
 	}
-	
-	public List<Project> getUserProjects(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return user.getProjectsList();
-        } else {
-            throw new EntityNotFoundException("User not found with id: " + userId);
-        }
-    }
+	public List<Project> getUserProjects(Long userId) {
+		Optional<User> userOptional = userRepository.findById(userId);
+
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			return user.getProjectsList();
+		} else {
+			throw new EntityNotFoundException("User not found with id: " + userId);
+		}
+	}
 }
