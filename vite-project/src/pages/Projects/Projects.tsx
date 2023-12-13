@@ -4,8 +4,9 @@ import AllProjects from '../../components/AllProjects/AllProjects';
 
 function Projects(): any {  
   return (
-    <div className={style.container}> 
-      <AllProjects />
+    <div className={style.container}>
+      <button className={style.btnCrearProject}>+</button> 
+      <AllProjects/>
     </div>
   );
 }
