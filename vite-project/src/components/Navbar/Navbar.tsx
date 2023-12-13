@@ -27,7 +27,7 @@ function Navbar(): any {
                     <>
                         <NavLink to="/projects" >Proyectos</NavLink>
 
-                        {roleUser === 'ADMIN' && (
+                        {roleUser === 'admin' && (
                             <>
                                 <NavLink to="/login" >Administrar Usuarios</NavLink>
                                 <NavLink to="/login" >Administrar Proyectos</NavLink>
