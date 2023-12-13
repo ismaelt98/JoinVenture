@@ -4,75 +4,71 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+interface FormData {
+    email: string
+    password: string
+}
 function Login(): any {
     Cookies.remove('id');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();   
+    //Cookies.remove('roleuser');
+    const navigate = useNavigate();
 
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const [formData, setFormData] = useState<FormData>({
+        email: '',
+        password: ''
+    });
 
-        // Lógica para iniciar sesión...
-        try {
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-
-            var raw = JSON.stringify({
-                "email": email,
-                "password": password
-            });
-
-            var requestOptions: RequestInit = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            fetch(`http://localhost:8080/users/login1?email=${email}&password=${password}`, requestOptions)
-                .then(response => {
-                    return response.json()
-                })
-                .then(result => {
-                    const cookieValue = result.id; 
-                    const cookieRoleUser = result.roleuser.name;                    
-                    Cookies.set('id', cookieValue, { expires: 10 });
-                    Cookies.set('roleuser', cookieRoleUser, { expires: 10 });
-                    navigate('/autenficationpage');
-                })
-                .catch(() => {
-                    
-                    toast.error('El password no coincide', {
-                        position: toast.POSITION.TOP_RIGHT,
-                    });
-                });
-        } catch (e) {
-            console.log(e);
-        }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+        var requestOptions: RequestInit = {
+            method: 'POST',
+            redirect: 'follow'
+        };
+        fetch(`http://localhost:8080/users/login?email=${formData.email}&password=${formData.password}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                Cookies.set('id', result.id, { expires: 10 });
+                Cookies.set('roleuser', result.roleuser, { expires: 10 });
+                navigate('/autenficationpage');
+            })
+            .catch(error => {
+                console.log('error', error);
+                toast.error('Usuario o contraseña mal', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            });
+    };
     return (
         <>
             <div className={style.container}>
                 <h2 className={style.h2Title}>INICIAR SESION</h2>
-                <form className={style.signinForm} onSubmit={handleLogin}>
+                <form className={style.signinForm} onSubmit={handleSubmit}>
                     <input
                         type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Correo electrónico"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Email"
                         required
                     />
                     <input
                         type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
                         placeholder="Contraseña"
                         required
-                    />
-                    <button className={style.submitBtn} type="submit">Iniciar sesión</button>
+                    /><button className={style.submitBtn} type="submit">Iniciar sesión</button>
                     <div>
                         <ToastContainer />
                     </div>
