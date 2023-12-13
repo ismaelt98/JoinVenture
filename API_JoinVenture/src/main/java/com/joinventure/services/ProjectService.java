@@ -67,6 +67,10 @@ public class ProjectService {
 		if (project.getNummembers() < project.getUsersList().size() + 1) {
 			throw new RuntimeException("Project has reached the maximum number of members.");
 		}
+		
+		if (project.getUsersList().contains(user)) {
+	        throw new RuntimeException("User is already a member of the project.");
+	    }
 
 		if (!project.getUsersList().contains(user)) {
 			project.getUsersList().add(user);
@@ -74,4 +78,19 @@ public class ProjectService {
 
 		return projectRepository.save(project);
 	}
+	
+	public Project deleteMemberFromProject(Long projectId, Long userId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found with id: " + projectId));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+
+        if (!project.getUsersList().contains(user)) {
+            throw new RuntimeException("User is not a member of the project.");
+        }
+
+        project.getUsersList().remove(user);
+        return projectRepository.save(project);
+    }
 }

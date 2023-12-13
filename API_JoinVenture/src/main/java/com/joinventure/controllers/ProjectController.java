@@ -74,4 +74,16 @@ public class ProjectController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+	
+	@DeleteMapping("/{projectId}/removeMember/{userId}")
+    public ResponseEntity<Project> deleteMemberFromProject(@PathVariable Long projectId, @PathVariable Long userId) {
+        try {
+            Project updatedProject = projectService.deleteMemberFromProject(projectId, userId);
+            return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
