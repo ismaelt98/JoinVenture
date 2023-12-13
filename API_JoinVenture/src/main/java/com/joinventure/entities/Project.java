@@ -1,5 +1,6 @@
 package com.joinventure.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -37,5 +38,5 @@ public class Project {
 	@JoinTable(name= "userhasproject",
 		joinColumns = @JoinColumn(name = "projectid"),
 		inverseJoinColumns = @JoinColumn(name = "userid"))
-	List<User> usersList;
+	List<User> usersList = new ArrayList<>();
 }

@@ -41,6 +41,9 @@ public class ProjectService {
 //		try {
 //			Optional<Project> existsProject = projectRepository.findAll().stream().filter(p -> p.)
 //		}
+		if (project.getUserCreator() != null && !project.getUsersList().contains(project.getUserCreator())) {
+            project.getUsersList().add(project.getUserCreator());
+        }
 		projectRepository.save(project);
 		return project;
 	}
