@@ -6,6 +6,11 @@
     height: 82.5vh;
 }
 
+.exitBtn{
+    background-color: red;
+    color: white;
+}
+
 .badgeOutline{
     border: 1px solid;
     border-radius: 8px;

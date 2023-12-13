@@ -2,12 +2,9 @@
 import { useEffect, useState } from 'react';
 import style from './allprojects.module.css';
 import Cookies from 'js-cookie';
-
-
-
+import { useNavigate } from 'react-router-dom';
 
 function AllProjects(): any {
-
     interface User {
         id: number;
         username: string;
@@ -61,7 +58,7 @@ function AllProjects(): any {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-                { setUnirse(false) };
+                // { setUnirse(false) };
             })
             .catch(error => {
 
@@ -75,8 +72,6 @@ function AllProjects(): any {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-
-
         var requestOptions: RequestInit = {
             method: 'DELETE',
             headers: myHeaders,
@@ -88,13 +83,13 @@ function AllProjects(): any {
             .then(response => response.text())
             .then(result => {
                 console.log(result)
-                { setUnirse(true) };
+                //{ setUnirse(true) };
             })
             .catch(error => console.log('error', error));
 
     };
 
-    const [unirse, setUnirse] = useState(true); //! para mirar 👀
+    //const [unirse, setUnirse] = useState(true); //! para mirar 👀
 
     interface User {
         id: number
@@ -121,8 +116,8 @@ function AllProjects(): any {
                             <div className={style.badgeOutline}>{project.demand}</div>
                         </div>
                         {project.usersList.some(user => user.id.toString() === idUser) ?
-                            <Button idProject={project.id} text="Salir del project" onClick={salirseDelProyecto} /> :
-                            <Button idProject={project.id} text="Unirse al project" onClick={unirseAlProyecto} />
+                            <Button clases={style.exitBtn} idProject={project.id} text="Salir del proyecto" onClick={salirseDelProyecto} /> :
+                            <Button clases="" idProject={project.id} text="Unirse al proyecto" onClick={unirseAlProyecto} />
                         }
                     </div>
                 </div>
@@ -134,20 +129,23 @@ function AllProjects(): any {
 interface ButtonProps {
     idProject: number;
     text: string;
+    clases: string
     onClick: (param: any) => void; // Ajusta el tipo de parámetro según lo que esperas recibir
 }
 
-const Button = ({ idProject, text, onClick }: ButtonProps) => {
+const Button = ({ idProject, text, clases, onClick }: ButtonProps) => {
+    const navigate = useNavigate();
     const handleClick = () => {
         // Aquí puedes definir el parámetro que quieres pasar a la función onClick
         const parametro = idProject; // Puedes definir el parámetro que necesites
         // alert(parametro);
         // Llamas a la función onClick y pasas el parámetro
-          onClick(parametro);
+        onClick(parametro);
+        window.location.reload();
     };
 
     return (
-        <button onClick={handleClick}>
+        <button onClick={handleClick} className={clases}>
             {text}
         </button>
     );
