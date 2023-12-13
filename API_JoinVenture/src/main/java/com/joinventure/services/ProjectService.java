@@ -43,7 +43,7 @@ public class ProjectService {
 		project.setNummembers(project.getNummembers());
 		project.setSector(project.getSector());
 		project.setDemand(project.getDemand());
-		project.setUser(project.getUser());
+		project.setUserCreator(project.getUserCreator());
 		projectRepository.save(project);
 	}
 }
