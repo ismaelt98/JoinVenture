@@ -75,10 +75,15 @@ public class UserService {
 	}
 
 	public void updateUser(User user) {
-		user.setUsername(user.getUsername());
-		user.setAlias(user.getAlias());
-		user.setPassword(hashSHA256(user.getPassword()));
-		userRepository.save(user);
+		User existingUser = userRepository.findById(user.getId())
+				.orElseThrow(() -> new EntityNotFoundException("User not found with id: " + user.getId()));
+		existingUser.setUsername(user.getUsername());
+		existingUser.setAlias(user.getAlias());
+
+		if (!existingUser.getPassword().equals(user.getPassword())) {
+			existingUser.setPassword(existingUser.getPassword());
+		}
+		userRepository.save(existingUser);
 	}
 
 	public Optional<User> getLoginUser(String email, String password) {

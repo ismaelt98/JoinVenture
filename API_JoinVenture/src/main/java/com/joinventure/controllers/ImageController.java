@@ -42,15 +42,15 @@ public class ImageController {
 
 	@GetMapping("/{filename}")
 	public ResponseEntity<byte[]> serveFile(@PathVariable String filename) {
-	    try {
-	        Path filePath = Path.of(UPLOAD_DIR, filename);
-	        byte[] fileContent = Files.readAllBytes(filePath);
+		try {
+			Path filePath = Path.of(UPLOAD_DIR, filename);
+			byte[] fileContent = Files.readAllBytes(filePath);
 
-	        HttpHeaders headers = new HttpHeaders();
-	        headers.setContentType(MediaType.IMAGE_PNG);
-	        return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
-	    } catch (IOException e) {
-	        return ResponseEntity.notFound().build();
-	    }
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_PNG);
+			return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
+		} catch (IOException e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }
