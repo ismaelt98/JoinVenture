@@ -107,7 +107,7 @@ function AllProjects(): any {
         <div className={style.container}>
             {projects.map(project => (
                 <div className={`${style.card} w-96 bg-base-100 shadow-xl`} key={project.id}>
-                    <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" className={style.image} alt="Shoes" /></figure>
+                    <figure><img src="https://mexico.unir.net/wp-content/uploads/sites/6/2019/05/ficha_1920x1080-copiaiStock-1274417553-1.jpg" className={style.image} alt="Shoes" /></figure>
                     <div className="card-body">
                         <h2 className="card-title">{project.name}</h2>
                         <p><strong>Numero de participantes: </strong>{project.nummembers}</p>

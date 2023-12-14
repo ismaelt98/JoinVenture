@@ -27,10 +27,10 @@ function Navbar(): any {
             <div className="navbar-links">
                 {cookieExists ? (
                     <>
-                    {roleUser !== 'admin' && (
-                        <NavLink to="/projects" activeClassName='active'>Proyectos</NavLink>
-                    )}
-                        
+                        {roleUser !== 'admin' && (
+                            <NavLink to="/projects" activeClassName="active">Proyectos</NavLink>
+                        )}
+
                         {roleUser === 'admin' && (
                             <>
                                 <NavLink to="/adminusers" >Administrar Usuarios</NavLink>

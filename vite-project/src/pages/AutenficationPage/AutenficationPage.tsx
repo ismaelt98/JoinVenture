@@ -5,7 +5,7 @@ import style from './autenfication.module.css'*/
 function AutenficationPage(): any {
 
     return (
-        <div>
+        <div className="">
             <h1>USTED SE LOGUE CORRECTAMENTE</h1>
         </div>
     );
