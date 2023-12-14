@@ -112,8 +112,8 @@ function CrearProject(): any {
                             <option value="Tecnología">Tecnología</option>
                             <option value="Salud">Salud</option>
                             <option value="Educación">Educación</option>
-                            <option value="Finanzas">Finanzas</option>
-                            <option value="Agricultura">Agricultura</option>
+                            <option value="Social">Social</option>
+                            <option value="Cultura">Cultura</option>
                             {/* Agrega más opciones según tus necesidades */}
                         </select>
                     </label>

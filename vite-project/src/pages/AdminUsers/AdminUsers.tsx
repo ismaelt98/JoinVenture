@@ -28,7 +28,7 @@ function AdminUsers(): any {
             .then(response => response.text())
             .then(result => {
                 console.log(result)
-                //window.location.reload();
+                window.location.reload();
             })
             .catch(error => console.log('error', error));
     };
