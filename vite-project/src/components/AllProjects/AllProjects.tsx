@@ -120,8 +120,8 @@ function AllProjects(): any {
                         {roleUser != 'empresa' ? (
                             <>
                                 {project.usersList.some(user => user.id.toString() === idUser) ?
-                                    <Button clases={style.exitBtn} idProject={project.id} text="Salir del proyecto" onClick={salirseDelProyecto} /> :
-                                    <Button clases={style.inBtn} idProject={project.id} text="Unirse al proyecto" onClick={unirseAlProyecto} />
+                                    <Button clases={style.exitBtn} idProject={project.id} text="Salirse" onClick={salirseDelProyecto} /> :
+                                    <Button clases={style.inBtn} idProject={project.id} text="Unirse" onClick={unirseAlProyecto} />
                                 }
                             </>
                         ) : (
