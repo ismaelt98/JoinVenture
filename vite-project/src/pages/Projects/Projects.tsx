@@ -2,6 +2,7 @@
 import style from './projects.module.css';
 import AllProjects from '../../components/AllProjects/AllProjects';
 import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
 
 function Projects(): any {
   const roleUser = Cookies.get('roleuser');
@@ -9,7 +10,11 @@ function Projects(): any {
     <div className={style.container}>
 
       {roleUser != 'empresa' ? (
-        <button className={style.btnCrearProject}>+</button>
+        
+          <div className={style.crearProject}>
+            <Link className={style.crearProject1} to="../autentificationpage">➕</Link>
+          </div>
+     
       ) : (
         <></>
       )}
