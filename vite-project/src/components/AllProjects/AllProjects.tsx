@@ -22,6 +22,7 @@ function AllProjects(): any {
 
     const [projects, setProjects] = useState<Project[]>([]);
     const idUser = Cookies.get('id');
+    const roleUser = Cookies.get('roleuser');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -115,10 +116,19 @@ function AllProjects(): any {
                             <div className={style.badgeOutline}>{project.sector}</div>
                             <div className={style.badgeOutline}>{project.demand}</div>
                         </div>
-                        {project.usersList.some(user => user.id.toString() === idUser) ?
-                            <Button clases={style.exitBtn} idProject={project.id} text="Salir del proyecto" onClick={salirseDelProyecto} /> :
-                            <Button clases={style.inBtn} idProject={project.id} text="Unirse al proyecto" onClick={unirseAlProyecto} />
-                        }
+
+                        {roleUser != 'empresa' ? (
+                            <>
+                                {project.usersList.some(user => user.id.toString() === idUser) ?
+                                    <Button clases={style.exitBtn} idProject={project.id} text="Salir del proyecto" onClick={salirseDelProyecto} /> :
+                                    <Button clases={style.inBtn} idProject={project.id} text="Unirse al proyecto" onClick={unirseAlProyecto} />
+                                }
+                            </>
+                        ) : (
+                            <button className={style.verBtn}>VER PARTICIPANTES</button>
+                        )}
+
+
                     </div>
                 </div>
             ))}
@@ -134,8 +144,8 @@ interface ButtonProps {
 }
 
 const Button = ({ idProject, text, clases, onClick }: ButtonProps) => {
-    
-    
+
+
     const handleClick = () => {
         // Aquí puedes definir el parámetro que quieres pasar a la función onClick
         const parametro = idProject; // Puedes definir el parámetro que necesites

@@ -1,12 +1,19 @@
 
 import style from './projects.module.css';
 import AllProjects from '../../components/AllProjects/AllProjects';
+import Cookies from 'js-cookie';
 
-function Projects(): any {  
+function Projects(): any {
+  const roleUser = Cookies.get('roleuser');
   return (
     <div className={style.container}>
-      <button className={style.btnCrearProject}>+</button> 
-      <AllProjects/>
+
+      {roleUser != 'empresa' ? (
+        <button className={style.btnCrearProject}>+</button>
+      ) : (
+        <></>
+      )}
+      <AllProjects />
     </div>
   );
 }
