@@ -20,6 +20,25 @@ function AdminProjects(): any {
         userCreator: User;
     }
 
+    const eliminarProyecto = async (idProject: number) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions: RequestInit = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch(`http://localhost:8080/projects/${idProject}`, requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                console.log(result)
+                window.location.reload();
+            })
+            .catch(error => console.log('error', error));
+    };
+
     const [projects, setProjects] = useState<Project[]>([]);
     
     useEffect(() => {
@@ -60,7 +79,7 @@ function AdminProjects(): any {
                             <td>{proj.demand}</td>
                             <td>{proj.userCreator.username}</td>
                             
-                            <td><button>DEL</button></td>
+                            <td><button onClick={() => eliminarProyecto(proj.id)}>DEL</button></td>
                         </tr>
                     ))}
                   </tbody>

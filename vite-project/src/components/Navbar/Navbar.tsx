@@ -37,7 +37,7 @@ function Navbar(): any {
                                 <NavLink to="/adminprojects" >Administrar Proyectos</NavLink>
                             </>
                         )}
-                        <NavLink to="/login" >Mi Perfil</NavLink>
+                        <NavLink to="/perfil" >Mi Perfil</NavLink>
                         <NavLink to="/login" className="button">Logout</NavLink>
                     </>
                 ) : (

@@ -8,6 +8,7 @@ import Projects from './pages/Projects/Projects';
 import Register from './components/Register/Register';
 import AdminProjects from './pages/AdminProjects/AdminProjects';
 import AdminUsers from './pages/AdminUsers/AdminUsers';
+import Perfil from './pages/Perfil/Perfil';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/adminprojects" element={<AdminProjects />} />
         <Route path="/adminusers" element={<AdminUsers />} />
+        <Route path='/perfil' element={<Perfil/>}/>
       </Routes>
     </>
   )
