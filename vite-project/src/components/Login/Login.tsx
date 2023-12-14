@@ -73,7 +73,7 @@ function Login(): any {
                         <ToastContainer />
                     </div>
                 </form>
-                <p>¿Aún no eres usuario? Pues haz click aquí 🪵 <Link to="../register">Registrarse</Link></p>
+                <p>¿Aún no eres usuario? Pues haz click aquí 🪵 <Link className={style.linkLogin} to="../register">Registrarse</Link></p>
             </div>
         </>
     );

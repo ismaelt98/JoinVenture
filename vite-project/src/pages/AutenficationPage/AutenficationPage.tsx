@@ -1,6 +1,8 @@
-/*import Login from "../../components/Login/Login";
-import Test from "../../components/Test/Test";
-import style from './autenfication.module.css'*/
+import { useState, useEffect } from 'react';
+import style from './autenficationpage.module.css';
+import background1 from '../../assets/background1.jpg';
+import background2 from '../../assets/background2.jpg';
+import background3 from '../../assets/background3.jpg';
 
 function AutenficationPage() {
     const [currentBackground, setCurrentBackground] = useState(0);
@@ -14,8 +16,8 @@ function AutenficationPage() {
     }, []);
 
     return (
-        <div className="">
-            <h1>USTED SE LOGUE CORRECTAMENTE</h1>
+        <div className={style.background} style={{ backgroundImage: `url(${backgrounds[currentBackground]})` }}>
+            {/* Contenido de tu componente */}
         </div>
     );
 }

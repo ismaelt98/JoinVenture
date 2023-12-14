@@ -22,13 +22,13 @@ function Navbar(): any {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <NavLink to="/" ><img className='imgLogo' src={logoImg} alt="Descripción de la imagen" /></NavLink>
+                <NavLink to="/autentificationpage" ><img className='imgLogo' src={logoImg} alt="Descripción de la imagen" /></NavLink>
             </div>
             <div className="navbar-links">
                 {cookieExists ? (
                     <>
                         {roleUser !== 'admin' && (
-                            <NavLink to="/projects" activeClassName="active">Proyectos</NavLink>
+                            <NavLink to="/projects" >Proyectos</NavLink>
                         )}
 
                         {roleUser === 'admin' && (

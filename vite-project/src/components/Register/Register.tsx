@@ -71,7 +71,7 @@ function Register(): any {
   };
   return (
     <>
-      <div>
+      <div className={style.divGe}>
         <h2 className={style.h2CrearCuenta}>CREAR CUENTA</h2>
         <form className={style.signupForm} onSubmit={handleSubmit}>
           <div className={style.divElige}>

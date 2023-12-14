@@ -9,7 +9,13 @@
 .h2Title{
   text-align: center;
 }
-
+.linkLogin{
+  background-color: #57b846;
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+}
 .signinForm {
   max-width: 400px;
   width: 100%;
@@ -52,7 +58,9 @@ p {
   text-align: center;
   margin-top: 1rem;
 }
-
+.submitBtn{
+  background-color: #57b846;
+}
 .submitBtn1 {
   width: 100%;
   padding: 1rem;

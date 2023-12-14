@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
+import style from './perfil.module.css';
+import imagen from '../../assets/user.png'
 interface ProfileData {
     username: string;
     alias: string;
@@ -56,46 +57,66 @@ const Perfil: any = () => {
         <div>
             {profileData ? (
                 <div>
-                    <h2>Perfil</h2>
+
                     {!isEditing ? (
-                        <div>
-                            <p>Nombre: {profileData.username}</p>
-                            <p>Alias: {profileData.alias}</p>
-                            <p>Email: {profileData.email}</p>
-                            <p>Telefono: {profileData.phone}</p>
-                            <button onClick={handleEditClick}>Editar Perfil</button>
+                        <div className={style.profileContainer}>
+                            <div className={style.profileHeader}>
+                                <img src={imagen} alt="Foto de perfil" className={style.profilePicture} />
+                                <h2>{profileData.username}</h2>
+                            </div>
+                            <div className={style.profileInfo}>
+                                <p><strong>Email: </strong>{profileData.email}</p>
+                                <p><strong>Alias: </strong>{profileData.alias}</p>
+                                <p><strong>Telefono: </strong>{profileData.phone}</p>
+                                <button onClick={handleEditClick}>Editar Perfil</button>
+                            </div>
                         </div>
                     ) : (
-                        <div>
-                            <input
-                                type="text"
-                                name="username"
-                                value={editedData.username || ''}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="text"
-                                name="alias"
+                        <>
+                            <div className={style.profileContainer}>
+                                <div className={style.profileHeader}>
+                                    <img src={imagen} alt="Foto de perfil" className={style.profilePicture} />
+                                    <input
+                                        className={style.inputName}
+                                        type="text"
+                                        name="username"
+                                        value={editedData.username || ''}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className={style.profileInfo}>
+                                    <input
+                                        type="text"
+                                        name="email"
+                                        disabled
+                                        value={editedData.email || ''}
+                                        onChange={handleInputChange}
+                                    />
+                                    <input
+                                        type="text"
+                                        name="alias"
+                                        required
+                                        value={editedData.alias || ''}
+                                        onChange={handleInputChange}
+                                    />
 
-                                value={editedData.alias || ''}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="text"
-                                name="email"
-                                disabled
-                                value={editedData.email || ''}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="number"
-                                name="phone"
-                                value={editedData.phone || ''}
-                                onChange={handleInputChange}
-                            />
-                            {/* Otros campos del formulario de edición */}
-                            <button onClick={handleSaveClick}>Guardar Cambios</button>
-                        </div>
+                                    <input
+                                        type="number"
+                                        name="phone"
+                                        value={editedData.phone || ''}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                    <button onClick={handleSaveClick}>Guardar Cambios</button>
+                                </div>
+                            </div>
+
+
+                        </>
+
+
+
+
                     )}
                 </div>
             ) : (
