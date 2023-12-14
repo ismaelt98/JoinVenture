@@ -1,35 +1,26 @@
 
-import { useEffect, useState } from 'react';
-import style from './projects.module.css'
-import Cookies from 'js-cookie';
+import style from './projects.module.css';
 import AllProjects from '../../components/AllProjects/AllProjects';
+import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
+
 function Projects(): any {
-    const [dataRoleUser, setDataRoleUser] = useState(true);
-    const roleuser = Cookies.get('roleuser');
-    
-    useEffect(() => {
+  const roleUser = Cookies.get('roleuser');
+  return (
+    <div className={style.container}>
+
+      {roleUser != 'empresa' ? (
         
-            if (roleuser === 'PROGRAMADOR') {
-              setDataRoleUser(true);
-            } else {
-              setDataRoleUser(false);
-            }
-        
-      }, [roleuser]);
-    
-    
-    return (
-        <div className={style.divGeneral}>
-            <div style={{ display: dataRoleUser ? 'flex' : 'none' }} className={style.navbar1}>
-                <button className={style.btnProjectsG}>Todos los Proyectos</button>
-                <button className={style.btnProjectsG}>Mis Proyectos</button>
-                <button className={style.btnProjectsG}>Crear Proyecto</button>
-            </div>
-            <div>
-                <AllProjects/>
-            </div>
-        </div>
-    );
+          <div className={style.crearProject}>
+            <Link className={style.crearProject1} to="../autentificationpage">➕</Link>
+          </div>
+     
+      ) : (
+        <></>
+      )}
+      <AllProjects />
+    </div>
+  );
 }
 
 export default Projects;

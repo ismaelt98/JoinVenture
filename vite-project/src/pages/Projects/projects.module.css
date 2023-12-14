@@ -1,21 +1,52 @@
-.divGeneral{
-    background-color: white(231, 201, 201);
-}
 
 .navbar1 {
 
     overflow: hidden;
-   
-   margin-top: 3px;
+
+    margin-top: 3px;
     display: flex;
     justify-content: space-around;
 }
-.btnProjectsG{
+
+.crearProject{
+    position: fixed;
+    z-index: 1;
+    bottom: 20px;
+    right: 20px;
+    background-color: #9ca0a3;;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+   height: 60px;
+   width: 60px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.crearProject1{
+    position: relative;
+    right: 37px;
+   
+    font-size: 40px;
+    text-decoration: none;
+    
+    margin-left: 40px;
+}
+.btnProjectsG {
     background-color: transparent;
     color: black;
     width: 200px;
 }
-.btnProjectsG:hover{
+
+.btnProjectsG:hover {
     background-color: black;
     color: white;
+}
+
+.btnCrearProject{
+    width: 50px;
+    height: 45px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
 }
