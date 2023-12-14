@@ -12,7 +12,7 @@ function Projects(): any {
       {roleUser != 'empresa' ? (
         
           <div className={style.crearProject}>
-            <Link className={style.crearProject1} to="../autentificationpage">➕</Link>
+            <Link className={style.crearProject1} to="../crearproject">➕</Link>
           </div>
      
       ) : (
